@@ -1,6 +1,5 @@
 package com.example.smarttrade.auth.presentation.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.smarttrade.auth.domain.model.User
 import com.example.smarttrade.auth.domain.repository.UserRepository
@@ -14,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ClientRegisterViewModel @Inject constructor(
     private val userRepository: UserRepository
-) : ViewModel() {
+) : RegisterViewModel() {
 
     private val _state = MutableStateFlow(ClientRegisterState())
     val state = _state.asStateFlow()
@@ -28,7 +27,7 @@ class ClientRegisterViewModel @Inject constructor(
         }
     }
 
-    fun onRegister() {
+    override fun onRegister() {
         /* TODO */
     }
 }
