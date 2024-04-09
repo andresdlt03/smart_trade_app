@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
@@ -44,7 +45,7 @@ import androidx.compose.ui.unit.sp
 
 @Preview
 @Composable
-fun App() {
+fun AppCategory() {
 
     val categories = listOf(
         Category("Tecnología",Icons.Filled.Build),
@@ -70,7 +71,7 @@ fun App() {
             FloatingActionButton(
                 onClick = { },
             ) {
-                Icon(Icons.Filled.ArrowBack, "Floating action button.")
+                Icon(Icons.Filled.ArrowBack, "Back button")
             }
             Spacer(modifier = Modifier.width(14.dp))
             Text(
@@ -85,6 +86,12 @@ fun App() {
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Filled.Search,
+                    contentDescription = null
+                )
+            },
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Filled.Clear,
                     contentDescription = null
                 )
             },
