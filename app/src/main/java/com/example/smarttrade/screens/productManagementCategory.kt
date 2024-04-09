@@ -1,14 +1,11 @@
 package com.example.smarttrade.screens
 
-import android.graphics.drawable.Icon
-import android.widget.Button
-import android.widget.GridLayout
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -23,24 +20,22 @@ import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemColors
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.smarttrade.R
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 
 @Preview
@@ -92,7 +87,10 @@ fun AppCategory() {
             trailingIcon = {
                 Icon(
                     imageVector = Icons.Filled.Clear,
-                    contentDescription = null
+                    contentDescription = null,
+                    modifier = Modifier.clickable{
+                        text = ""
+                    }
                 )
             },
             value = "Buscar una categoría",
@@ -119,6 +117,7 @@ fun AppCategory() {
 @Composable
 fun ListItem(category: Category){
     ListItem(
+        colors = ListItemDefaults.colors(containerColor = Color.LightGray),
         headlineContent = { Text(text = category.name) },
         leadingContent = {
             Icon(
@@ -133,4 +132,5 @@ data class Category(
     val name: String,
     val icon: ImageVector
 )
+
 

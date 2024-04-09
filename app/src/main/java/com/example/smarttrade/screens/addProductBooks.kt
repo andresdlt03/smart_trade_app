@@ -39,12 +39,11 @@ import com.example.smarttrade.R
 
 @Preview
 @Composable
-fun AppTechnology() {
+fun AppBooks() {
 
     var (name) = remember { mutableStateOf("") }
     var (description) = remember { mutableStateOf("") }
-    var (model) = remember { mutableStateOf("") }
-    var (energy) = remember { mutableStateOf("") }
+    var (isbn) = remember { mutableStateOf("") }
 
 
 
@@ -122,30 +121,13 @@ fun AppTechnology() {
                     imageVector = Icons.Filled.Clear,
                     contentDescription = null,
                     modifier = Modifier.clickable{
-                        model = ""
+                        isbn = ""
                     }
                 )
             },
-            value = "Modelo",
-            label = { Text("Modelo") },
-            onValueChange = {model = it}
-        )
-        Spacer(modifier = Modifier.height(14.dp))
-        OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth(),
-            trailingIcon = {
-                Icon(
-                    imageVector = Icons.Filled.Clear,
-                    contentDescription = null,
-                    modifier = Modifier.clickable{
-                        energy = ""
-                    }
-                )
-            },
-            value = "Consumo energético (kWh)",
-            label = { Text("Consumo energético") },
-            onValueChange = {energy = it}
+            value = "ISBN",
+            label = { Text("ISBN") },
+            onValueChange = {isbn = it}
         )
         Spacer(modifier = Modifier.height(54.dp))
         Box(
