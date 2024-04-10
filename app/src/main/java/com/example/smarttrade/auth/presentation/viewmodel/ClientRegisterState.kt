@@ -1,7 +1,9 @@
 package com.example.smarttrade.auth.presentation.viewmodel
 
-import com.example.smarttrade.auth.domain.model.User
-
 data class ClientRegisterState (
-    val users: List<User> = emptyList(),
+    val name: String = "",
+    val surname: String = "",
+    val email: String = "",
+    val password: String = "",
+    val dni: String = ""
 )
