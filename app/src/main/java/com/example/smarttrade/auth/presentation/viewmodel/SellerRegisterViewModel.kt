@@ -1,20 +1,17 @@
 package com.example.smarttrade.auth.presentation.viewmodel
 
-import androidx.lifecycle.viewModelScope
-import com.example.smarttrade.auth.domain.model.Client
 import com.example.smarttrade.auth.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ClientRegisterViewModel @Inject constructor(
+class SellerRegisterViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : RegisterViewModel() {
 
-    private val _state = MutableStateFlow(ClientRegisterState())
+    private val _state = MutableStateFlow(SellerRegisterState())
     val state = _state.asStateFlow()
 
     fun updateName(name: String) {
@@ -33,20 +30,15 @@ class ClientRegisterViewModel @Inject constructor(
         _state.value = _state.value.copy(password = password)
     }
 
-    fun updateDni(dni: String) {
-        _state.value = _state.value.copy(dni = dni)
+    fun updateCompanyName(companyName: String) {
+        _state.value = _state.value.copy(companyName = companyName)
+    }
+
+    fun updateCif(cif: String) {
+        _state.value = _state.value.copy(cif = cif)
     }
 
     override fun onRegister() {
-        viewModelScope.launch {
-            val client = Client(
-                name = state.value.name,
-                surname = state.value.surname,
-                email = state.value.email,
-                password = state.value.password,
-                dni = state.value.dni
-            )
-            userRepository.registerUser(client, "client")
-        }
+        //TODO: Implement this method
     }
 }

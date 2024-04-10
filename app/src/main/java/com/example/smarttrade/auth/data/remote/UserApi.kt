@@ -1,9 +1,14 @@
 package com.example.smarttrade.auth.data.remote
 
 import com.example.smarttrade.auth.domain.model.User
-import retrofit2.http.GET
+import retrofit2.http.Body
+import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface UserApi {
-    @GET("users")
-    suspend fun getUsers() : List<User>
+    @POST("users/{userType}s")
+    suspend fun registerUser(@Body user: User, @Query("userType") userType: String): String
+
+    @POST("users/{userType}s")
+    suspend fun loginUser(@Body user: User, @Query("userType") userType: String): String
 }

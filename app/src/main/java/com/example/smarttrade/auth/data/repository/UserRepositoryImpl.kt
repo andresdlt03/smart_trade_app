@@ -8,12 +8,11 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(
     private val userApi: UserApi
 ) : UserRepository {
-    override suspend fun getUsers(): List<User> {
+    override suspend fun registerUser(user: User, userType: String): String {
         try {
-            return userApi.getUsers()
+            return userApi.registerUser(user, userType)
         } catch (e: Exception) {
             throw e
         }
     }
-
 }
