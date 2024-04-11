@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -33,15 +32,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.smarttrade.R
 
-
 @Composable
 fun addProductTechnologyScreen(viewModel: addProductTechnologyViewModel) {
-
-    var (name) = remember { mutableStateOf("") }
-    var (description) = remember { mutableStateOf("") }
-    var (model) = remember { mutableStateOf("") }
-    var (energy) = remember { mutableStateOf("") }
-
 
     Column(
         modifier = Modifier
@@ -69,41 +61,11 @@ fun addProductTechnology(viewModel: addProductTechnologyViewModel){
     Spacer(modifier = Modifier.height(14.dp))
     outLinedTextAdd(model, {text("Modelo")}, 3,{viewModel.onItemChanged(it,3)} ,{ viewModel.clearSelected(3) })
     Spacer(modifier = Modifier.height(14.dp))
-    outLinedTextAdd(model, {text("Consumo energético")}, 4,{viewModel.onItemChanged(it,4)} ,{ viewModel.clearSelected(4) })
+    outLinedTextAdd(energy, {text("Consumo energético")}, 4,{viewModel.onItemChanged(it,4)} ,{ viewModel.clearSelected(4) })
     Spacer(modifier = Modifier.height(54.dp))
-    Box(
-        modifier = Modifier
-            .fillMaxWidth(),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            FloatingActionButton(
-                onClick = { },
-                modifier = Modifier.padding(bottom = 8.dp)
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.add_foto),
-                    contentDescription = null
-                )
-                }
-            Spacer(modifier = Modifier.height(2.dp))
-            Text(text = "Añade una foto del producto")
-        }
-    }
+    addImage()
     Spacer(modifier = Modifier.height(54.dp))
-    Box(
-        modifier = Modifier
-            .fillMaxWidth(),
-        contentAlignment = Alignment.Center
-    ) {
-        Button(
-            onClick = { })
-        {
-            Text(text = "Publicar producto")
-        }
-    }
+    publishProductButton()
 }
 
 @Composable
@@ -129,7 +91,6 @@ fun text(text: String){
     Text(text = text)
 }
 
-
 @Composable
 fun outLinedTextAdd(item: String, text: @Composable (String) -> Unit, id: Int, onItemChanged:(String) -> Unit, clearSelected:(Int) -> Unit){
     OutlinedTextField(
@@ -150,6 +111,46 @@ fun outLinedTextAdd(item: String, text: @Composable (String) -> Unit, id: Int, o
         label = { text },
         onValueChange = {onItemChanged(it)}
     )
+}
+
+@Composable
+fun addImage(){
+    Box(
+        modifier = Modifier
+            .fillMaxWidth(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            FloatingActionButton(
+                onClick = { },
+                modifier = Modifier.padding(bottom = 8.dp)
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.add_foto),
+                    contentDescription = null
+                )
+            }
+            Spacer(modifier = Modifier.height(2.dp))
+            Text(text = "Añade una foto del producto")
+        }
+    }
+}
+
+@Composable
+fun publishProductButton(){
+    Box(
+        modifier = Modifier
+            .fillMaxWidth(),
+        contentAlignment = Alignment.Center
+    ) {
+        Button(
+            onClick = { })
+        {
+            Text(text = "Publicar producto")
+        }
+    }
 }
 
 
