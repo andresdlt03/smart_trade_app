@@ -1,4 +1,4 @@
-package com.example.smarttrade.screens
+package com.example.smarttrade.product_management.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -34,11 +34,11 @@ import com.example.smarttrade.R
 
 @Preview
 @Composable
-fun AppFood() {
+fun AppBooks() {
 
     var (name) = remember { mutableStateOf("") }
     var (description) = remember { mutableStateOf("") }
-    var (calories) = remember { mutableStateOf("") }
+    var (isbn) = remember { mutableStateOf("") }
 
 
 
@@ -116,14 +116,14 @@ fun AppFood() {
                     imageVector = Icons.Filled.Clear,
                     contentDescription = null,
                     modifier = Modifier.clickable{
-                        calories = ""
+                        isbn = ""
                     }
                 )
             },
-            value = "Calorias",
-            label = { Text("Calorias") },
-            onValueChange = {calories = it}
-        ) 
+            value = "ISBN",
+            label = { Text("ISBN") },
+            onValueChange = {isbn = it}
+        )
         Spacer(modifier = Modifier.height(54.dp))
         Box(
             modifier = Modifier
