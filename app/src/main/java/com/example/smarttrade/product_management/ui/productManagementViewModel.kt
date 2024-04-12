@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavHostController
 
 class productManagementViewModel : ViewModel(){
 
@@ -35,6 +36,16 @@ class productManagementViewModel : ViewModel(){
 
     private val _filteredCategories = MutableLiveData<List<Category>>()
     val filteredCategories : LiveData<List<Category>> = _filteredCategories
+
+    fun changeAddScreen(navControler: NavHostController, name: String){
+        when(name){
+            "Tecnología" -> navControler.navigate("add1")
+            "Libros" ->     {}
+            "Comida" ->     {}
+            "Ropa"->        {}
+        }
+
+    }
 }
 
 data class Category(

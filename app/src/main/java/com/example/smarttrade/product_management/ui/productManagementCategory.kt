@@ -28,20 +28,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 
 
 @Composable
-fun productManagementScreen(viewModel: productManagementViewModel) {
+fun productManagementScreen(viewModel: productManagementViewModel, navControler: NavHostController) {
 
     Column (
         modifier = Modifier
@@ -49,12 +47,12 @@ fun productManagementScreen(viewModel: productManagementViewModel) {
             .padding(32.dp),
         verticalArrangement = Arrangement.Top,
     ){
-        productManagement(viewModel)
+        productManagement(viewModel,navControler)
     }
 }
 
 @Composable
-fun productManagement(viewModel: productManagementViewModel){
+fun productManagement(viewModel: productManagementViewModel,navControler: NavHostController){
 
     val category :String by viewModel.category.observeAsState(initial = "Buscar una categoría")
 
@@ -76,7 +74,7 @@ fun productManagement(viewModel: productManagementViewModel){
             .height(1.dp)
     )
     Spacer(modifier = Modifier.height(14.dp))
-    CategoryItems(filteredCategories)
+    CategoryItems(filteredCategories, navControler, viewModel)
 }
 
 
@@ -127,18 +125,18 @@ fun outLinedTextManage(category: String, onCategoryChanged:(String) -> Unit, cle
 }
 
 @Composable
-fun CategoryItems(filteredCategories: List<Category>){
+fun CategoryItems(filteredCategories: List<Category>, navControler: NavHostController, viewModel: productManagementViewModel ){
     Column(
         verticalArrangement = Arrangement.spacedBy(14.dp)
     )
     {
         for ( category in filteredCategories)
-            ListItem(category = category)
+            ListItem(category = category, navControler, viewModel)
     }
 }
 
 @Composable
-fun ListItem(category: Category){
+fun ListItem(category: Category, navControler: NavHostController, viewModel: productManagementViewModel){
     ListItem(
         colors = ListItemDefaults.colors(containerColor = Color.LightGray),
         headlineContent = { Text(text = category.name) },
@@ -147,7 +145,8 @@ fun ListItem(category: Category){
                 category.icon,
                 contentDescription = category.name
             )
-        }
+        },
+        modifier = Modifier.clickable(onClick = { viewModel.changeAddScreen(navControler,category.name) })
     )
 }
 
