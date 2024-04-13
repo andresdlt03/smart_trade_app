@@ -1,5 +1,6 @@
 package com.example.smarttrade.auth.data.remote
 
+import com.example.smarttrade.auth.data.body.LoginCredentials
 import com.example.smarttrade.auth.domain.model.User
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -10,5 +11,5 @@ interface UserApi {
     suspend fun registerUser(@Body user: User, @Query("userType") userType: String): String
 
     @POST("users/{userType}s")
-    suspend fun loginUser(@Body user: User, @Query("userType") userType: String): String
+    suspend fun loginUser(@Body credentials: LoginCredentials): String
 }
