@@ -54,7 +54,7 @@ fun productManagementScreen(viewModel: productManagementViewModel, navControler:
 @Composable
 fun productManagement(viewModel: productManagementViewModel,navControler: NavHostController){
 
-    val category :String by viewModel.category.observeAsState(initial = "Buscar una categoría")
+    val category :String by viewModel.category.observeAsState(initial = "")
 
     val filteredCategories :List<Category> by viewModel.filteredCategories.observeAsState(initial =
         listOf(
@@ -119,7 +119,7 @@ fun outLinedTextManage(category: String, onCategoryChanged:(String) -> Unit, cle
             )
         },
         value = category,
-        label = { Text("Categoría") },
+        label = { Text("Buscar una categoría") },
         onValueChange = {onCategoryChanged(it)}
     )
 }

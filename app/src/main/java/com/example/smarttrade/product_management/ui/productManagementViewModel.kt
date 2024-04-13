@@ -24,14 +24,20 @@ class productManagementViewModel : ViewModel(){
     val category : LiveData<String> = _category
 
     fun onCategoryChanged(category :String){
-        _category.value = category
-        _filteredCategories.value = categories.filter {
-            it.name.contains(category, ignoreCase = true)
+        if(category.trim() == ""){
+            _category.value = category
+            _filteredCategories.value = categories
+        }else {
+            _category.value = category
+            _filteredCategories.value = categories.filter {
+                it.name.contains(category, ignoreCase = true)
+            }
         }
     }
 
     fun clearSelected(){
         _category.value = ""
+        _filteredCategories.value = categories
     }
 
     private val _filteredCategories = MutableLiveData<List<Category>>()
@@ -40,9 +46,9 @@ class productManagementViewModel : ViewModel(){
     fun changeAddScreen(navControler: NavHostController, name: String){
         when(name){
             "Tecnología" -> navControler.navigate("add1")
-            "Libros" ->     {}
-            "Comida" ->     {}
-            "Ropa"->        {}
+            "Libros" ->     navControler.navigate("add2")
+            "Comida" ->     navControler.navigate("add3")
+            "Ropa"->        navControler.navigate("add4")
         }
 
     }

@@ -12,9 +12,10 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 
 @Composable
-fun addProductClothesScreen(viewModel: addProductClothesViewModel) {
+fun addProductClothesScreen(viewModel: addProductClothesViewModel, navHostController: NavHostController) {
 
     Column(
         modifier = Modifier
@@ -22,27 +23,27 @@ fun addProductClothesScreen(viewModel: addProductClothesViewModel) {
             .padding(32.dp),
         verticalArrangement = Arrangement.Top,
     ) {
-        addProductClothes(viewModel)
+        addProductClothes(viewModel, navHostController)
     }
 }
 
 @Composable
-fun addProductClothes(viewModel: addProductClothesViewModel){
+fun addProductClothes(viewModel: addProductClothesViewModel, navHostController: NavHostController){
 
-    val name :String by viewModel.name.observeAsState(initial = "Nombre (20 carácteres)")
-    val description :String by viewModel.description.observeAsState(initial = "Descripción (50 carácteres)")
-    val size :String by viewModel.size.observeAsState(initial = "Talla (Tallaje español)")
-    val price :String by viewModel.price.observeAsState(initial = "Precio del producto")
+    val name :String by viewModel.name.observeAsState(initial = "")
+    val description :String by viewModel.description.observeAsState(initial = "")
+    val size :String by viewModel.size.observeAsState(initial = "")
+    val price :String by viewModel.price.observeAsState(initial = "")
 
-    topBarAdd()
+    topBarAdd({viewModel.goBackCategories(navHostController)},navHostController)
     Spacer(modifier = Modifier.height(24.dp))
-    outLinedTextAdd(name, "Nombre", 1,{viewModel.onItemChanged(it,1)} ,{ viewModel.clearSelected(1) })
+    outLinedTextAdd(name, "Nombre (20 carácteres)", 1,{viewModel.onItemChanged(it,1)} ,{ viewModel.clearSelected(1) })
     Spacer(modifier = Modifier.height(14.dp))
-    outLinedTextAdd(description, "Descripción", 2,{viewModel.onItemChanged(it,2)} ,{ viewModel.clearSelected(2) })
+    outLinedTextAdd(description, "Descripción (50 carácteres)", 2,{viewModel.onItemChanged(it,2)} ,{ viewModel.clearSelected(2) })
     Spacer(modifier = Modifier.height(14.dp))
-    outLinedTextAdd(size, "Talla", 3,{viewModel.onItemChanged(it,3)} ,{ viewModel.clearSelected(3) })
+    outLinedTextAdd(size, "Talla (Tallaje español)", 3,{viewModel.onItemChanged(it,3)} ,{ viewModel.clearSelected(3) })
     Spacer(modifier = Modifier.height(14.dp))
-    outLinedTextAdd(price, "Precio", 4,{viewModel.onItemChanged(it,4)} ,{ viewModel.clearSelected(4) })
+    outLinedTextAdd(price, "Precio del producto", 4,{viewModel.onItemChanged(it,4)} ,{ viewModel.clearSelected(4) })
     Spacer(modifier = Modifier.height(54.dp))
     addImage()
     Spacer(modifier = Modifier.height(54.dp))
@@ -50,12 +51,6 @@ fun addProductClothes(viewModel: addProductClothesViewModel){
 }
 
 
-@Preview
-@Composable
-fun preview3(){
-    val addProductClothesViewModel : `addProductClothesViewModel`
-    addProductClothesScreen(viewModel = `addProductClothesViewModel`())
-}
 
 
 

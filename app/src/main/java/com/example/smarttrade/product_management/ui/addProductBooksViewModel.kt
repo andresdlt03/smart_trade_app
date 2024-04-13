@@ -3,6 +3,7 @@ package com.example.smarttrade.product_management.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavHostController
 
 class `addProductBooksViewModel` : ViewModel(){
 
@@ -38,5 +39,9 @@ class `addProductBooksViewModel` : ViewModel(){
             3 ->    _isbn.value = ""
             4 ->    _price.value = ""
         }
+    }
+
+    fun goBackCategories(navControler: NavHostController){
+        navControler.navigate("main")
     }
 }

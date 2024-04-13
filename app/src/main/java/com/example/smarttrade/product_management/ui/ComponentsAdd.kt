@@ -21,19 +21,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.smarttrade.R
 
 
 @Composable
-fun topBarAdd(){
+fun topBarAdd(goBackCategories:(NavHostController) -> Unit , navController: NavHostController){
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
         FloatingActionButton(
-            onClick = { },
+            onClick = { goBackCategories(navController)},
         ) {
             Icon(Icons.Filled.ArrowBack, "Back button")
         }
@@ -52,9 +56,15 @@ fun text(text: String){
 
 @Composable
 fun outLinedTextAdd(item: String, text: (String), id: Int, onItemChanged:(String) -> Unit, clearSelected:(Int) -> Unit){
+
+
     OutlinedTextField(
         modifier = Modifier
+            .clickable {
+
+            }
             .fillMaxWidth(),
+
         trailingIcon = {
             Icon(
                 imageVector = Icons.Filled.Clear,
@@ -68,7 +78,7 @@ fun outLinedTextAdd(item: String, text: (String), id: Int, onItemChanged:(String
         },
         value = item,
         label = { Text(text = text) },
-        onValueChange = {onItemChanged(it)}
+        onValueChange = { onItemChanged(it) }
     )
 }
 
