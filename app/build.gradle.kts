@@ -65,6 +65,9 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
 
+    // Compose Navigation
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -77,8 +80,12 @@ dependencies {
 
     // Dagger-Hilt
     implementation("com.google.dagger:hilt-android:2.51.1")
+    implementation(libs.androidx.media3.ui)
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
+    // For media playback using ExoPlayer
+    implementation("androidx.media3:media3-exoplayer:1.3.1")
 
     implementation(libs.androidx.material3)
     testImplementation(libs.junit)
