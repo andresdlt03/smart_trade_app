@@ -8,10 +8,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.smarttrade.product_management.ui.addProductBooks
+import com.example.smarttrade.product_management.ui.addProductBooksScreen
 import com.example.smarttrade.product_management.ui.addProductBooksViewModel
 import com.example.smarttrade.product_management.ui.addProductClothesScreen
 import com.example.smarttrade.product_management.ui.addProductClothesViewModel
 import com.example.smarttrade.product_management.ui.addProductFood
+import com.example.smarttrade.product_management.ui.addProductFoodScreen
 import com.example.smarttrade.product_management.ui.addProductFoodViewModel
 import com.example.smarttrade.product_management.ui.addProductTechnologyScreen
 import com.example.smarttrade.product_management.ui.addProductTechnologyViewModel
@@ -32,13 +34,13 @@ class MainActivity : ComponentActivity(){
                     addProductTechnologyScreen(viewModel = addProductTechnologyViewModel(), navControler, scrollState)
                 }
                 composable("add2"){
-                    addProductBooks(viewModel = addProductBooksViewModel(), navControler)
+                    addProductBooksScreen(viewModel = addProductBooksViewModel(), navControler, scrollState)
                 }
                 composable("add3"){
-                    addProductFood(viewModel = addProductFoodViewModel(), navControler)
+                    addProductFoodScreen(viewModel = addProductFoodViewModel(), navControler, scrollState)
                 }
                 composable("add4"){
-                    addProductClothesScreen(viewModel = addProductClothesViewModel(), navControler)
+                    addProductClothesScreen(viewModel = addProductClothesViewModel(), navControler, scrollState)
                 }
 
 

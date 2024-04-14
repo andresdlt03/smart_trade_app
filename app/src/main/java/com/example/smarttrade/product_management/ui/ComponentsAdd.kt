@@ -108,14 +108,14 @@ fun addImage(){
 }
 
 @Composable
-fun publishProductButton(){
+fun publishProductButton(checkAllVariables:() -> Unit){
     Box(
         modifier = Modifier
             .fillMaxWidth(),
         contentAlignment = Alignment.Center
     ) {
         Button(
-            onClick = { })
+            onClick = {checkAllVariables() })
         {
             Text(text = "Publicar producto")
         }
