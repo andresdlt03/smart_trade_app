@@ -12,15 +12,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
 import com.example.smarttrade.catalogue.ui.mainCatalogue
+import com.example.smarttrade.catalogue.ui.mainCatalogueViewModel
 import com.example.smarttrade.ui.theme.SmartTradeTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            var viewModel
-            mainCatalogue(viewModel = )
+
+            mainCatalogue(viewModel = mainCatalogueViewModel())
         }
     }
 }

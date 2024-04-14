@@ -27,18 +27,27 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 
 @Composable
-fun mainCatalogueScreen(viewModel: productManagementViewModel){
+fun mainCatalogueScreen(viewModel: mainCatalogueViewModel){
     Column {
         mainCatalogue(viewModel)
     }
 }
 
 @Composable
-fun mainCatalogue(viewModel: productManagementViewModel){
+fun mainCatalogue(viewModel: mainCatalogueViewModel){
     val search :String by viewModel.search.observeAsState(initial = "")
     val selectedCategories: List<String> by viewModel.selectedCategories.observeAsState(emptyList())
     val filterCategory :Boolean by viewModel.filterCatgegory.observeAsState(initial = false)
     val filterPrice:Boolean by viewModel.filterPrice.observeAsState(initial = false)
+
+    outLinedTextManage(
+        search = search,
+        selectedCategories = selectedCategories,
+        filterCatgegory = filterCategory,
+        filterPrice = filterPrice,
+        activeFilterCategory = {viewModel.activeFilterCategory()}) {
+
+    }
 }
 
 
