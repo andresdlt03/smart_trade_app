@@ -1,4 +1,4 @@
-package com.example.smarttrade.product_management.ui
+package com.example.smarttrade.product_management.presentation.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -21,12 +21,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.smarttrade.R
 

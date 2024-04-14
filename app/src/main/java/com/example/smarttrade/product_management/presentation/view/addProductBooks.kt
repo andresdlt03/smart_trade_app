@@ -1,4 +1,4 @@
-package com.example.smarttrade.product_management.ui
+package com.example.smarttrade.product_management.presentation.view
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -18,6 +18,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -28,14 +29,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.data.EmptyGroup.name
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.smarttrade.R
+import com.example.smarttrade.product_management.presentation.viewmodel.AddProductBookViewModel
 
 @Composable
-fun addProductClothesScreen(viewModel: addProductClothesViewModel, navHostController: NavHostController,scrollState: ScrollState) {
+fun addProductBooksScreen(viewModel: AddProductBookViewModel, navHostController: NavHostController, scrollState: ScrollState) {
 
     Column(
         modifier = Modifier
@@ -44,18 +46,14 @@ fun addProductClothesScreen(viewModel: addProductClothesViewModel, navHostContro
             .padding(32.dp),
         verticalArrangement = Arrangement.Top,
     ) {
-        addProductClothes(viewModel, navHostController)
+        addProductBooks(viewModel, navHostController)
     }
 }
 
 @Composable
-fun addProductClothes(viewModel: addProductClothesViewModel, navHostController: NavHostController){
+fun addProductBooks(viewModel: AddProductBookViewModel, navHostController: NavHostController){
 
-    val name :String by viewModel.name.observeAsState(initial = "")
-    val description :String by viewModel.description.observeAsState(initial = "")
-    val size :String by viewModel.size.observeAsState(initial = "")
-    val price :String by viewModel.price.observeAsState(initial = "")
-    val textError :String by viewModel.textError.observeAsState(initial = "")
+    val state = viewModel.state.collectAsState()
 
 
     var photoUri: Uri? by remember { mutableStateOf(null) }
@@ -68,14 +66,15 @@ fun addProductClothes(viewModel: addProductClothesViewModel, navHostController: 
 
     topBarAdd({viewModel.goBackCategories(navHostController)},navHostController)
     Spacer(modifier = Modifier.height(24.dp))
-    outLinedTextAdd(name, "Nombre (20 carácteres)", 1,{viewModel.onItemChanged(it,1)} ,{ viewModel.clearSelected(1) })
+    outLinedTextAdd(state.value.name, "Nombre (20 carácteres)", 1,{viewModel.onItemChanged(it,1)} ,{ viewModel.clearSelected(1) })
     Spacer(modifier = Modifier.height(14.dp))
-    outLinedTextAdd(description, "Descripción (50 carácteres)", 2,{viewModel.onItemChanged(it,2)} ,{ viewModel.clearSelected(2) })
+    outLinedTextAdd(state.value.description, "Descripción (50 carácteres)", 2,{viewModel.onItemChanged(it,2)} ,{ viewModel.clearSelected(2) })
     Spacer(modifier = Modifier.height(14.dp))
-    outLinedTextAdd(size, "Talla (Tallaje español)", 3,{viewModel.onItemChanged(it,3)} ,{ viewModel.clearSelected(3) })
+    outLinedTextAdd(state.value.isbn, "ISBN", 3,{viewModel.onItemChanged(it,3)} ,{ viewModel.clearSelected(3) })
     Spacer(modifier = Modifier.height(14.dp))
-    outLinedTextAdd(price, "Precio del producto", 4,{viewModel.onItemChanged(it,4)} ,{ viewModel.clearSelected(4) })
+    outLinedTextAdd(state.value.price, "Precio del producto", 4,{viewModel.onItemChanged(it,4)} ,{ viewModel.clearSelected(4) })
     Spacer(modifier = Modifier.height(54.dp))
+
 
     Box(
         modifier = Modifier
@@ -130,15 +129,13 @@ fun addProductClothes(viewModel: addProductClothesViewModel, navHostController: 
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = textError,
+            text = state.value.textError!!,
             color = Color.Red
         )
     }
     Spacer(modifier = Modifier.height(8.dp))
     publishProductButton({viewModel.checkAllVariables()})
 }
-
-
 
 
 

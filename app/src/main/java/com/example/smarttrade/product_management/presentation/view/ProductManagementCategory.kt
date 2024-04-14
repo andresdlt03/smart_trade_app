@@ -1,4 +1,4 @@
-package com.example.smarttrade.product_management.ui
+package com.example.smarttrade.product_management.presentation.view
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,13 +33,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.example.smarttrade.product_management.presentation.viewmodel.Category
+import com.example.smarttrade.product_management.presentation.viewmodel.ProductManagementViewModel
+import com.example.smarttrade.product_management.presentation.viewmodel.productManagementViewModel
 
 
 @Composable
-fun productManagementScreen(viewModel: productManagementViewModel, navControler: NavHostController) {
+fun productManagementScreen(viewModel: ProductManagementViewModel, navControler: NavHostController) {
 
     Column (
         modifier = Modifier
@@ -52,7 +53,7 @@ fun productManagementScreen(viewModel: productManagementViewModel, navControler:
 }
 
 @Composable
-fun productManagement(viewModel: productManagementViewModel,navControler: NavHostController){
+fun productManagement(viewModel: ProductManagementViewModel, navControler: NavHostController){
 
     val category :String by viewModel.category.observeAsState(initial = "")
 
@@ -61,7 +62,8 @@ fun productManagement(viewModel: productManagementViewModel,navControler: NavHos
             Category("Tecnología", Icons.Filled.Build),
             Category( "Libros", Icons.Filled.Email),
             Category("Comida", Icons.Filled.Home),
-            Category("Ropa", Icons.Filled.Face))
+            Category("Ropa", Icons.Filled.Face)
+        )
     )
 
     topBarManage()
@@ -125,7 +127,7 @@ fun outLinedTextManage(category: String, onCategoryChanged:(String) -> Unit, cle
 }
 
 @Composable
-fun CategoryItems(filteredCategories: List<Category>, navControler: NavHostController, viewModel: productManagementViewModel ){
+fun CategoryItems(filteredCategories: List<Category>, navControler: NavHostController, viewModel: ProductManagementViewModel){
     Column(
         verticalArrangement = Arrangement.spacedBy(14.dp)
     )
@@ -136,7 +138,7 @@ fun CategoryItems(filteredCategories: List<Category>, navControler: NavHostContr
 }
 
 @Composable
-fun ListItem(category: Category, navControler: NavHostController, viewModel: productManagementViewModel){
+fun ListItem(category: Category, navControler: NavHostController, viewModel: ProductManagementViewModel){
     ListItem(
         colors = ListItemDefaults.colors(containerColor = Color.LightGray),
         headlineContent = { Text(text = category.name) },

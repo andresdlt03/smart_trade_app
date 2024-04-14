@@ -1,4 +1,4 @@
-package com.example.smarttrade.product_management.ui
+package com.example.smarttrade.product_management.presentation.viewmodel
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
@@ -11,7 +11,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 
-class productManagementViewModel : ViewModel(){
+class ProductManagementViewModel : ViewModel(){
 
     private val categories = listOf(
         Category("Tecnología", Icons.Filled.Build),

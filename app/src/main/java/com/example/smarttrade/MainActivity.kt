@@ -7,16 +7,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.smarttrade.product_management.ui.addProductBooksScreen
-import com.example.smarttrade.product_management.ui.addProductBooksViewModel
-import com.example.smarttrade.product_management.ui.addProductClothesScreen
-import com.example.smarttrade.product_management.ui.addProductClothesViewModel
-import com.example.smarttrade.product_management.ui.addProductFoodScreen
-import com.example.smarttrade.product_management.ui.addProductFoodViewModel
-import com.example.smarttrade.product_management.ui.addProductTechnologyScreen
-import com.example.smarttrade.product_management.ui.addProductTechnologyViewModel
-import com.example.smarttrade.product_management.ui.productManagementScreen
-import com.example.smarttrade.product_management.ui.productManagementViewModel
+import com.example.smarttrade.product_management.presentation.view.addProductBooksScreen
+import com.example.smarttrade.product_management.presentation.view.addProductClothesScreen
+import com.example.smarttrade.product_management.presentation.view.addProductFoodScreen
+import com.example.smarttrade.product_management.presentation.view.addProductTechnologyScreen
+import com.example.smarttrade.product_management.presentation.view.productManagementScreen
+import com.example.smarttrade.product_management.presentation.viewmodel.AddProductBookViewModel
+import com.example.smarttrade.product_management.presentation.viewmodel.AddProductClothesViewModel
+import com.example.smarttrade.product_management.presentation.viewmodel.AddProductFoodViewModel
+import com.example.smarttrade.product_management.presentation.viewmodel.ProductManagementViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,32 +27,32 @@ class MainActivity : ComponentActivity() {
             val scrollState = rememberScrollState()
             NavHost(navController = navController, startDestination = "main") {
                 composable("main") {
-                    productManagementScreen(viewModel = productManagementViewModel(), navController)
+                    productManagementScreen(viewModel = ProductManagementViewModel(), navController)
                 }
                 composable("add1") {
                     addProductTechnologyScreen(
-                        viewModel = addProductTechnologyViewModel(),
+                        viewModel = AddProductTechnologyViewModelDraft(),
                         navController,
                         scrollState
                     )
                 }
                 composable("add2") {
                     addProductBooksScreen(
-                        viewModel = addProductBooksViewModel(),
+                        viewModel = AddProductBookViewModel(),
                         navController,
                         scrollState
                     )
                 }
                 composable("add3") {
                     addProductFoodScreen(
-                        viewModel = addProductFoodViewModel(),
+                        viewModel = AddProductFoodViewModel(),
                         navController,
                         scrollState
                     )
                 }
                 composable("add4") {
                     addProductClothesScreen(
-                        viewModel = addProductClothesViewModel(),
+                        viewModel = AddProductClothesViewModel(),
                         navController,
                         scrollState
                     )
