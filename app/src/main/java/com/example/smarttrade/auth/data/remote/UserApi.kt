@@ -10,6 +10,6 @@ interface UserApi {
     @POST("users/{userType}s")
     suspend fun registerUser(@Body user: User, @Query("userType") userType: String): String
 
-    @POST("users/{userType}s")
+    @POST("users/login")
     suspend fun loginUser(@Body credentials: LoginCredentials): String
 }

@@ -13,7 +13,7 @@ class UserRepositoryImpl @Inject constructor(
         try {
             return userApi.registerUser(user, userType)
         } catch (e: Exception) {
-            throw e
+            return e.message.toString()
         }
     }
 
@@ -22,7 +22,7 @@ class UserRepositoryImpl @Inject constructor(
             val credentials = LoginCredentials(email, password)
             return userApi.loginUser(credentials)
         } catch (e: Exception) {
-            throw e
+            return e.message.toString()
         }
     }
 }
