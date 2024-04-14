@@ -33,4 +33,8 @@ class mainCatalogueViewModel : ViewModel() {
     fun unActiveFilterPrice(){
         _filterPrice.value = false
     }
+
+    fun saveFilterCategory(m:MutableList<String>){
+        _selectedCategories.value = m
+    }
 }

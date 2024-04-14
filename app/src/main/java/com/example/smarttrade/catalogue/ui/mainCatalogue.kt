@@ -20,6 +20,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,7 +38,8 @@ fun mainCatalogueScreen(viewModel: mainCatalogueViewModel){
 @Composable
 fun mainCatalogue(viewModel: mainCatalogueViewModel){
     val search :String by viewModel.search.observeAsState(initial = "")
-    val selectedCategories: List<String> by viewModel.selectedCategories.observeAsState(emptyList())
+    val selectedCategoriesState = viewModel.selectedCategories.observeAsState(emptyList())
+    val selectedCategories: MutableList<String> by remember { mutableStateOf(selectedCategoriesState.value.toMutableList()) }
     val filterCategory :Boolean by viewModel.filterCatgegory.observeAsState(initial = false)
     val filterPrice:Boolean by viewModel.filterPrice.observeAsState(initial = false)
 
@@ -58,8 +61,9 @@ fun outLinedTextManage(
     filterCatgegory: Boolean,
     filterPrice: Boolean,
     activeFilterCategory:() -> Unit,
-    activeFilterPrice:() -> Unit
-
+    activeFilterPrice:() -> Unit,
+    UnActiveFilterCategory:() -> Unit,
+    UnActiveFilterPrice:() -> Unit
 
 ){
     Column() {
@@ -101,12 +105,12 @@ fun outLinedTextManage(
                 onDismissRequest = {  },
                 title = { Text("Filtrar por categoría") },
                 confirmButton = {
-                    Button(onClick = {  }) {
+                    Button(onClick = { UnActiveFilterCategory() }) {
                         Text("Aceptar")
                     }
                 },
                 dismissButton = {
-                    Button(onClick = {  }) {
+                    Button(onClick = { UnActiveFilterCategory() }) {
                         Text("Cancelar")
                     }
                 },
@@ -163,35 +167,6 @@ fun PriceFilterDialog(
         },
         // Aquí puedes incluir opciones para filtrar por precio
         text = { Text("Opciones de filtrado de precio") }
-    )
-}
-
-
-@Composable
-fun CategoryFilterDialog(selectedCategories: MutableList<String>
-) {
-
-    AlertDialog(
-        onDismissRequest = {  },
-        title = { Text("Filtrar por categoría") },
-        confirmButton = {
-            Button(onClick = {  }) {
-                Text("Aceptar")
-            }
-        },
-        dismissButton = {
-            Button(onClick = {  }) {
-                Text("Cancelar")
-            }
-        },
-        text = {
-            Column {
-                CategoryCheckBox("Tecnología", selectedCategories)
-                CategoryCheckBox("Libros", selectedCategories)
-                CategoryCheckBox("Ropa", selectedCategories)
-                CategoryCheckBox("Comida", selectedCategories)
-            }
-        }
     )
 }
 
