@@ -94,6 +94,9 @@ dependencies {
     // For media playback using ExoPlayer
     implementation("androidx.media3:media3-exoplayer:1.3.1")
 
+    // Images
+    implementation("io.coil-kt:coil-compose:2.1.0")
+
     implementation(libs.androidx.material3)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

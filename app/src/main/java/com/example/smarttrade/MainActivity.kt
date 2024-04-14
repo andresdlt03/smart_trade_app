@@ -15,6 +15,7 @@ import com.example.smarttrade.product_management.presentation.view.productManage
 import com.example.smarttrade.product_management.presentation.viewmodel.AddProductBookViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.AddProductClothesViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.AddProductFoodViewModel
+import com.example.smarttrade.product_management.presentation.viewmodel.AddProductTechnologyViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.ProductManagementViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,7 +32,7 @@ class MainActivity : ComponentActivity() {
                 }
                 composable("add1") {
                     addProductTechnologyScreen(
-                        viewModel = AddProductTechnologyViewModelDraft(),
+                        viewModel = AddProductTechnologyViewModel(),
                         navController,
                         scrollState
                     )

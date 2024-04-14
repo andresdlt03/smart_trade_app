@@ -36,7 +36,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.smarttrade.product_management.presentation.viewmodel.Category
 import com.example.smarttrade.product_management.presentation.viewmodel.ProductManagementViewModel
-import com.example.smarttrade.product_management.presentation.viewmodel.productManagementViewModel
 
 
 @Composable
