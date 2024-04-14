@@ -10,7 +10,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
+import dagger.hilt.android.lifecycle.HiltViewModel
 
+@HiltViewModel
 class ProductManagementViewModel : ViewModel(){
 
     private val categories = listOf(

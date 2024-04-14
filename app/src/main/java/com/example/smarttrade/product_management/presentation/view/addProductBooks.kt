@@ -29,13 +29,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.smarttrade.R
 import com.example.smarttrade.product_management.presentation.viewmodel.AddProductBookViewModel
 
 @Composable
-fun addProductBooksScreen(viewModel: AddProductBookViewModel, navHostController: NavHostController, scrollState: ScrollState) {
+fun addProductBooksScreen(viewModel: AddProductBookViewModel = hiltViewModel(),
+                          navHostController: NavHostController,
+                          scrollState: ScrollState) {
 
     Column(
         modifier = Modifier

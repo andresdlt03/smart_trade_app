@@ -29,10 +29,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.smarttrade.product_management.presentation.viewmodel.Category
 import com.example.smarttrade.product_management.presentation.viewmodel.ProductManagementViewModel
@@ -52,7 +53,8 @@ fun productManagementScreen(viewModel: ProductManagementViewModel, navControler:
 }
 
 @Composable
-fun productManagement(viewModel: ProductManagementViewModel, navControler: NavHostController){
+fun productManagement(viewModel: ProductManagementViewModel = hiltViewModel(),
+                      navController: NavHostController){
 
     val category :String by viewModel.category.observeAsState(initial = "")
 
@@ -75,7 +77,7 @@ fun productManagement(viewModel: ProductManagementViewModel, navControler: NavHo
             .height(1.dp)
     )
     Spacer(modifier = Modifier.height(14.dp))
-    CategoryItems(filteredCategories, navControler, viewModel)
+    CategoryItems(filteredCategories, navController, viewModel)
 }
 
 

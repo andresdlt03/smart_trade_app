@@ -5,9 +5,11 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import com.example.smarttrade.product_management.presentation.viewmodel.state.ProductClothesState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
+@HiltViewModel
 class AddProductClothesViewModel : ViewModel(){
 
     private val _state = MutableStateFlow(ProductClothesState())

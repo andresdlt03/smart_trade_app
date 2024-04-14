@@ -28,7 +28,10 @@ class MainActivity : ComponentActivity() {
             val scrollState = rememberScrollState()
             NavHost(navController = navController, startDestination = "main") {
                 composable("main") {
-                    productManagementScreen(viewModel = ProductManagementViewModel(), navController)
+                    productManagementScreen(
+                        viewModel = ProductManagementViewModel(),
+                        navController
+                    )
                 }
                 composable("add1") {
                     addProductTechnologyScreen(
@@ -58,8 +61,6 @@ class MainActivity : ComponentActivity() {
                         scrollState
                     )
                 }
-
-
             }
         }
     }
