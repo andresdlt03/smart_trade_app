@@ -2,12 +2,14 @@ package com.example.smarttrade.catalogue.ui
 
 import android.widget.ToggleButton
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
@@ -16,6 +18,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -38,32 +41,34 @@ fun mainCatalogueScreen(viewModel: mainCatalogueViewModel){
 @Composable
 fun mainCatalogue(viewModel: mainCatalogueViewModel){
     val search :String by viewModel.search.observeAsState(initial = "")
-    val selectedCategoriesState = viewModel.selectedCategories.observeAsState(emptyList())
-    val selectedCategories: MutableList<String> by remember { mutableStateOf(selectedCategoriesState.value.toMutableList()) }
     val filterCategory :Boolean by viewModel.filterCatgegory.observeAsState(initial = false)
     val filterPrice:Boolean by viewModel.filterPrice.observeAsState(initial = false)
 
     outLinedTextManage(
         search = search,
-        selectedCategories = selectedCategories,
         filterCatgegory = filterCategory,
         filterPrice = filterPrice,
-        activeFilterCategory = {viewModel.activeFilterCategory()}) {
+        activeFilterCategory = {viewModel.activeFilterCategory()},
+        activeFilterPrice = {viewModel.activeFilterPrice()},
+        UnActiveFilterCategory = {viewModel.unActiveFilterCategory()},
+        UnActiveFilterPrice = {viewModel.unActiveFilterPrice()},
+        viewModel = viewModel
+    )
 
-    }
+
 }
 
 
 @Composable
 fun outLinedTextManage(
     search: String,
-    selectedCategories: MutableList<String>,
     filterCatgegory: Boolean,
     filterPrice: Boolean,
     activeFilterCategory:() -> Unit,
     activeFilterPrice:() -> Unit,
     UnActiveFilterCategory:() -> Unit,
-    UnActiveFilterPrice:() -> Unit
+    UnActiveFilterPrice:() -> Unit,
+    viewModel: mainCatalogueViewModel
 
 ){
     Column() {
@@ -100,92 +105,137 @@ fun outLinedTextManage(
                 Text("Filtrar por categoría")
             }
         }
-        if(filterCatgegory == true){
+        if(filterCatgegory == true) {
+
+            val technologyChecked by viewModel.technologyChecked.observeAsState(false)
+            val booksChecked by viewModel.booksChecked.observeAsState(false)
+            val clothingChecked by viewModel.clothingChecked.observeAsState(false)
+            val foodChecked by viewModel.foodChecked.observeAsState(false)
+
             AlertDialog(
-                onDismissRequest = {  },
+                onDismissRequest = { UnActiveFilterCategory() },
                 title = { Text("Filtrar por categoría") },
                 confirmButton = {
-                    Button(onClick = { UnActiveFilterCategory() }) {
-                        Text("Aceptar")
+                    Row(
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        Button(onClick = { UnActiveFilterCategory() }) {
+                            Text("Aceptar")
+                        }
                     }
                 },
                 dismissButton = {
-                    Button(onClick = { UnActiveFilterCategory() }) {
-                        Text("Cancelar")
+                    Row(
+                        horizontalArrangement = Arrangement.Start
+                    ) {
+                        Button(onClick = {
+                            UnActiveFilterCategory()
+                            viewModel.cancelFilterCategory()
+                        }) {
+                            Text("Cancelar")
+                        }
                     }
                 },
                 text = {
                     Column {
-                        CategoryCheckBox("Tecnología", selectedCategories)
-                        CategoryCheckBox("Libros", selectedCategories)
-                        CategoryCheckBox("Ropa", selectedCategories)
-                        CategoryCheckBox("Comida", selectedCategories)
+                        CheckBoxItem(
+                            text = "Tecnología",
+                            checked = technologyChecked,
+                            onCheckedChange = { viewModel.setTechnologyChecked(it) }
+                        )
+
+                        CheckBoxItem(
+                            text = "Libros",
+                            checked = booksChecked,
+                            onCheckedChange = { viewModel.setBooksChecked(it) }
+                        )
+                        CheckBoxItem(
+                            text = "Ropa",
+                            checked = clothingChecked,
+                            onCheckedChange = { viewModel.setClothingChecked(it) }
+                        )
+                        CheckBoxItem(
+                            text = "Comida",
+                            checked = foodChecked,
+                            onCheckedChange = { viewModel.setFoodChecked(it) }
+                        )
                     }
                 }
             )
+
         }
 
-        if(filterPrice == true){
+            if(filterPrice == true){
+            val minPrice by viewModel.minPrice.observeAsState(0F)
+            val maxPrice by viewModel.maxPrice.observeAsState(100F)
+
             AlertDialog(
-                onDismissRequest = {  },
+
+                onDismissRequest = { UnActiveFilterPrice() },
                 title = { Text("Filtrar por precio") },
                 confirmButton = {
-                    Button(onClick = {  }) {
+                    Button(onClick = { UnActiveFilterPrice() }) {
                         Text("Aceptar")
                     }
                 },
                 dismissButton = {
-                    Button(onClick = {  }) {
+                    Button(onClick = { viewModel.disablePriceFilter();UnActiveFilterPrice() }) {
                         Text("Cancelar")
                     }
                 },
-                // Aquí puedes incluir opciones para filtrar por precio
-                text = { Text("Opciones de filtrado de precio") }
+                text ={
+                    Column(
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        minPrice?.let { currentMinPrice ->
+                            Text("Precio mínimo: $currentMinPrice")
+                            Slider(
+                                value = currentMinPrice,
+                                onValueChange = { viewModel.setMinPrice(it) },
+                                valueRange = viewModel.priceRange,
+                                steps = 100,
+                                modifier = Modifier.padding(vertical = 8.dp)
+                            )
+                        }
+                        maxPrice?.let { currentMaxPrice ->
+                            Text("Precio máximo: $currentMaxPrice")
+                            Slider(
+                                value = currentMaxPrice,
+                                onValueChange = { viewModel.setMaxPrice(it) },
+                                valueRange = viewModel.priceRange,
+                                steps = 100,
+                                modifier = Modifier.padding(vertical = 8.dp)
+                            )
+                        }
+                    }
+
+                }
+
             )
         }
-
-
     }
 }
 
 
 @Composable
-fun PriceFilterDialog(
+fun CheckBoxItem(
+    text: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit
 ) {
-    AlertDialog(
-        onDismissRequest = {  },
-        title = { Text("Filtrar por precio") },
-        confirmButton = {
-            Button(onClick = {  }) {
-                Text("Aceptar")
-            }
-        },
-        dismissButton = {
-            Button(onClick = {  }) {
-                Text("Cancelar")
-            }
-        },
-        // Aquí puedes incluir opciones para filtrar por precio
-        text = { Text("Opciones de filtrado de precio") }
-    )
-}
-
-@Composable
-fun CategoryCheckBox(
-    category: String,
-    selectedCategories: MutableList<String>
-) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()
+            .selectable(selected = checked, onClick = { onCheckedChange(!checked) })
+    ) {
         Checkbox(
-            checked = selectedCategories.contains(category),
-            onCheckedChange = { isChecked ->
-                if (isChecked) {
-                    selectedCategories.add(category)
-                } else {
-                    selectedCategories.remove(category)
-                }
-            }
+            checked = checked,
+            onCheckedChange = onCheckedChange
         )
-        Text(text = category)
-    }
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(text = text)
+            }
 }
+
