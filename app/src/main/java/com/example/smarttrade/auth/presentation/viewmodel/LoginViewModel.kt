@@ -6,6 +6,7 @@ import com.example.smarttrade.auth.domain.repository.UserRepository
 import com.example.smarttrade.auth.presentation.validation.ValidateEmail
 import com.example.smarttrade.auth.presentation.validation.ValidatePassword
 import com.example.smarttrade.auth.presentation.viewmodel.state.LoginState
+import com.example.smarttrade.network.Exception.NetworkException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -49,7 +50,11 @@ class LoginViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            userRepository.loginUser(_state.value.email, _state.value.password)
+            try {
+                userRepository.loginUser(_state.value.email, _state.value.password)
+            } catch(e: NetworkException) {
+                // modal window indicating the error
+            }
         }
     }
 }

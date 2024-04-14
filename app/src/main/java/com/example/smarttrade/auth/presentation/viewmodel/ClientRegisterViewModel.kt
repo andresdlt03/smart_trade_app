@@ -7,6 +7,7 @@ import com.example.smarttrade.auth.presentation.validation.ValidateEmail
 import com.example.smarttrade.auth.presentation.validation.ValidateNotEmpty
 import com.example.smarttrade.auth.presentation.validation.ValidatePassword
 import com.example.smarttrade.auth.presentation.viewmodel.state.ClientRegisterState
+import com.example.smarttrade.network.Exception.NetworkException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -78,7 +79,11 @@ class ClientRegisterViewModel @Inject constructor(
                 password = state.value.password,
                 dni = state.value.dni
             )
-            userRepository.registerUser(client, "client")
+            try {
+                userRepository.registerUser(client, "client")
+            } catch (e: NetworkException) {
+                // modal window indicating the error
+            }
         }
     }
 }
