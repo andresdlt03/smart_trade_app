@@ -112,6 +112,26 @@ fun outLinedTextManage(
             )
         }
 
+        if(filterPrice == true){
+            AlertDialog(
+                onDismissRequest = {  },
+                title = { Text("Filtrar por precio") },
+                confirmButton = {
+                    Button(onClick = {  }) {
+                        Text("Aceptar")
+                    }
+                },
+                dismissButton = {
+                    Button(onClick = {  }) {
+                        Text("Cancelar")
+                    }
+                },
+                // Aquí puedes incluir opciones para filtrar por precio
+                text = { Text("Opciones de filtrado de precio") }
+            )
+        }
+
+
     }
 }
 
