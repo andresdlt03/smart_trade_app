@@ -7,9 +7,10 @@ import com.example.smarttrade.product_management.presentation.viewmodel.state.Pr
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 
 @HiltViewModel
-class AddProductBookViewModel : ViewModel(){
+class AddProductBookViewModel @Inject constructor() : ViewModel() {
 
     private val _state = MutableStateFlow(ProductBookState())
     val state = _state.asStateFlow()

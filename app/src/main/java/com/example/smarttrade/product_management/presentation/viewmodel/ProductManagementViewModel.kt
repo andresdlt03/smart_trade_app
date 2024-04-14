@@ -11,9 +11,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 @HiltViewModel
-class ProductManagementViewModel : ViewModel(){
+class ProductManagementViewModel @Inject constructor() : ViewModel(){
 
     private val categories = listOf(
         Category("Tecnología", Icons.Filled.Build),

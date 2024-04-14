@@ -7,16 +7,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.smarttrade.auth.presentation.view.ClientRegisterScreen
+import com.example.smarttrade.auth.presentation.view.LoginScreen
+import com.example.smarttrade.auth.presentation.view.SellerRegisterScreen
 import com.example.smarttrade.product_management.presentation.view.addProductBooksScreen
 import com.example.smarttrade.product_management.presentation.view.addProductClothesScreen
 import com.example.smarttrade.product_management.presentation.view.addProductFoodScreen
 import com.example.smarttrade.product_management.presentation.view.addProductTechnologyScreen
 import com.example.smarttrade.product_management.presentation.view.productManagementScreen
-import com.example.smarttrade.product_management.presentation.viewmodel.AddProductBookViewModel
-import com.example.smarttrade.product_management.presentation.viewmodel.AddProductClothesViewModel
-import com.example.smarttrade.product_management.presentation.viewmodel.AddProductFoodViewModel
-import com.example.smarttrade.product_management.presentation.viewmodel.AddProductTechnologyViewModel
-import com.example.smarttrade.product_management.presentation.viewmodel.ProductManagementViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,39 +24,54 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             val scrollState = rememberScrollState()
-            NavHost(navController = navController, startDestination = "main") {
-                composable("main") {
+            NavHost(navController = navController, startDestination = "initial_screen") {
+                composable("initial_screen") {
+                    InitialScreen(
+                        navController = navController
+                    )
+                }
+                composable("login") {
+                    LoginScreen(
+                        navController = navController
+                    )
+                }
+                composable("register_client") {
+                    ClientRegisterScreen(
+                        navController = navController
+                    )
+                }
+                composable("register_seller") {
+                    SellerRegisterScreen(
+                        navController = navController
+                    )
+                }
+                composable("product_management") {
                     productManagementScreen(
-                        viewModel = ProductManagementViewModel(),
-                        navController
+                        navController = navController
                     )
                 }
                 composable("add1") {
                     addProductTechnologyScreen(
-                        viewModel = AddProductTechnologyViewModel(),
-                        navController,
-                        scrollState
+                        navHostController = navController,
+                        scrollState = scrollState
                     )
                 }
                 composable("add2") {
                     addProductBooksScreen(
-                        viewModel = AddProductBookViewModel(),
-                        navController,
-                        scrollState
+                        navHostController = navController,
+                        scrollState = scrollState
                     )
                 }
                 composable("add3") {
                     addProductFoodScreen(
-                        viewModel = AddProductFoodViewModel(),
-                        navController,
-                        scrollState
+                        navHostController = navController,
+                        scrollState = scrollState
                     )
                 }
                 composable("add4") {
                     addProductClothesScreen(
-                        viewModel = AddProductClothesViewModel(),
-                        navController,
-                        scrollState
+                        navHostController = navController,
+                        scrollState = scrollState
                     )
                 }
             }

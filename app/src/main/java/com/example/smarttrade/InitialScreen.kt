@@ -20,23 +20,22 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.smarttrade.ui.theme.md_theme_light_onPrimary
 
-@Preview(showBackground = true)
 @Composable
-fun InitialScreen() {
+fun InitialScreen(navController: NavController) {
     Surface (
         modifier = Modifier.fillMaxSize()
     ){
-        Content()
+        Content(navController)
     }
 }
 
 @Composable
-fun Content() {
+fun Content(navController: NavController) {
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(id = R.drawable.initial_screen_background),
@@ -65,7 +64,7 @@ fun Content() {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.width(250.dp)
             ) {
-                Button(onClick = { /*TODO*/ }) {
+                Button(onClick = { navController.navigate("login") }) {
                     Text(
                         text = "Iniciar sesión",
                         fontSize = 22.sp,
@@ -73,7 +72,7 @@ fun Content() {
                         textAlign = TextAlign.Center,
                     )
                 }
-                Button(onClick = { /*TODO*/ }) {
+                Button(onClick = { navController.navigate("register_client") }) {
                     Text(
                         text = "Registro - Cliente",
                         fontSize = 22.sp,
@@ -81,7 +80,7 @@ fun Content() {
                         textAlign = TextAlign.Center
                     )
                 }
-                Button(onClick = { /*TODO*/ }) {
+                Button(onClick = { navController.navigate("register_seller") }) {
                     Text(
                         text = "Registro - Vendedor",
                         fontSize = 22.sp,

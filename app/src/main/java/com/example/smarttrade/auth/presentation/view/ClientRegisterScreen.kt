@@ -8,18 +8,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.smarttrade.auth.presentation.viewmodel.ClientRegisterViewModel
 import com.example.smarttrade.ui.theme.md_theme_light_error
 
 @Composable
-fun ClientRegisterScreen(viewModel: ClientRegisterViewModel = hiltViewModel()) {
-    RegisterLayout(viewModel) {
-        ClientRegisterForm(viewModel)
+fun ClientRegisterScreen(viewModel: ClientRegisterViewModel = hiltViewModel(),
+                         navController: NavController) {
+    RegisterLayout(viewModel, navController) {
+        ClientRegisterForm(viewModel, navController)
     }
 }
 
 @Composable
-fun ClientRegisterForm(viewModel: ClientRegisterViewModel = hiltViewModel()) {
+fun ClientRegisterForm(viewModel: ClientRegisterViewModel = hiltViewModel(),
+                       navController: NavController) {
 
     val state = viewModel.state.collectAsState()
 

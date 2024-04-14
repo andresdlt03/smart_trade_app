@@ -40,7 +40,7 @@ import com.example.smarttrade.product_management.presentation.viewmodel.ProductM
 
 
 @Composable
-fun productManagementScreen(viewModel: ProductManagementViewModel, navControler: NavHostController) {
+fun productManagementScreen(viewModel: ProductManagementViewModel = hiltViewModel(), navController: NavHostController) {
 
     Column (
         modifier = Modifier
@@ -48,7 +48,7 @@ fun productManagementScreen(viewModel: ProductManagementViewModel, navControler:
             .padding(32.dp),
         verticalArrangement = Arrangement.Top,
     ){
-        productManagement(viewModel,navControler)
+        productManagement(viewModel, navController)
     }
 }
 

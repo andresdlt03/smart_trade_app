@@ -21,19 +21,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.smarttrade.R
 import com.example.smarttrade.auth.presentation.viewmodel.LoginViewModel
 import com.example.smarttrade.ui.theme.Typography
 import com.example.smarttrade.ui.theme.md_theme_light_error
 
-@Preview(showBackground = true)
 @Composable
-fun LoginScreen(viewModel: LoginViewModel = hiltViewModel()) {
+fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), navController: NavController) {
 
     val state = viewModel.state.collectAsState()
 
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.CenterH orizontally,
         modifier = Modifier
             .padding(vertical = 48.dp)
             .verticalScroll(rememberScrollState())

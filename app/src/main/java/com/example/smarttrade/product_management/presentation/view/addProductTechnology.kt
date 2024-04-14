@@ -38,8 +38,7 @@ import com.example.smarttrade.product_management.presentation.viewmodel.AddProdu
 
 @Composable
 fun addProductTechnologyScreen(viewModel: AddProductTechnologyViewModel = hiltViewModel(),
-                               navHostController: NavHostController,
-                               scrollState: ScrollState) {
+                               navHostController: NavHostController, scrollState: ScrollState) {
 
     Column(
         modifier = Modifier

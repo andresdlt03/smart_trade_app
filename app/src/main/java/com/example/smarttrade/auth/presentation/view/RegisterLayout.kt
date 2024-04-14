@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.smarttrade.R
 import com.example.smarttrade.auth.presentation.viewmodel.RegisterViewModel
 import com.example.smarttrade.ui.theme.Typography
@@ -29,6 +30,7 @@ import com.example.smarttrade.ui.theme.Typography
 @Composable
 fun RegisterLayout(
     viewModel: RegisterViewModel,
+    navController: NavController,
     content: @Composable () -> Unit
 ) {
     Column(
