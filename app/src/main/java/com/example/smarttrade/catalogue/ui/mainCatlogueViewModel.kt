@@ -9,4 +9,6 @@ class productManagementViewModel : ViewModel() {
     private val _search = MutableLiveData<String>()
     val search: LiveData<String> = _search
 
+    private val selectedCategories = MutableLiveData<String>()
+
 }
