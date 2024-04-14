@@ -5,6 +5,6 @@ data class Seller (
     override val surname: String,
     override val email: String,
     override val password: String,
-    val company: String,
+    val companyName: String,
     val cif: String,
 ): User

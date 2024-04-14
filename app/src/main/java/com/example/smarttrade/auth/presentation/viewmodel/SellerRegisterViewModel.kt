@@ -85,11 +85,11 @@ class SellerRegisterViewModel @Inject constructor(
                 surname = _state.value.surname,
                 email = _state.value.email,
                 password = _state.value.password,
-                company = _state.value.companyName,
+                companyName = _state.value.companyName,
                 cif = _state.value.cif
             )
             try {
-                userRepository.registerUser(seller, "seller")
+                userRepository.registerSeller(seller)
             } catch (e: NetworkException) {
                 // modal window indicating the error
             }

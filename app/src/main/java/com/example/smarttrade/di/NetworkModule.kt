@@ -17,7 +17,7 @@ object NetworkModule {
     @Singleton
     fun provideApi(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("${BuildConfig.BASE_URL}/auth/")
+            .baseUrl("${BuildConfig.BASE_URL}/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
