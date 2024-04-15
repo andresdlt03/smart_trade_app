@@ -16,11 +16,14 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
@@ -40,6 +43,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
+import com.example.smarttrade.R
 
 @Composable
 fun mainCatalogueScreen(viewModel: mainCatalogueViewModel){
@@ -255,9 +259,9 @@ fun ProductoItem(
 
 ) {
     var nombre: String = "Camiseta basica"
-    var imagenResId: Int =
-    var propiedad1: String = "precio 23$"
-    var propiedad2: String = "descripcion del producto"
+    var imagenResId: Int = R.drawable.camiseta_ejemplo
+    var propiedad1: String = "23"
+    var propiedad2: String = "Es una camiseta realizada a mano, de la marca Zara."
     Row(
         modifier = Modifier
             .padding(16.dp)
@@ -266,11 +270,7 @@ fun ProductoItem(
     ) {
         Image(
             painter = painterResource(id = imagenResId),
-        ontentDescription = null,
-            modifier = Modifier
-                .size(120.dp)
-                .clip(shape = RoundedCornerShape(8.dp)),
-            contentScale = ContentScale.Crop
+            contentDescription = null
         )
 
         Spacer(modifier = Modifier.width(16.dp))
@@ -282,9 +282,26 @@ fun ProductoItem(
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp
             )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "Propiedad 1: $propiedad1", fontSize = 14.sp)
-            Text(text = "Propiedad 2: $propiedad2", fontSize = 14.sp)
+            Spacer(modifier = Modifier.height(2.dp))
+            Text(text = "Precio: $propiedad1 €" , fontSize = 14.sp)
+            Text(text = "Descripción: $propiedad2", fontSize = 14.sp)
+        }
+    }
+}
+
+@Preview
+@Composable
+fun BottomBar() {
+    BottomAppBar() {
+        Row(
+            modifier = Modifier
+                .padding(start = 16.dp))
+
+
+        {
+            IconButton(onClick = { }) {
+                Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
+            }
         }
     }
 }
