@@ -66,12 +66,16 @@ fun addProductBooks(viewModel: AddProductBookViewModel, navHostController: NavHo
 
     topBarAdd({viewModel.goBackCategories(navHostController)},navHostController)
     Spacer(modifier = Modifier.height(24.dp))
+
     outLinedTextAdd(state.value.name, "Nombre (20 carácteres)", 1,{viewModel.onItemChanged(it,1)} ,{ viewModel.clearSelected(1) })
     Spacer(modifier = Modifier.height(14.dp))
+
     outLinedTextAdd(state.value.description, "Descripción (50 carácteres)", 2,{viewModel.onItemChanged(it,2)} ,{ viewModel.clearSelected(2) })
     Spacer(modifier = Modifier.height(14.dp))
+
     outLinedTextAdd(state.value.isbn, "ISBN", 3,{viewModel.onItemChanged(it,3)} ,{ viewModel.clearSelected(3) })
     Spacer(modifier = Modifier.height(14.dp))
+
     outLinedTextAdd(state.value.price, "Precio del producto", 4,{viewModel.onItemChanged(it,4)} ,{ viewModel.clearSelected(4) })
     Spacer(modifier = Modifier.height(54.dp))
 

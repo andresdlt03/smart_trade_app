@@ -59,13 +59,11 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), navController: NavC
                 onValueChange = { viewModel.updateEmail(it) },
                 placeholder = { Text("Email") }
             )
-            if(state.value.emailError != null) {
-                state.value.emailError?.let {
-                    Text(
-                        text = it,
-                        color = md_theme_light_error
-                    )
-                }
+            state.value.emailError?.let {
+                Text(
+                    text = it,
+                    color = md_theme_light_error
+                )
             }
 
             OutlinedTextField(
@@ -73,17 +71,22 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), navController: NavC
                 onValueChange = { viewModel.updatePassword(it) },
                 placeholder = { Text("Contraseña") }
             )
-            if(state.value.emailError != null) {
-                state.value.passwordError?.let {
-                    Text(
-                        text = it,
-                        color = md_theme_light_error
-                    )
-                }
+            state.value.passwordError?.let {
+                Text(
+                    text = it,
+                    color = md_theme_light_error
+                )
             }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
+
+        state.value.errorMessage?.let {
+            Text(
+                text = it,
+                color = md_theme_light_error
+            )
+        }
 
         Button(onClick = { viewModel.onLogin() }) {
             Text(text = "Iniciar sesión")

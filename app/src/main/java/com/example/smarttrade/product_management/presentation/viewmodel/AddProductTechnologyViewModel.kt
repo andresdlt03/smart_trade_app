@@ -18,21 +18,21 @@ class AddProductTechnologyViewModel @Inject constructor() : ViewModel(){
 
     fun onItemChanged(item :String, id: Int){
         when(id){
-            1 ->    _state.value.name = item
-            2 ->    _state.value.description = item
-            3 ->    _state.value.model = item
-            4 ->    _state.value.energy = item
-            5 ->    _state.value.price = item
+            1 ->    _state.value = _state.value.copy(name = item)
+            2 ->    _state.value = _state.value.copy(description = item)
+            3 ->    _state.value = _state.value.copy(model = item)
+            4 ->    _state.value = _state.value.copy(energy = item)
+            5 ->    _state.value = _state.value.copy(price = item)
         }
     }
 
     fun clearSelected(id: Int){
         when(id){
-            1 ->    _state.value.name = ""
-            2 ->    _state.value.description = ""
-            3 ->    _state.value.model = ""
-            4 ->    _state.value.energy = ""
-            5 ->    _state.value.price = ""
+            1 ->    _state.value = _state.value.copy(name = "")
+            2 ->    _state.value = _state.value.copy(description = "")
+            3 ->    _state.value = _state.value.copy(model = "")
+            4 ->    _state.value = _state.value.copy(energy = "")
+            5 ->    _state.value = _state.value.copy(price = "")
         }
     }
 
@@ -41,67 +41,67 @@ class AddProductTechnologyViewModel @Inject constructor() : ViewModel(){
     }
 
     fun updatePhotos(p1: Uri?, p2: Uri?){
-        if(p1 != null){_state.value.photo1 = p1}
-        if(p2 != null){_state.value.photo2 = p2}
+        if(p1 != null){_state.value = _state.value.copy(photo1 = p1)}
+        if(p2 != null){_state.value = _state.value.copy(photo2 = p2)}
     }
 
     fun checkAllVariables() {
-        _state.value.checkVariables = true
-        _state.value.textError = "Todo correcto"
+        _state.value = _state.value.copy(checkVariables = true)
+        _state.value = _state.value.copy(textError = "")
 
         if (_state.value.name.isNullOrEmpty()) {
-            _state.value.checkVariables = false
-            _state.value.textError = "El nombre está vacío"
+            _state.value = _state.value.copy(checkVariables = false)
+            _state.value = _state.value.copy(textError = "El nombre está vacío")
             return
         } else if (_state.value.name.length > 20) {
-            _state.value.checkVariables = false
-            _state.value.textError = "El nombre es demasiado largo"
+            _state.value = _state.value.copy(checkVariables = false)
+            _state.value = _state.value.copy(textError = "El nombre es demasiado largo")
             return
         } else if (_state.value.description.isNullOrEmpty()) {
-            _state.value.checkVariables = false
-            _state.value.textError = "La descripción está vacía"
+            _state.value = _state.value.copy(checkVariables = false)
+            _state.value = _state.value.copy(textError = "La descripción está vacía")
             return
         } else if (_state.value.description.length > 50) {
-            _state.value.checkVariables = false
-            _state.value.textError = "La descripción es demasiado larga"
+            _state.value = _state.value.copy(checkVariables = false)
+            _state.value = _state.value.copy(textError = "La descripción es demasiado larga")
             return
         } else if (_state.value.model.isNullOrEmpty()) {
-            _state.value.checkVariables = false
-            _state.value.textError = "El modelo está vacío"
+            _state.value = _state.value.copy(checkVariables = false)
+            _state.value = _state.value.copy(textError = "El modelo está vacío")
             return
         } else if (_state.value.model.length > 20) {
-            _state.value.checkVariables = false
-            _state.value.textError = "El modelo es demasiado largo"
+            _state.value = _state.value.copy(checkVariables = false)
+            _state.value = _state.value.copy(textError = "El modelo es demasiado largo")
             return
         } else if (_state.value.energy.isNullOrEmpty()) {
-            _state.value.checkVariables = false
-            _state.value.textError = "El consumo energético está vacío"
+            _state.value = _state.value.copy(checkVariables = false)
+            _state.value = _state.value.copy(textError = "El consumo energético está vacío")
             return
         } else {
             val energyFloat = _state.value.energy.toFloatOrNull()
             if (energyFloat == null) {
-                _state.value.checkVariables = false
-                _state.value.textError = "El consumo energético debe ser un número"
+                _state.value = _state.value.copy(checkVariables = false)
+                _state.value = _state.value.copy(textError = "El consumo energético debe ser un número")
                 return
             }
         }
 
         if (_state.value.price.isNullOrEmpty()) {
-            _state.value.checkVariables = false
-            _state.value.textError = "El precio está vacío"
+            _state.value = _state.value.copy(checkVariables = false)
+            _state.value = _state.value.copy(textError = "El precio está vacío")
             return
         } else {
             val priceFloat = _state.value.price.toFloatOrNull()
             if (priceFloat == null) {
-                _state.value.checkVariables = false
-                _state.value.textError = "El precio debe ser un número"
+                _state.value = _state.value.copy(checkVariables = false)
+                _state.value = _state.value.copy(textError = "El precio debe ser un número")
                 return
             }
         }
 
         if (_state.value.photo1 == null) {
-            _state.value.checkVariables = false
-            _state.value.textError = "Debes seleccionar al menos 1 foto"
+            _state.value = _state.value.copy(checkVariables = false)
+            _state.value = _state.value.copy(textError = "La foto 1 está vacía")
             return
         }
     }

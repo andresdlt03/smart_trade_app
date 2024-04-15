@@ -80,7 +80,8 @@ class ClientRegisterViewModel @Inject constructor(
                 dni = state.value.dni
             )
             try {
-                userRepository.registerClient(client)
+                val call = userRepository.registerClient(client)
+                val response = call.body()
             } catch (e: NetworkException) {
                 // modal window indicating the error
             }

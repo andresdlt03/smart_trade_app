@@ -51,7 +51,13 @@ class LoginViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                userRepository.loginUser(_state.value.email, _state.value.password)
+                val call = userRepository.loginUser(_state.value.email, _state.value.password)
+                val response = call.body()
+                if(call.isSuccessful && response != null) {
+
+                } else {
+
+                }
             } catch(e: NetworkException) {
                 // modal window indicating the error
             }
