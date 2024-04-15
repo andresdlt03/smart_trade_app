@@ -1,5 +1,6 @@
 package com.example.smarttrade.catalogue.ui
 
+import android.annotation.SuppressLint
 import android.widget.ToggleButton
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -26,6 +27,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,22 +55,31 @@ fun mainCatalogueScreen(viewModel: mainCatalogueViewModel){
     }
 }
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun mainCatalogue(viewModel: mainCatalogueViewModel){
     val search :String by viewModel.search.observeAsState(initial = "")
     val filterCategory :Boolean by viewModel.filterCatgegory.observeAsState(initial = false)
     val filterPrice:Boolean by viewModel.filterPrice.observeAsState(initial = false)
 
-    outLinedTextManage(
-        search = search,
-        filterCatgegory = filterCategory,
-        filterPrice = filterPrice,
-        activeFilterCategory = {viewModel.activeFilterCategory()},
-        activeFilterPrice = {viewModel.activeFilterPrice()},
-        UnActiveFilterCategory = {viewModel.unActiveFilterCategory()},
-        UnActiveFilterPrice = {viewModel.unActiveFilterPrice()},
-        viewModel = viewModel
+    Scaffold (
+        bottomBar =  {
+            BottomBar()
+        }
     )
+
+    {
+        outLinedTextManage(
+            search = search,
+            filterCatgegory = filterCategory,
+            filterPrice = filterPrice,
+            activeFilterCategory = { viewModel.activeFilterCategory() },
+            activeFilterPrice = { viewModel.activeFilterPrice() },
+            UnActiveFilterCategory = { viewModel.unActiveFilterCategory() },
+            UnActiveFilterPrice = { viewModel.unActiveFilterPrice() },
+            viewModel = viewModel
+        )
+    }
 
 
 }
@@ -85,7 +97,10 @@ fun outLinedTextManage(
     viewModel: mainCatalogueViewModel
 
 ){
-    Column() {
+    Column(
+        modifier = Modifier.padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally) {
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -109,7 +124,8 @@ fun outLinedTextManage(
         )
         Row(
             modifier = Modifier.padding(vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
         ) {
             Button(onClick = {activeFilterPrice()}) {
                 Text("Filtrar por precio")
@@ -127,28 +143,44 @@ fun outLinedTextManage(
             val foodChecked by viewModel.foodChecked.observeAsState(false)
 
             AlertDialog(
+                modifier = Modifier
+                    .align(alignment = Alignment.CenterHorizontally),
+
                 onDismissRequest = { UnActiveFilterCategory() },
-                title = { Text("Filtrar por categoría") },
+                title = {
+                    Row(modifier = Modifier.padding(horizontal = 16.dp) ){
+                    Text(
+                    text = "Filtrar por categoría")
+                        }},
                 confirmButton = {
                     Row(
-                        horizontalArrangement = Arrangement.End
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ){
+                    Button(
+                        onClick = { UnActiveFilterCategory() },
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp),
                     ) {
-                        Button(onClick = { UnActiveFilterCategory() }) {
-                            Text("Aceptar")
-                        }
-                    }
+                        Text("Aceptar")
+                    }}
                 },
                 dismissButton = {
                     Row(
-                        horizontalArrangement = Arrangement.Start
-                    ) {
-                        Button(onClick = {
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ){
+                    Button(
+                        onClick = {
                             UnActiveFilterCategory()
                             viewModel.cancelFilterCategory()
-                        }) {
-                            Text("Cancelar")
-                        }
-                    }
+                        },
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp),
+
+                    ) {
+                        Text("Cancelar")
+                    }}
                 },
                 text = {
                     Column {
@@ -158,16 +190,21 @@ fun outLinedTextManage(
                             onCheckedChange = { viewModel.setTechnologyChecked(it) }
                         )
 
+
                         CheckBoxItem(
                             text = "Libros",
                             checked = booksChecked,
                             onCheckedChange = { viewModel.setBooksChecked(it) }
                         )
+
+
                         CheckBoxItem(
                             text = "Ropa",
                             checked = clothingChecked,
                             onCheckedChange = { viewModel.setClothingChecked(it) }
                         )
+
+
                         CheckBoxItem(
                             text = "Comida",
                             checked = foodChecked,
@@ -181,19 +218,27 @@ fun outLinedTextManage(
 
             if(filterPrice == true){
             val minPrice by viewModel.minPrice.observeAsState(0F)
-            val maxPrice by viewModel.maxPrice.observeAsState(100F)
+            val maxPrice by viewModel.maxPrice.observeAsState(1000F)
 
             AlertDialog(
 
                 onDismissRequest = { UnActiveFilterPrice() },
                 title = { Text("Filtrar por precio") },
                 confirmButton = {
-                    Button(onClick = { UnActiveFilterPrice() }) {
+                    Button(
+                        onClick = { UnActiveFilterPrice()} ,
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp),
+                    ) {
                         Text("Aceptar")
                     }
                 },
                 dismissButton = {
-                    Button(onClick = { viewModel.disablePriceFilter();UnActiveFilterPrice() }) {
+                    Button(
+                        onClick = { viewModel.disablePriceFilter();UnActiveFilterPrice()},
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp),
+                    ) {
                         Text("Cancelar")
                     }
                 },
@@ -202,22 +247,22 @@ fun outLinedTextManage(
                         modifier = Modifier.padding(16.dp)
                     ) {
                         minPrice?.let { currentMinPrice ->
-                            Text("Precio mínimo: $currentMinPrice")
+                            Text("Precio mínimo: %.1f".format(currentMinPrice) + " €")
                             Slider(
                                 value = currentMinPrice,
                                 onValueChange = { viewModel.setMinPrice(it) },
                                 valueRange = viewModel.priceRange,
-                                steps = 100,
+                                steps = 1000,
                                 modifier = Modifier.padding(vertical = 8.dp)
                             )
                         }
                         maxPrice?.let { currentMaxPrice ->
-                            Text("Precio máximo: $currentMaxPrice")
+                            Text("Precio máximo: %.1f".format(currentMaxPrice) + " €")
                             Slider(
                                 value = currentMaxPrice,
                                 onValueChange = { viewModel.setMaxPrice(it) },
                                 valueRange = viewModel.priceRange,
-                                steps = 100,
+                                steps = 1000,
                                 modifier = Modifier.padding(vertical = 8.dp)
                             )
                         }
@@ -227,6 +272,9 @@ fun outLinedTextManage(
 
             )
         }
+        Spacer(modifier = Modifier.height(20.dp))
+        ProductoItem()
+
     }
 }
 
@@ -265,8 +313,10 @@ fun ProductoItem(
     Row(
         modifier = Modifier
             .padding(16.dp)
+            .clickable {  }
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
+
     ) {
         Image(
             painter = painterResource(id = imagenResId),
@@ -275,7 +325,6 @@ fun ProductoItem(
 
         Spacer(modifier = Modifier.width(16.dp))
 
-        // Detalles del producto
         Column {
             Text(
                 text = nombre,
@@ -294,12 +343,11 @@ fun ProductoItem(
 fun BottomBar() {
     BottomAppBar() {
         Row(
-            modifier = Modifier
-                .padding(start = 16.dp))
-
-
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        )
         {
-            IconButton(onClick = { }) {
+            IconButton(onClick = {}) {
                 Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
             }
         }
