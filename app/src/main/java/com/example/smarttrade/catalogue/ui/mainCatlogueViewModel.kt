@@ -1,9 +1,11 @@
 package com.example.smarttrade.catalogue.ui
 
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavHostController
 
 class mainCatalogueViewModel : ViewModel() {
 
@@ -93,5 +95,21 @@ class mainCatalogueViewModel : ViewModel() {
 
     val priceRange: ClosedFloatingPointRange<Float> = 0f..1000f
 
+    private var _product: Product? = null
+
+    fun setProduct(IdImage: Int, name: String, price: String, description: String) {
+        _product = Product(IdImage, name, price, description)
+    }
+
+    fun getProduct(): Product? {
+        return _product
+    }
 
 }
+
+data class Product(
+    val IdImage: Int,
+    val name: String,
+    val price: String,
+    val description: String
+)

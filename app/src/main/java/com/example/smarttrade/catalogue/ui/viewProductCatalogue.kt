@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,49 +24,59 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.smarttrade.R
 
 @Composable
-fun viewProductCatalogueScreen(viewModel: viewProductCatalogueViewModel){
+fun viewProductCatalogueScreen(
+    viewModel: viewProductCatalogueViewModel,
+    navControler: NavHostController,
+    viewModel2: mainCatalogueViewModel
+){
     Column {
-        viewProductCatalogue(viewModel)
+        viewProductCatalogue(viewModel, navControler, viewModel2)
     }
 }
 
 @Composable
-fun viewProductCatalogue(viewModel: viewProductCatalogueViewModel) {
-    topBarManage()
+fun viewProductCatalogue(viewModel: viewProductCatalogueViewModel,navControler :NavHostController, viewModel2: mainCatalogueViewModel) {
+    val producto: Product? = viewModel2.getProduct()
+    if(producto != null) {
+        topBarManage(producto.name, navControler)
+        Spacer(modifier = Modifier.height(20.dp))
+        ProductoEnPantalla(imagenResId = producto.IdImage, nombre = producto.name, precio = producto.price, descripcion = producto.description)
+    }
 }
 
 
 
 @Composable
-fun topBarManage(){
+fun topBarManage(text : String, navControler: NavHostController){
     Row (
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(16.dp)
     ){
         FloatingActionButton(
-            onClick = { },
+            onClick = { navControler.navigate("catalogue")},
         ) {
             Icon(Icons.Filled.ArrowBack, "Back button")
         }
         Spacer(modifier = Modifier.width(14.dp))
         Text(
-            text = "Selecciona una categoría",
+            text = text,
             fontSize = 22.sp
         )
     }
 }
 
-@Preview
+
 @Composable
 fun ProductoEnPantalla(
-
+    imagenResId: Int,
+    nombre: String,
+    precio: String,
+    descripcion: String
 ) {
-    var imagenResId: Int = R.drawable.camiseta_ejemplo
-    var nombre: String = "Camiseta Básica"
-    var precio: String = "23"
-    var descripcion: String = "Es una camiseta realizada a mano, de la marca Zara."
     Column(
         modifier = Modifier
             .fillMaxSize()
