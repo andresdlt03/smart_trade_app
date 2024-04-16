@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Smart Trade</string>
+    <string name="logo_description">Smart Trade Logo</string>
+    <string name="register_title">Registro</string>
+    <string name="login_title">Inicio de sesión</string>
 </resources>
