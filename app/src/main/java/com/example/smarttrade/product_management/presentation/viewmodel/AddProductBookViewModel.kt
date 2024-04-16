@@ -91,8 +91,14 @@ class AddProductBookViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun productPublished(producto : Product, vm: mainCatalogueViewModel){
-
+    fun error(): Boolean{
+        return (_state.value.textError != "")
     }
+
+    fun addProduct(viewModel: mainCatalogueViewModel){
+        val producto :Product = Product(_state.value.photo1, _state.value.name, _state.value.price, _state.value.description, "Libros")
+        viewModel.addtoCatalogue(producto)
+    }
+
 
 }

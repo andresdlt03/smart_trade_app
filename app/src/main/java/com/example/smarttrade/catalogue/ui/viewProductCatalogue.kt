@@ -44,7 +44,7 @@ fun viewProductCatalogue(viewModel: viewProductCatalogueViewModel,navControler :
     if(producto != null) {
         topBarManage(producto.name, navControler)
         Spacer(modifier = Modifier.height(20.dp))
-        ProductoEnPantalla(imagenResId = producto.IdImage, nombre = producto.name, precio = producto.price, descripcion = producto.description)
+        //ProductoEnPantalla(imagenResId = producto.IdImage, nombre = producto.name, precio = producto.price, descripcion = producto.description)
     }
 }
 

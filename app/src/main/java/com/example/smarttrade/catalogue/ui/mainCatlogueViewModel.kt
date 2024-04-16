@@ -20,6 +20,29 @@ class mainCatalogueViewModel : ViewModel() {
     private val _filterPrice = MutableLiveData<Boolean>()
     val filterPrice: LiveData<Boolean> = _filterPrice
 
+    private val _filterC = MutableLiveData<Boolean>()
+    val filterC: LiveData<Boolean> = _filterC
+
+    private val _filterP = MutableLiveData<Boolean>()
+    val filterP: LiveData<Boolean> = _filterP
+
+    fun activeFilterC(){
+        _filterC.value = true
+    }
+
+    fun activeFilterP(){
+        _filterP.value = true
+    }
+
+    fun unActiveFilterC(){
+        _filterC.value = false
+    }
+
+    fun unActiveFilterP(){
+        _filterP.value = false
+    }
+
+
     private val _technologyChecked = MutableLiveData(false)
     private val _booksChecked = MutableLiveData(false)
     private val _clothingChecked = MutableLiveData(false)
@@ -115,32 +138,36 @@ class mainCatalogueViewModel : ViewModel() {
         return _product
     }
 
+
+    private val _filteredProduct = MutableLiveData<List<Product>>()
+    val filteredProduct : LiveData<List<Product>> = _filteredProduct
+
     var listaCatalogo: MutableList<Product> = mutableListOf()
 
     fun addtoCatalogue(Producto: Product){
         listaCatalogo.add(Producto)
+        _filteredProduct.value = listaCatalogo
     }
     fun getLista():MutableList<Product> {
         return listaCatalogo
     }
 
-    fun returnCategoriesChecked(): MutableList<String>{
-        var aux :MutableList<String> = mutableListOf()
+    fun returnCategoriesChecked(): String{
+        var aux: String  = ""
         if(technologyChecked.value != null && technologyChecked.value == true){
-            aux.add("Tecnología")
+            aux = aux + ("Tecnología")
         }
         if(booksChecked.value != null && booksChecked.value == true){
-            aux.add("Libros")
+            aux = aux + ("Libros")
         }
         if(foodChecked.value != null && foodChecked.value == true){
-            aux.add("Comida")
+            aux = aux + ("Comida")
         }
         if(clothingChecked.value != null && clothingChecked.value == true){
-            aux.add("Ropa")
+            aux = aux + ("Ropa")
         }
         return aux
     }
-
 }
 
 data class Product(
