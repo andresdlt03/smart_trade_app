@@ -88,7 +88,7 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), navController: NavC
             )
         }
 
-        Button(onClick = { viewModel.onLogin() }) {
+        Button(onClick = { viewModel.onLogin(); navController.navigate("catalogue") }) {
             Text(text = "Iniciar sesión")
         }
     }

@@ -467,7 +467,7 @@ fun BottomBar(navController: NavHostController) {
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = { navController.navigate("login") }) {
+            IconButton(onClick = { navController.navigate("initial_screen") }) {
                 Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
             }
 

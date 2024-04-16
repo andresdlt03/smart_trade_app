@@ -98,7 +98,7 @@ fun ProductoEnPantalla(
         Text(
             text = "Precio: $precio €",
             style = TextStyle(fontSize = 15.sp),
-            color = Color.Yellow,
+            color = Color.Black,
         )
         Spacer(modifier = Modifier.height(6.dp))
         Text(

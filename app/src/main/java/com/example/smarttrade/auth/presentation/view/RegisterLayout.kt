@@ -58,7 +58,7 @@ fun RegisterLayout(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(onClick = { viewModel.onRegister() }) {
+        Button(onClick = { viewModel.onRegister();navController.navigate("login") }) {
             Text(text = "Registrarse")
         }
     }
