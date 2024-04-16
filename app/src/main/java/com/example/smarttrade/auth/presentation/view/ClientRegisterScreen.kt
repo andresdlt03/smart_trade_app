@@ -2,12 +2,14 @@ package com.example.smarttrade.auth.presentation.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -33,6 +35,7 @@ fun ClientRegisterForm(viewModel: ClientRegisterViewModel = hiltViewModel(),
     )
     {
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = state.value.name,
             onValueChange = { viewModel.updateName(it) },
             placeholder = { Text("Nombre") }
@@ -44,6 +47,7 @@ fun ClientRegisterForm(viewModel: ClientRegisterViewModel = hiltViewModel(),
             )
         }
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = state.value.surname,
             onValueChange = { viewModel.updateSurname(it) },
             placeholder = { Text("Apellido") }
@@ -55,6 +59,7 @@ fun ClientRegisterForm(viewModel: ClientRegisterViewModel = hiltViewModel(),
             )
         }
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = state.value.email,
             onValueChange = { viewModel.updateEmail(it) },
             placeholder = { Text("Email") }
@@ -66,6 +71,7 @@ fun ClientRegisterForm(viewModel: ClientRegisterViewModel = hiltViewModel(),
             )
         }
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = state.value.password,
             onValueChange = { viewModel.updatePassword(it) },
             placeholder = { Text("Contraseña") }
@@ -77,6 +83,7 @@ fun ClientRegisterForm(viewModel: ClientRegisterViewModel = hiltViewModel(),
             )
         }
         OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
             value = state.value.dni,
             onValueChange = { viewModel.updateDni(it) },
             placeholder = { Text("DNI") }

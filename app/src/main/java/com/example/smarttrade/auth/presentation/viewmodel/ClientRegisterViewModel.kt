@@ -100,7 +100,7 @@ class ClientRegisterViewModel @Inject constructor(
                 dni = state.value.dni
             )
             try {
-                val call = userRepository.registerClient(client)
+                val call = userRepository.registerUser(client, "client")
                 if(call.isSuccessful) {
                     _state.value = _state.value.copy(
                         registerSuccess = true
