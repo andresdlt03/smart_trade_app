@@ -1,4 +1,6 @@
 package com.example.smarttrade.auth.data.body.login
 
-class LoginCredentials(var email: String, var password: String) {
-}
+data class LoginCredentials (
+    val email: String,
+    val password: String
+)

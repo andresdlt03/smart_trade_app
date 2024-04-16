@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
             SmartTradeTheme {
                 val navController = rememberNavController()
                 val scrollState = rememberScrollState()
-                NavHost(navController = navController, startDestination = "product_management") {
+                NavHost(navController = navController, startDestination = "login") {
                     composable("initial_screen") {
                         InitialScreen(
                             navController = navController
