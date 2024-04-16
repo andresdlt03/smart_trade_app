@@ -28,6 +28,14 @@ class mainCatalogueViewModel : ViewModel() {
     val clothingChecked: LiveData<Boolean> = _clothingChecked
     val foodChecked: LiveData<Boolean> = _foodChecked
 
+    fun searchChanged(it: String){
+        _search.value = it
+    }
+
+    fun clearSelected(){
+        _search.value = ""
+    }
+
     fun setTechnologyChecked(checked: Boolean) {
         _technologyChecked.value = checked
     }

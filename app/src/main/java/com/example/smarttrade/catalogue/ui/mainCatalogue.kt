@@ -2,6 +2,8 @@ package com.example.smarttrade.catalogue.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,9 +12,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
@@ -31,31 +36,43 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.smarttrade.R
 
 @Composable
-fun mainCatalogueScreen(viewModel: mainCatalogueViewModel, navControler: NavHostController){
+fun mainCatalogueScreen(
+    viewModel: mainCatalogueViewModel,
+    navControler: NavHostController,
+    scrollState: ScrollState
+){
     Column {
-        mainCatalogue(viewModel, navControler)
+        mainCatalogue(viewModel, navControler, scrollState)
     }
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun mainCatalogue(viewModel: mainCatalogueViewModel, navControler: NavHostController){
+fun mainCatalogue(
+    viewModel: mainCatalogueViewModel,
+    navControler: NavHostController,
+    scrollState: ScrollState
+){
     val search :String by viewModel.search.observeAsState(initial = "")
     val filterCategory :Boolean by viewModel.filterCatgegory.observeAsState(initial = false)
     val filterPrice:Boolean by viewModel.filterPrice.observeAsState(initial = false)
 
     Scaffold (
+        modifier = Modifier
+            .background(color = Color.White
+            ),
+        containerColor = Color.White,
         bottomBar =  {
-            BottomBar()
+            BottomBar(navControler)
         }
     )
 
@@ -69,7 +86,8 @@ fun mainCatalogue(viewModel: mainCatalogueViewModel, navControler: NavHostContro
             UnActiveFilterCategory = { viewModel.unActiveFilterCategory() },
             UnActiveFilterPrice = { viewModel.unActiveFilterPrice() },
             viewModel = viewModel,
-            navControler
+            navControler,
+            scrollState = scrollState
         )
     }
 
@@ -87,11 +105,14 @@ fun outLinedTextManage(
     UnActiveFilterCategory:() -> Unit,
     UnActiveFilterPrice:() -> Unit,
     viewModel: mainCatalogueViewModel,
-    navControler: NavHostController
+    navControler: NavHostController,
+    scrollState: ScrollState
 
 ){
     Column(
-        modifier = Modifier.padding(16.dp),
+        modifier = Modifier
+        .verticalScroll(scrollState)
+        .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally) {
         OutlinedTextField(
@@ -107,13 +128,13 @@ fun outLinedTextManage(
                 Icon(
                     imageVector = Icons.Filled.Clear,
                     contentDescription = null,
-                    modifier = Modifier.clickable {}
+                    modifier = Modifier.clickable {viewModel.clearSelected()}
 
                 )
             },
             value = search,
             label = { Text("Buscar un producto") },
-            onValueChange = {}
+            onValueChange = {viewModel.searchChanged(it)}
         )
         Row(
             modifier = Modifier.padding(vertical = 8.dp),
@@ -267,6 +288,12 @@ fun outLinedTextManage(
         }
         Spacer(modifier = Modifier.height(20.dp))
         ProductoItem(viewModel, navControler )
+        Spacer(modifier = Modifier.height(20.dp))
+        ProductoItem2(viewModel, navControler )
+        Spacer(modifier = Modifier.height(20.dp))
+        ProductoItem3(viewModel, navControler )
+        Spacer(modifier = Modifier.height(80.dp))
+
 
     }
 }
@@ -299,19 +326,27 @@ fun ProductoItem(
 viewModel: mainCatalogueViewModel,
 navControler: NavHostController
 ) {
-    var nombre: String = "Camiseta basica"
-    var imagenResId: Int = R.drawable.camiseta_ejemplo
-    var propiedad1: String = "23"
-    var propiedad2: String = "Es una camiseta realizada a mano, de la marca Zara."
+    var nombre: String = "IPhone X"
+    var imagenResId: Int = R.drawable.mobile_image
+    var propiedad1: String = "800"
+    var propiedad2: String = "Móvil de última generación de Apple"
     Row(
         modifier = Modifier
             .padding(16.dp)
-            .clickable { viewModel.setProduct(imagenResId, nombre, propiedad1, propiedad2); navControler.navigate("viewProduct") }
+            .clickable {
+                viewModel.setProduct(
+                    imagenResId,
+                    nombre,
+                    propiedad1,
+                    propiedad2
+                ); navControler.navigate("viewProduct")
+            }
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
 
     ) {
         Image(
+            modifier = Modifier.size(width = 80.dp, height = 80.dp),
             painter = painterResource(id = imagenResId),
             contentDescription = null
         )
@@ -331,17 +366,113 @@ navControler: NavHostController
     }
 }
 
-@Preview
 @Composable
-fun BottomBar() {
-    BottomAppBar() {
+fun ProductoItem2(
+    viewModel: mainCatalogueViewModel,
+    navControler: NavHostController
+) {
+    var nombre: String = "El Hobbit libro"
+    var imagenResId: Int = R.drawable.book_image
+    var propiedad1: String = "20"
+    var propiedad2: String = "Famoso libro de fantasía que narra las aventuras que han pasado el Hobbit y sus amigos."
+    Row(
+        modifier = Modifier
+            .padding(16.dp)
+            .clickable {
+                viewModel.setProduct(
+                    imagenResId,
+                    nombre,
+                    propiedad1,
+                    propiedad2
+                ); navControler.navigate("viewProduct")
+            }
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+
+    ) {
+        Image(
+            modifier = Modifier.size(width = 80.dp, height = 80.dp),
+            painter = painterResource(id = imagenResId),
+            contentDescription = null
+        )
+
+        Spacer(modifier = Modifier.width(16.dp))
+
+        Column {
+            Text(
+                text = nombre,
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp
+            )
+            Spacer(modifier = Modifier.height(2.dp))
+            Text(text = "Precio: $propiedad1 €" , fontSize = 14.sp)
+            Text(text = "Descripción: $propiedad2", fontSize = 14.sp)
+        }
+    }
+}
+
+@Composable
+fun ProductoItem3(
+    viewModel: mainCatalogueViewModel,
+    navControler: NavHostController
+) {
+    var nombre: String = "Manzana"
+    var imagenResId: Int = R.drawable.apple_image
+    var propiedad1: String = "0.1"
+    var propiedad2: String = "Es una manzana recogida a mano, de la marca AppleTree."
+    Row(
+        modifier = Modifier
+            .padding(16.dp)
+            .clickable {
+                viewModel.setProduct(
+                    imagenResId,
+                    nombre,
+                    propiedad1,
+                    propiedad2
+                ); navControler.navigate("viewProduct")
+            }
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+
+    ) {
+        Image(
+            modifier = Modifier.size(width = 80.dp, height = 80.dp),
+            painter = painterResource(id = imagenResId),
+            contentDescription = null
+        )
+
+        Spacer(modifier = Modifier.width(16.dp))
+
+        Column {
+            Text(
+                text = nombre,
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp
+            )
+            Spacer(modifier = Modifier.height(2.dp))
+            Text(text = "Precio: $propiedad1 €" , fontSize = 14.sp)
+            Text(text = "Descripción: $propiedad2", fontSize = 14.sp)
+        }
+    }
+}
+
+
+@Composable
+fun BottomBar(navController: NavHostController) {
+    BottomAppBar(
+        containerColor = Color(android.graphics.Color.parseColor("#FFA8F5A6"))
+    ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        )
-        {
-            IconButton(onClick = {}) {
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = { navController.navigate("login") }) {
                 Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
+            }
+
+            IconButton(onClick = { navController.navigate("product_management") }) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Añadir")
             }
         }
     }

@@ -67,7 +67,7 @@ fun productManagement(viewModel: ProductManagementViewModel = hiltViewModel(),
         )
     )
 
-    topBarManage()
+    topBarManage(navController)
     Spacer(modifier = Modifier.height(14.dp))
     outLinedTextManage(category,{viewModel.onCategoryChanged(it)}, {viewModel.clearSelected()})
     Spacer(modifier = Modifier.height(14.dp))
@@ -83,12 +83,12 @@ fun productManagement(viewModel: ProductManagementViewModel = hiltViewModel(),
 
 
 @Composable
-fun topBarManage(){
+fun topBarManage(navController: NavHostController){
     Row (
         verticalAlignment = Alignment.CenterVertically
     ){
         FloatingActionButton(
-            onClick = { },
+            onClick = {navController.navigate("catalogue") },
         ) {
             Icon(Icons.Filled.ArrowBack, "Back button")
         }
@@ -141,7 +141,7 @@ fun CategoryItems(filteredCategories: List<Category>, navControler: NavHostContr
 @Composable
 fun ListItem(category: Category, navControler: NavHostController, viewModel: ProductManagementViewModel){
     ListItem(
-        colors = ListItemDefaults.colors(containerColor = Color.LightGray),
+        colors = ListItemDefaults.colors(containerColor = Color(android.graphics.Color.parseColor("#FF3F8B4A"))),
         headlineContent = { Text(text = category.name) },
         leadingContent = {
             Icon(

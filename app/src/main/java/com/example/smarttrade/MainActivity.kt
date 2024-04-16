@@ -10,7 +10,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.smarttrade.auth.presentation.view.ClientRegisterScreen
 import com.example.smarttrade.auth.presentation.view.LoginScreen
 import com.example.smarttrade.auth.presentation.view.SellerRegisterScreen
+import com.example.smarttrade.catalogue.ui.mainCatalogueScreen
 import com.example.smarttrade.catalogue.ui.mainCatalogueViewModel
+import com.example.smarttrade.catalogue.ui.viewProductCatalogueScreen
+import com.example.smarttrade.catalogue.ui.viewProductCatalogueViewModel
 import com.example.smarttrade.product_management.presentation.view.addProductBooksScreen
 import com.example.smarttrade.product_management.presentation.view.addProductClothesScreen
 import com.example.smarttrade.product_management.presentation.view.addProductFoodScreen
@@ -28,7 +31,8 @@ class MainActivity : ComponentActivity() {
             SmartTradeTheme {
                 val navController = rememberNavController()
                 val scrollState = rememberScrollState()
-                NavHost(navController = navController, startDestination = "product_management") {
+
+                NavHost(navController = navController, startDestination = "catalogue") {
                     composable("initial_screen") {
                         InitialScreen(
                             navController = navController
@@ -76,6 +80,16 @@ class MainActivity : ComponentActivity() {
                         addProductClothesScreen(
                             navHostController = navController,
                             scrollState = scrollState
+                        )
+                    }
+                    composable("catalogue") {
+                        mainCatalogueScreen(viewmodel, navController,scrollState)
+                    }
+                    composable("viewProduct") {
+                        viewProductCatalogueScreen(
+                            viewProductCatalogueViewModel(),
+                            navController,
+                            viewmodel
                         )
                     }
                 }
