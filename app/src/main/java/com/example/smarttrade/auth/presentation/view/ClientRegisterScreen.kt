@@ -2,6 +2,8 @@ package com.example.smarttrade.auth.presentation.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -83,6 +85,33 @@ fun ClientRegisterForm(viewModel: ClientRegisterViewModel = hiltViewModel(),
             Text(
                 text = it,
                 color = md_theme_light_error
+            )
+        }
+
+        state.value.registerError?.let {
+            AlertDialog(
+                onDismissRequest = { /*TODO*/ },
+                confirmButton = {
+                                Button(onClick = { viewModel.clearError() }) {
+                                    Text(text = "Aceptar")
+                                }
+                },
+                title = { Text("Error en el registro") },
+                text = { Text(it) }
+            )
+        }
+
+        if(state.value.registerSuccess) {
+            AlertDialog(
+                onDismissRequest = { /*TODO*/ },
+                confirmButton = {
+                    Button(onClick = {
+                        navController.navigate("login")
+                    }) {
+                        Text(text = "Iniciar sesión")
+                    }
+                },
+                text = { Text(text = "Usuario registrado con éxito") }
             )
         }
     }

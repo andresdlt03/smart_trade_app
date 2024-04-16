@@ -11,4 +11,6 @@ data class ClientRegisterState (
     val emailError: String? = null,
     val passwordError: String? = null,
     val dniError: String? = null,
+    val registerError: String? = null,
+    val registerSuccess: Boolean = false
 )
