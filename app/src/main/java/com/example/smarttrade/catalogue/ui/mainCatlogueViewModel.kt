@@ -1,11 +1,13 @@
 package com.example.smarttrade.catalogue.ui
 
+import android.net.Uri
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
+import com.example.smarttrade.product_management.presentation.viewmodel.Category
 
 class mainCatalogueViewModel : ViewModel() {
 
@@ -105,19 +107,46 @@ class mainCatalogueViewModel : ViewModel() {
 
     private var _product: Product? = null
 
-    fun setProduct(IdImage: Int, name: String, price: String, description: String) {
-        _product = Product(IdImage, name, price, description)
+    fun setProduct(uri: Uri?, name: String, price: String, description: String, cat: String) {
+        _product = Product(uri, name, price, description, cat)
     }
 
     fun getProduct(): Product? {
         return _product
     }
 
+    var listaCatalogo: MutableList<Product> = mutableListOf()
+
+    fun addtoCatalogue(Producto: Product){
+        listaCatalogo.add(Producto)
+    }
+    fun getLista():MutableList<Product> {
+        return listaCatalogo
+    }
+
+    fun returnCategoriesChecked(): MutableList<String>{
+        var aux :MutableList<String> = mutableListOf()
+        if(technologyChecked.value != null && technologyChecked.value == true){
+            aux.add("Tecnología")
+        }
+        if(booksChecked.value != null && booksChecked.value == true){
+            aux.add("Libros")
+        }
+        if(foodChecked.value != null && foodChecked.value == true){
+            aux.add("Comida")
+        }
+        if(clothingChecked.value != null && clothingChecked.value == true){
+            aux.add("Ropa")
+        }
+        return aux
+    }
+
 }
 
 data class Product(
-    val IdImage: Int,
+    val uri: Uri?,
     val name: String,
     val price: String,
-    val description: String
+    val description: String,
+    val category : String
 )

@@ -18,7 +18,10 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.AlertDialog
@@ -43,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.smarttrade.R
+import com.example.smarttrade.product_management.presentation.viewmodel.Category
 
 @Composable
 fun mainCatalogueScreen(
@@ -109,6 +113,15 @@ fun outLinedTextManage(
     scrollState: ScrollState
 
 ){
+    var catalogueProducts :MutableList<Product>  = viewModel.getLista()
+
+    listOf(
+        Category("Tecnología", Icons.Filled.Build),
+        Category( "Libros", Icons.Filled.Email),
+        Category("Comida", Icons.Filled.Home),
+        Category("Ropa", Icons.Filled.Face)
+    )
+    )
     Column(
         modifier = Modifier
         .verticalScroll(scrollState)
@@ -286,14 +299,20 @@ fun outLinedTextManage(
 
             )
         }
-        Spacer(modifier = Modifier.height(20.dp))
-        ProductoItem(viewModel, navControler )
-        Spacer(modifier = Modifier.height(20.dp))
-        ProductoItem2(viewModel, navControler )
-        Spacer(modifier = Modifier.height(20.dp))
-        ProductoItem3(viewModel, navControler )
-        Spacer(modifier = Modifier.height(80.dp))
 
+        if (filterCatgegory) {
+            val m: MutableList<String> = viewModel.returnCategoriesChecked()
+            catalogueProducts = catalogueProducts.filter { it.category in m }.toMutableList()
+        }
+
+        if (filterPrice) {
+            val minPrice by viewModel.minPrice.observeAsState(0F)
+            val maxPrice by viewModel.maxPrice.observeAsState(1000F)
+            catalogueProducts = catalogueProducts.filter { it.price.toFloatOrNull()!! >= minPrice && it.price.toFloatOrNull()!! <= maxPrice }.toMutableList()
+        }
+        for (i in catalogueProducts){
+            
+        }
 
     }
 }
