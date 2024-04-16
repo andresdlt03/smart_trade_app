@@ -3,10 +3,12 @@ package com.example.smarttrade.auth.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.smarttrade.auth.domain.repository.UserRepository
+import com.example.smarttrade.auth.http.login.LoginFailed
 import com.example.smarttrade.auth.presentation.validation.ValidateEmail
 import com.example.smarttrade.auth.presentation.validation.ValidatePassword
 import com.example.smarttrade.auth.presentation.viewmodel.state.LoginState
 import com.example.smarttrade.network.Exception.NetworkException
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +19,8 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val validateEmail: ValidateEmail,
-    private val validatePassword: ValidatePassword
+    private val validatePassword: ValidatePassword,
+    private val gson: Gson
 ): ViewModel(){
 
     private val _state = MutableStateFlow(LoginState())
@@ -29,6 +32,14 @@ class LoginViewModel @Inject constructor(
 
     fun updatePassword(password: String) {
         _state.value = _state.value.copy(password = password)
+    }
+
+    fun clearError() {
+        _state.value = _state.value.copy(
+            emailError = null,
+            passwordError = null,
+            loginError = null
+        )
     }
 
     fun onLogin() {
@@ -52,16 +63,19 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val call = userRepository.loginUser(_state.value.email, _state.value.password)
-                val response = call.body()
-                if(call.isSuccessful && response != null) {
-                    
-                } else {
+                if(call.isSuccessful) {
                     _state.value = _state.value.copy(
-                        errorMessage = "Usuario o contraseña incorrectos"
+                        loginSuccess = true
+                    )
+                } else {
+                    val body = call.errorBody()?.string()
+                    val error = gson.fromJson(body, LoginFailed::class.java)
+                    _state.value = _state.value.copy(
+                        loginError = error.errorMessage
                     )
                 }
             } catch(e: NetworkException) {
-                // modal window indicating the error
+                println(e.message)
             }
         }
     }
