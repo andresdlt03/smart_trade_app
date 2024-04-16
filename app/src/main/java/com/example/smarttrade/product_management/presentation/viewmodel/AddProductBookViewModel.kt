@@ -34,7 +34,7 @@ class AddProductBookViewModel @Inject constructor() : ViewModel() {
     }
 
     fun goBackCategories(navControler: NavHostController){
-        navControler.navigate("main")
+        navControler.navigate("product_management")
     }
 
     fun updatePhotos(p1: Uri?,p2: Uri?){
