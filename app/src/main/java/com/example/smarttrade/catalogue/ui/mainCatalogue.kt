@@ -313,33 +313,46 @@ fun outLinedTextManage(
         val maxPrice by viewModel.maxPrice.observeAsState(1000F)
 
         for (i in filteredProducts){
-            if(filterC && filterP){
-                if(i.name.contains(search) && search.trim() != "") {
-                val m:String = viewModel.returnCategoriesChecked()
-                if(i.category in m && i.price.toFloatOrNull()!! >= minPrice && i.price.toFloatOrNull()!! <= maxPrice){
-                ProductoItem(
-                    viewModel = viewModel,
-                    navControler = navControler,
-                    nombre = i.name,
-                    uri = i.uri,
-                    precio = i.price,
-                    descripcion = i.description,
-                    cat = i.category
-                )}}
-            }else if(filterC && !filterP && i.name.contains(search) && search.trim() != ""){
-                val m:String = viewModel.returnCategoriesChecked()
-                if(i.category in m){
-                ProductoItem(
-                    viewModel = viewModel,
-                    navControler = navControler,
-                    nombre = i.name,
-                    uri = i.uri,
-                    precio = i.price,
-                    descripcion = i.description,
-                    cat = i.category
-                )}
-            }else if(filterC && !filterP && i.name.contains(search) && search.trim() != ""){
-                if(i.price.toFloatOrNull()!! >= minPrice && i.price.toFloatOrNull()!! <= maxPrice) {
+            if(i.name.contains(search.trim())) {
+                if (filterC && filterP) {
+                    val m: String = viewModel.returnCategoriesChecked()
+                    if (i.category in m && i.price.toFloatOrNull()!! >= minPrice && i.price.toFloatOrNull()!! <= maxPrice) {
+                        ProductoItem(
+                            viewModel = viewModel,
+                            navControler = navControler,
+                            nombre = i.name,
+                            uri = i.uri,
+                            precio = i.price,
+                            descripcion = i.description,
+                            cat = i.category
+                        )
+                    }
+                } else if (filterC && !filterP) {
+                    val m: String = viewModel.returnCategoriesChecked()
+                    if (i.category in m) {
+                        ProductoItem(
+                            viewModel = viewModel,
+                            navControler = navControler,
+                            nombre = i.name,
+                            uri = i.uri,
+                            precio = i.price,
+                            descripcion = i.description,
+                            cat = i.category
+                        )
+                    }
+                } else if (filterC && !filterP) {
+                    if (i.price.toFloatOrNull()!! >= minPrice && i.price.toFloatOrNull()!! <= maxPrice) {
+                        ProductoItem(
+                            viewModel = viewModel,
+                            navControler = navControler,
+                            nombre = i.name,
+                            uri = i.uri,
+                            precio = i.price,
+                            descripcion = i.description,
+                            cat = i.category
+                        )
+                    }
+                } else if (!filterC && !filterP) {
                     ProductoItem(
                         viewModel = viewModel,
                         navControler = navControler,
@@ -348,29 +361,18 @@ fun outLinedTextManage(
                         precio = i.price,
                         descripcion = i.description,
                         cat = i.category
-                    )}
-            }
-            else if(!filterC && !filterP && i.name.contains(search) && search.trim() != ""){
-                ProductoItem(
-                    viewModel = viewModel,
-                    navControler = navControler,
-                    nombre = i.name,
-                    uri = i.uri,
-                    precio = i.price,
-                    descripcion = i.description,
-                    cat = i.category
-                )
-            }
-            else{
-                ProductoItem(
-                    viewModel = viewModel,
-                    navControler = navControler,
-                    nombre = i.name,
-                    uri = i.uri,
-                    precio = i.price,
-                    descripcion = i.description,
-                    cat = i.category
-                )
+                    )
+                } else {
+                    ProductoItem(
+                        viewModel = viewModel,
+                        navControler = navControler,
+                        nombre = i.name,
+                        uri = i.uri,
+                        precio = i.price,
+                        descripcion = i.description,
+                        cat = i.category
+                    )
+                }
             }
         }
 
