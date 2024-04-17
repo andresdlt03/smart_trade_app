@@ -1,22 +1,19 @@
 package com.example.smarttrade.auth.data.remote
 
-import com.example.smarttrade.auth.data.body.login.LoginCredentials
-import com.example.smarttrade.auth.data.body.login.LoginResponse
-import com.example.smarttrade.auth.data.body.register.RegisterResponse
-import com.example.smarttrade.auth.domain.model.Client
-import com.example.smarttrade.auth.domain.model.Seller
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface UserApi {
 
-    @POST("users/clients")
-    suspend fun registerClient(@Body user: Client): Response<RegisterResponse>
+    @Headers("content-type: application/json")
+    @POST("users/{userType}s")
+    suspend fun registerUser(@Body user: String, @Path("userType") userType: String): Response<String>
 
-    @POST("users/sellers")
-    suspend fun registerSeller(@Body user: Seller): Response<RegisterResponse>
 
+    @Headers("content-type: application/json")
     @POST("users/login")
-    suspend fun loginUser(@Body credentials: LoginCredentials): Response<LoginResponse>
+    suspend fun loginUser(@Body loginRequest: String): Response<String>
 }

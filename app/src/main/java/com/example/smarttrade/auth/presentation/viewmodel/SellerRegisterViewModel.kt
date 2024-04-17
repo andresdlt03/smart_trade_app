@@ -3,11 +3,13 @@ package com.example.smarttrade.auth.presentation.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.example.smarttrade.auth.domain.model.Seller
 import com.example.smarttrade.auth.domain.repository.UserRepository
+import com.example.smarttrade.auth.http.register.RegisterFailed
 import com.example.smarttrade.auth.presentation.validation.ValidateEmail
 import com.example.smarttrade.auth.presentation.validation.ValidateNotEmpty
 import com.example.smarttrade.auth.presentation.validation.ValidatePassword
 import com.example.smarttrade.auth.presentation.viewmodel.state.SellerRegisterState
 import com.example.smarttrade.network.Exception.NetworkException
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,7 +21,8 @@ class SellerRegisterViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val validateEmail: ValidateEmail,
     private val validatePassword: ValidatePassword,
-    private val validateNotEmpty: ValidateNotEmpty
+    private val validateNotEmpty: ValidateNotEmpty,
+    private val gson: Gson
     ) : RegisterViewModel() {
 
     private val _state = MutableStateFlow(SellerRegisterState())
@@ -47,6 +50,24 @@ class SellerRegisterViewModel @Inject constructor(
 
     fun updateCif(cif: String) {
         _state.value = _state.value.copy(cif = cif)
+    }
+
+    fun clearError() {
+        _state.value = _state.value.copy(
+            emailError = null,
+            passwordError = null,
+            nameError = null,
+            surnameError = null,
+            companyNameError = null,
+            cifError = null,
+            registerError = null,
+        )
+    }
+
+    fun clearRegisterSuccess() {
+        _state.value = _state.value.copy(
+            registerSuccess = false
+        )
     }
 
     override fun onRegister() {
@@ -89,10 +110,23 @@ class SellerRegisterViewModel @Inject constructor(
                 cif = _state.value.cif
             )
             try {
-                userRepository.registerSeller(seller)
+                val call = userRepository.registerUser(seller, "seller")
+                if(call.isSuccessful) {
+                    _state.value = _state.value.copy(
+                        registerSuccess = true
+                    )
+                } else {
+                    val error = gson.fromJson(call.errorBody()?.string(), RegisterFailed::class.java)
+                    _state.value = _state.value.copy(
+                        registerError = error.errorMessage
+                    )
+                }
             } catch (e: NetworkException) {
-                // modal window indicating the error
+                _state.value = _state.value.copy(
+                    registerError = e.message
+                )
             }
         }
+
     }
 }

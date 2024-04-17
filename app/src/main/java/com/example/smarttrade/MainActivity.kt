@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val scrollState = rememberScrollState()
 
-                NavHost(navController = navController, startDestination = "catalogue") {
+                NavHost(navController = navController, startDestination = "initial_screen") {
                     composable("initial_screen") {
                         InitialScreen(
                             navController = navController
