@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -81,15 +82,25 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), navController: NavC
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        state.value.errorMessage?.let {
-            Text(
-                text = it,
-                color = md_theme_light_error
+        Button(onClick = { viewModel.onLogin() }) {
+            Text(text = "Iniciar sesión")
+        }
+
+        state.value.loginError?.let {
+            AlertDialog(
+                onDismissRequest = { /*TODO*/ },
+                confirmButton = {
+                    Button(onClick = { viewModel.clearError() }) {
+                        Text(text = "Aceptar")
+                    }
+                },
+                title = { Text("Error en el registro") },
+                text = { Text(it) }
             )
         }
 
-        Button(onClick = { viewModel.onLogin() }) {
-            Text(text = "Iniciar sesión")
+        if(state.value.loginSuccess) {
+            navController.navigate("catalogue")
         }
     }
 

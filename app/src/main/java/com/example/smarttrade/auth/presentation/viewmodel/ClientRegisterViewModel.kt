@@ -3,11 +3,13 @@ package com.example.smarttrade.auth.presentation.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.example.smarttrade.auth.domain.model.Client
 import com.example.smarttrade.auth.domain.repository.UserRepository
+import com.example.smarttrade.auth.http.register.RegisterFailed
 import com.example.smarttrade.auth.presentation.validation.ValidateEmail
 import com.example.smarttrade.auth.presentation.validation.ValidateNotEmpty
 import com.example.smarttrade.auth.presentation.validation.ValidatePassword
 import com.example.smarttrade.auth.presentation.viewmodel.state.ClientRegisterState
 import com.example.smarttrade.network.Exception.NetworkException
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,7 +21,8 @@ class ClientRegisterViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val validateEmail: ValidateEmail,
     private val validatePassword: ValidatePassword,
-    private val validateNotEmpty: ValidateNotEmpty
+    private val validateNotEmpty: ValidateNotEmpty,
+    private val gson: Gson
     ) : RegisterViewModel() {
 
     private val _state = MutableStateFlow(ClientRegisterState())
@@ -43,6 +46,23 @@ class ClientRegisterViewModel @Inject constructor(
 
     fun updateDni(dni: String) {
         _state.value = _state.value.copy(dni = dni)
+    }
+
+    fun clearError() {
+        _state.value = _state.value.copy(
+            emailError = null,
+            passwordError = null,
+            nameError = null,
+            surnameError = null,
+            dniError = null,
+            registerError = null
+        )
+    }
+
+    fun clearRegisterSuccess() {
+        _state.value = _state.value.copy(
+            registerSuccess = false
+        )
     }
 
     override fun onRegister() {
@@ -80,8 +100,17 @@ class ClientRegisterViewModel @Inject constructor(
                 dni = state.value.dni
             )
             try {
-                val call = userRepository.registerClient(client)
-                val response = call.body()
+                val call = userRepository.registerUser(client, "client")
+                if(call.isSuccessful) {
+                    _state.value = _state.value.copy(
+                        registerSuccess = true
+                    )
+                } else {
+                    val error = gson.fromJson(call.errorBody()?.string(), RegisterFailed::class.java)
+                    _state.value = _state.value.copy(
+                        registerError = error.errorMessage
+                    )
+                }
             } catch (e: NetworkException) {
                 // modal window indicating the error
             }

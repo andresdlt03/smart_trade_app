@@ -12,6 +12,8 @@ data class SellerRegisterState (
     val emailError: String? = null,
     val passwordError: String? = null,
     val companyNameError: String? = null,
-    val cifError: String? = null
+    val cifError: String? = null,
+    val registerError: String? = null,
+    val registerSuccess: Boolean = false
 
 )
