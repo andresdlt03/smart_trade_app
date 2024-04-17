@@ -61,25 +61,29 @@ class MainActivity : ComponentActivity() {
                     composable("add1") {
                         addProductTechnologyScreen(
                             navHostController = navController,
-                            scrollState = scrollState
+                            scrollState = scrollState,
+                            vm = viewmodel
                         )
                     }
                     composable("add2") {
                         addProductBooksScreen(
                             navHostController = navController,
-                            scrollState = scrollState
+                            scrollState = scrollState,
+                            vm = viewmodel
                         )
                     }
                     composable("add3") {
                         addProductFoodScreen(
                             navHostController = navController,
-                            scrollState = scrollState
+                            scrollState = scrollState,
+                            vm = viewmodel
                         )
                     }
                     composable("add4") {
                         addProductClothesScreen(
                             navHostController = navController,
-                            scrollState = scrollState
+                            scrollState = scrollState,
+                            vm = viewmodel
                         )
                     }
                     composable("catalogue") {

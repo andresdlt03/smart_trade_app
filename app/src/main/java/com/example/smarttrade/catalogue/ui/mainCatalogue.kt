@@ -1,6 +1,7 @@
 package com.example.smarttrade.catalogue.ui
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -18,7 +19,10 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.AlertDialog
@@ -37,12 +41,15 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
 import com.example.smarttrade.R
+import com.example.smarttrade.product_management.presentation.viewmodel.Category
 
 @Composable
 fun mainCatalogueScreen(
@@ -63,8 +70,7 @@ fun mainCatalogue(
     scrollState: ScrollState
 ){
     val search :String by viewModel.search.observeAsState(initial = "")
-    val filterCategory :Boolean by viewModel.filterCatgegory.observeAsState(initial = false)
-    val filterPrice:Boolean by viewModel.filterPrice.observeAsState(initial = false)
+
 
     Scaffold (
         modifier = Modifier
@@ -79,8 +85,6 @@ fun mainCatalogue(
     {
         outLinedTextManage(
             search = search,
-            filterCatgegory = filterCategory,
-            filterPrice = filterPrice,
             activeFilterCategory = { viewModel.activeFilterCategory() },
             activeFilterPrice = { viewModel.activeFilterPrice() },
             UnActiveFilterCategory = { viewModel.unActiveFilterCategory() },
@@ -98,8 +102,6 @@ fun mainCatalogue(
 @Composable
 fun outLinedTextManage(
     search: String,
-    filterCatgegory: Boolean,
-    filterPrice: Boolean,
     activeFilterCategory:() -> Unit,
     activeFilterPrice:() -> Unit,
     UnActiveFilterCategory:() -> Unit,
@@ -109,10 +111,27 @@ fun outLinedTextManage(
     scrollState: ScrollState
 
 ){
+    val filteredProducts :List<Product> by viewModel.filteredProduct.observeAsState(initial =
+    listOf())
+    val filterCategory :Boolean by viewModel.filterCatgegory.observeAsState(initial = false)
+    val filterPrice:Boolean by viewModel.filterPrice.observeAsState(initial = false)
+
+    val filterC :Boolean by viewModel.filterC.observeAsState(initial = false)
+    val filterP:Boolean by viewModel.filterP.observeAsState(initial = false)
+
+    val search : String by viewModel.search.observeAsState(initial = "")
+
+    listOf(
+        Category("Tecnología", Icons.Filled.Build),
+        Category( "Libros", Icons.Filled.Email),
+        Category("Comida", Icons.Filled.Home),
+        Category("Ropa", Icons.Filled.Face)
+    )
+
     Column(
         modifier = Modifier
-        .verticalScroll(scrollState)
-        .padding(16.dp),
+            .verticalScroll(scrollState)
+            .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally) {
         OutlinedTextField(
@@ -149,7 +168,7 @@ fun outLinedTextManage(
                 Text("Filtrar por categoría")
             }
         }
-        if(filterCatgegory == true) {
+        if(filterCategory == true) {
 
             val technologyChecked by viewModel.technologyChecked.observeAsState(false)
             val booksChecked by viewModel.booksChecked.observeAsState(false)
@@ -172,7 +191,9 @@ fun outLinedTextManage(
                         horizontalArrangement = Arrangement.Center
                     ){
                     Button(
-                        onClick = { UnActiveFilterCategory() },
+                        onClick = { UnActiveFilterCategory();
+                        if(viewModel.returnCategoriesChecked() != "")
+                            viewModel.activeFilterC()},
                         modifier = Modifier
                             .padding(horizontal = 16.dp),
                     ) {
@@ -188,6 +209,7 @@ fun outLinedTextManage(
                         onClick = {
                             UnActiveFilterCategory()
                             viewModel.cancelFilterCategory()
+                            viewModel.unActiveFilterC()
                         },
                         modifier = Modifier
                             .padding(horizontal = 16.dp),
@@ -240,7 +262,7 @@ fun outLinedTextManage(
                 title = { Text("Filtrar por precio") },
                 confirmButton = {
                     Button(
-                        onClick = { UnActiveFilterPrice()} ,
+                        onClick = { UnActiveFilterPrice();viewModel.activeFilterP() } ,
                         modifier = Modifier
                             .padding(horizontal = 16.dp),
                     ) {
@@ -249,7 +271,7 @@ fun outLinedTextManage(
                 },
                 dismissButton = {
                     Button(
-                        onClick = { viewModel.disablePriceFilter();UnActiveFilterPrice()},
+                        onClick = { viewModel.disablePriceFilter();UnActiveFilterPrice();viewModel.unActiveFilterP()},
                         modifier = Modifier
                             .padding(horizontal = 16.dp),
                     ) {
@@ -286,17 +308,78 @@ fun outLinedTextManage(
 
             )
         }
-        Spacer(modifier = Modifier.height(20.dp))
-        ProductoItem(viewModel, navControler )
-        Spacer(modifier = Modifier.height(20.dp))
-        ProductoItem2(viewModel, navControler )
-        Spacer(modifier = Modifier.height(20.dp))
-        ProductoItem3(viewModel, navControler )
-        Spacer(modifier = Modifier.height(80.dp))
 
+        val minPrice by viewModel.minPrice.observeAsState(0F)
+        val maxPrice by viewModel.maxPrice.observeAsState(1000F)
+
+        for (i in filteredProducts){
+            if(i.name.contains(search.trim())) {
+                if (filterC && filterP) {
+                    val m: String = viewModel.returnCategoriesChecked()
+                    if (i.category in m && i.price.toFloatOrNull()!! >= minPrice && i.price.toFloatOrNull()!! <= maxPrice) {
+                        ProductoItem(
+                            viewModel = viewModel,
+                            navControler = navControler,
+                            nombre = i.name,
+                            uri = i.uri,
+                            precio = i.price,
+                            descripcion = i.description,
+                            cat = i.category
+                        )
+                    }
+                } else if (filterC && !filterP) {
+                    val m: String = viewModel.returnCategoriesChecked()
+                    if (i.category in m) {
+                        ProductoItem(
+                            viewModel = viewModel,
+                            navControler = navControler,
+                            nombre = i.name,
+                            uri = i.uri,
+                            precio = i.price,
+                            descripcion = i.description,
+                            cat = i.category
+                        )
+                    }
+                } else if (filterC && !filterP) {
+                    if (i.price.toFloatOrNull()!! >= minPrice && i.price.toFloatOrNull()!! <= maxPrice) {
+                        ProductoItem(
+                            viewModel = viewModel,
+                            navControler = navControler,
+                            nombre = i.name,
+                            uri = i.uri,
+                            precio = i.price,
+                            descripcion = i.description,
+                            cat = i.category
+                        )
+                    }
+                } else if (!filterC && !filterP) {
+                    ProductoItem(
+                        viewModel = viewModel,
+                        navControler = navControler,
+                        nombre = i.name,
+                        uri = i.uri,
+                        precio = i.price,
+                        descripcion = i.description,
+                        cat = i.category
+                    )
+                } else {
+                    ProductoItem(
+                        viewModel = viewModel,
+                        navControler = navControler,
+                        nombre = i.name,
+                        uri = i.uri,
+                        precio = i.price,
+                        descripcion = i.description,
+                        cat = i.category
+                    )
+                }
+            }
+        }
 
     }
+
 }
+
 
 
 @Composable
@@ -324,31 +407,37 @@ fun CheckBoxItem(
 @Composable
 fun ProductoItem(
 viewModel: mainCatalogueViewModel,
-navControler: NavHostController
+navControler: NavHostController,
+nombre : String,
+uri: Uri?,
+precio: String,
+descripcion: String,
+cat : String
+
 ) {
-    var nombre: String = "IPhone X"
-    var imagenResId: Int = R.drawable.mobile_image
-    var propiedad1: String = "800"
-    var propiedad2: String = "Móvil de última generación de Apple"
     Row(
         modifier = Modifier
             .padding(16.dp)
             .clickable {
                 viewModel.setProduct(
-                    imagenResId,
+                    uri,
                     nombre,
-                    propiedad1,
-                    propiedad2
+                    precio,
+                    descripcion,
+                    cat
                 ); navControler.navigate("viewProduct")
             }
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
 
     ) {
-        Image(
-            modifier = Modifier.size(width = 80.dp, height = 80.dp),
-            painter = painterResource(id = imagenResId),
-            contentDescription = null
+        AsyncImage(
+            model = uri,
+            contentDescription = null,
+            modifier = Modifier
+                .clickable { }
+                .size(80.dp, 80.dp),
+            contentScale = ContentScale.Crop
         )
 
         Spacer(modifier = Modifier.width(16.dp))
@@ -360,101 +449,12 @@ navControler: NavHostController
                 fontSize = 18.sp
             )
             Spacer(modifier = Modifier.height(2.dp))
-            Text(text = "Precio: $propiedad1 €" , fontSize = 14.sp)
-            Text(text = "Descripción: $propiedad2", fontSize = 14.sp)
+            Text(text = "Precio: $precio €" , fontSize = 14.sp)
+            Text(text = "Descripción: $descripcion", fontSize = 14.sp)
         }
     }
 }
 
-@Composable
-fun ProductoItem2(
-    viewModel: mainCatalogueViewModel,
-    navControler: NavHostController
-) {
-    var nombre: String = "El Hobbit libro"
-    var imagenResId: Int = R.drawable.book_image
-    var propiedad1: String = "20"
-    var propiedad2: String = "Famoso libro de fantasía que narra las aventuras que han pasado el Hobbit y sus amigos."
-    Row(
-        modifier = Modifier
-            .padding(16.dp)
-            .clickable {
-                viewModel.setProduct(
-                    imagenResId,
-                    nombre,
-                    propiedad1,
-                    propiedad2
-                ); navControler.navigate("viewProduct")
-            }
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
-
-    ) {
-        Image(
-            modifier = Modifier.size(width = 80.dp, height = 80.dp),
-            painter = painterResource(id = imagenResId),
-            contentDescription = null
-        )
-
-        Spacer(modifier = Modifier.width(16.dp))
-
-        Column {
-            Text(
-                text = nombre,
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp
-            )
-            Spacer(modifier = Modifier.height(2.dp))
-            Text(text = "Precio: $propiedad1 €" , fontSize = 14.sp)
-            Text(text = "Descripción: $propiedad2", fontSize = 14.sp)
-        }
-    }
-}
-
-@Composable
-fun ProductoItem3(
-    viewModel: mainCatalogueViewModel,
-    navControler: NavHostController
-) {
-    var nombre: String = "Manzana"
-    var imagenResId: Int = R.drawable.apple_image
-    var propiedad1: String = "0.1"
-    var propiedad2: String = "Es una manzana recogida a mano, de la marca AppleTree."
-    Row(
-        modifier = Modifier
-            .padding(16.dp)
-            .clickable {
-                viewModel.setProduct(
-                    imagenResId,
-                    nombre,
-                    propiedad1,
-                    propiedad2
-                ); navControler.navigate("viewProduct")
-            }
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
-
-    ) {
-        Image(
-            modifier = Modifier.size(width = 80.dp, height = 80.dp),
-            painter = painterResource(id = imagenResId),
-            contentDescription = null
-        )
-
-        Spacer(modifier = Modifier.width(16.dp))
-
-        Column {
-            Text(
-                text = nombre,
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp
-            )
-            Spacer(modifier = Modifier.height(2.dp))
-            Text(text = "Precio: $propiedad1 €" , fontSize = 14.sp)
-            Text(text = "Descripción: $propiedad2", fontSize = 14.sp)
-        }
-    }
-}
 
 
 @Composable
@@ -467,7 +467,7 @@ fun BottomBar(navController: NavHostController) {
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = { navController.navigate("login") }) {
+            IconButton(onClick = { navController.navigate("initial_screen") }) {
                 Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
             }
 

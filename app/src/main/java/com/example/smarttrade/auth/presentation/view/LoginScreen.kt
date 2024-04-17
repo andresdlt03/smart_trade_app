@@ -98,7 +98,7 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), navController: NavC
                 text = { Text(it) }
             )
         }
-
+        
         if(state.value.loginSuccess) {
             navController.navigate("catalogue")
         }

@@ -1,11 +1,13 @@
 package com.example.smarttrade.catalogue.ui
 
+import android.net.Uri
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
+import com.example.smarttrade.product_management.presentation.viewmodel.Category
 
 class mainCatalogueViewModel : ViewModel() {
 
@@ -17,6 +19,29 @@ class mainCatalogueViewModel : ViewModel() {
 
     private val _filterPrice = MutableLiveData<Boolean>()
     val filterPrice: LiveData<Boolean> = _filterPrice
+
+    private val _filterC = MutableLiveData<Boolean>()
+    val filterC: LiveData<Boolean> = _filterC
+
+    private val _filterP = MutableLiveData<Boolean>()
+    val filterP: LiveData<Boolean> = _filterP
+
+    fun activeFilterC(){
+        _filterC.value = true
+    }
+
+    fun activeFilterP(){
+        _filterP.value = true
+    }
+
+    fun unActiveFilterC(){
+        _filterC.value = false
+    }
+
+    fun unActiveFilterP(){
+        _filterP.value = false
+    }
+
 
     private val _technologyChecked = MutableLiveData(false)
     private val _booksChecked = MutableLiveData(false)
@@ -105,19 +130,50 @@ class mainCatalogueViewModel : ViewModel() {
 
     private var _product: Product? = null
 
-    fun setProduct(IdImage: Int, name: String, price: String, description: String) {
-        _product = Product(IdImage, name, price, description)
+    fun setProduct(uri: Uri?, name: String, price: String, description: String, cat: String) {
+        _product = Product(uri, name, price, description, cat)
     }
 
     fun getProduct(): Product? {
         return _product
     }
 
+
+    private val _filteredProduct = MutableLiveData<List<Product>>()
+    val filteredProduct : LiveData<List<Product>> = _filteredProduct
+
+    var listaCatalogo: MutableList<Product> = mutableListOf()
+
+    fun addtoCatalogue(Producto: Product){
+        listaCatalogo.add(Producto)
+        _filteredProduct.value = listaCatalogo
+    }
+    fun getLista():MutableList<Product> {
+        return listaCatalogo
+    }
+
+    fun returnCategoriesChecked(): String{
+        var aux: String  = ""
+        if(technologyChecked.value != null && technologyChecked.value == true){
+            aux = aux + ("Tecnología")
+        }
+        if(booksChecked.value != null && booksChecked.value == true){
+            aux = aux + ("Libros")
+        }
+        if(foodChecked.value != null && foodChecked.value == true){
+            aux = aux + ("Comida")
+        }
+        if(clothingChecked.value != null && clothingChecked.value == true){
+            aux = aux + ("Ropa")
+        }
+        return aux
+    }
 }
 
 data class Product(
-    val IdImage: Int,
+    val uri: Uri?,
     val name: String,
     val price: String,
-    val description: String
+    val description: String,
+    val category : String
 )
