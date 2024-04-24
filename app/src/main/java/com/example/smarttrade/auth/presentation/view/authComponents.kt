@@ -25,7 +25,7 @@ fun outlinedText(value:String, label:String, upDateField:(String) -> Unit){
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
         value = value,
-        onValueChange = {upDateField },
+        onValueChange = {upDateField(it) },
         label = { Text(text = label) },
         trailingIcon = {
             Icon(

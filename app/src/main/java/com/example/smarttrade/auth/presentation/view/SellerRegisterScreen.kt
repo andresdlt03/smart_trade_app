@@ -48,6 +48,8 @@ fun SellerRegisterForm(viewModel: SellerRegisterViewModel = hiltViewModel(),
         state.value.companyNameError?.let {ErrorText(text = it)}
         outlinedText(value = state.value.cif, label = "CIF") {viewModel.updateCif(it)}
         state.value.cifError?.let { ErrorText(text = it)}
+        outlinedText(value = state.value.bankAccount, label ="IBAN" ) {viewModel.updateBankAccount(it)}
+        state.value.bankAccountError?.let {ErrorText(text = it)}
         state.value.registerError?.let {
             AlertDialog(
                 onDismissRequest = { /*TODO*/ },

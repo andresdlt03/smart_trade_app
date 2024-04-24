@@ -43,6 +43,7 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(), navController: NavC
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 48.dp)
+            .padding(horizontal = 16.dp)
             .verticalScroll(rememberScrollState())
     ) {
         LogoImage()

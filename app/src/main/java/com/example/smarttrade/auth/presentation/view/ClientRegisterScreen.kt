@@ -60,7 +60,7 @@ fun ClientRegisterForm(
         state.value.deliverDirError?.let { ErrorText(text = it)}
         outlinedText(value = state.value.factDir, label = "Dirección de facturación", {viewModel.updatefactDire(it)})
         state.value.factDirError?.let { ErrorText(text = it)}
-        outlinedText(value = state.value.creditCard, label = "Tarjeta de credito", {viewModel.updateCreditCard(it)})
+        outlinedText(value = state.value.creditCard, label = "Tarjeta de crédito", {viewModel.updateCreditCard(it)})
         state.value.creditCardError?.let { ErrorText(text = it)}
 
         state.value.registerError?.let {
