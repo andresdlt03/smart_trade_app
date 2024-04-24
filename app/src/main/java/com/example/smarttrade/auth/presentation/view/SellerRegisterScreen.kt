@@ -34,85 +34,20 @@ fun SellerRegisterForm(viewModel: SellerRegisterViewModel = hiltViewModel(),
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier.padding(horizontal = 16.dp)
+
     ) {
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = state.value.name,
-            onValueChange = { viewModel.updateName(it) },
-            placeholder = { Text("Nombre") }
-        )
-        state.value.nameError?.let {
-            Text(
-                text = it,
-                color = md_theme_light_error
-            )
-        }
-
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = state.value.surname,
-            onValueChange = { viewModel.updateSurname(it) },
-            placeholder = { Text("Apellido") }
-        )
-        state.value.surnameError?.let {
-            Text(
-                text = it,
-                color = md_theme_light_error
-            )
-        }
-
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = state.value.email,
-            onValueChange = { viewModel.updateEmail(it) },
-            placeholder = { Text("Email") }
-        )
-        state.value.emailError?.let {
-            Text(
-                text = it,
-                color = md_theme_light_error
-            )
-        }
-
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = state.value.password,
-            onValueChange = { viewModel.updatePassword(it) },
-            placeholder = { Text("Contraseña") }
-        )
-        state.value.passwordError?.let {
-            Text(
-                text = it,
-                color = md_theme_light_error
-            )
-        }
-
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = state.value.companyName,
-            onValueChange = { viewModel.updateCompanyName(it) },
-            placeholder = { Text("Nombre de la empresa") }
-        )
-        state.value.companyNameError?.let {
-            Text(
-                text = it,
-                color = md_theme_light_error
-            )
-        }
-
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = state.value.cif,
-            onValueChange = { viewModel.updateCif(it) },
-            placeholder = { Text("CIF") }
-        )
-        state.value.cifError?.let {
-            Text(
-                text = it,
-                color = md_theme_light_error
-            )
-        }
-
+        outlinedText(value = state.value.name, label = "Nombre") { viewModel.updateName(it)  }
+        state.value.nameError?.let {ErrorText(text = it)}
+        outlinedText(value = state.value.surname, label = "Apellido") {viewModel.updateSurname(it)}
+        state.value.surnameError?.let {ErrorText(text = it)}
+        outlinedText(value = state.value.email, label = "Email") {viewModel.updateEmail(it)}
+        state.value.emailError?.let { ErrorText(text = it)}
+        outlinedText(value = state.value.password, label = "Contraseña") { viewModel.updatePassword(it)}
+        state.value.passwordError?.let { ErrorText(text = it)}
+        outlinedText(value = state.value.companyName, label ="Nombre de la empresa" ) {viewModel.updateCompanyName(it)}
+        state.value.companyNameError?.let {ErrorText(text = it)}
+        outlinedText(value = state.value.cif, label = "CIF") {viewModel.updateCif(it)}
+        state.value.cifError?.let { ErrorText(text = it)}
         state.value.registerError?.let {
             AlertDialog(
                 onDismissRequest = { /*TODO*/ },
