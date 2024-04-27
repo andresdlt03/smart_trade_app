@@ -14,6 +14,8 @@ import com.example.smarttrade.catalogue.ui.mainCatalogueScreen
 import com.example.smarttrade.catalogue.ui.mainCatalogueViewModel
 import com.example.smarttrade.catalogue.ui.viewProductCatalogueScreen
 import com.example.smarttrade.catalogue.ui.viewProductCatalogueViewModel
+import com.example.smarttrade.gift.presentation.giftScreen
+import com.example.smarttrade.gift.presentation.giftViewModel
 import com.example.smarttrade.product_management.presentation.view.addProductBooksScreen
 import com.example.smarttrade.product_management.presentation.view.addProductClothesScreen
 import com.example.smarttrade.product_management.presentation.view.addProductFoodScreen
@@ -32,7 +34,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val scrollState = rememberScrollState()
 
-                NavHost(navController = navController, startDestination = "initial_screen") {
+                NavHost(navController = navController, startDestination = "gift") {
                     composable("initial_screen") {
                         InitialScreen(
                             navController = navController
@@ -95,6 +97,9 @@ class MainActivity : ComponentActivity() {
                             navController,
                             viewmodel
                         )
+                    }
+                    composable("gift"){
+                        giftScreen(navController =navController , viewModel = giftViewModel())
                     }
                 }
             }
