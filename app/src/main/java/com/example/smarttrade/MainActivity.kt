@@ -10,10 +10,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.smarttrade.auth.presentation.view.ClientRegisterScreen
 import com.example.smarttrade.auth.presentation.view.LoginScreen
 import com.example.smarttrade.auth.presentation.view.SellerRegisterScreen
-import com.example.smarttrade.catalogue.ui.mainCatalogueScreen
-import com.example.smarttrade.catalogue.ui.mainCatalogueViewModel
-import com.example.smarttrade.catalogue.ui.viewProductCatalogueScreen
-import com.example.smarttrade.catalogue.ui.viewProductCatalogueViewModel
+import com.example.smarttrade.catalogue.view.mainCatalogueScreen
+import com.example.smarttrade.catalogue.viewmodel.mainCatalogueViewModel
+import com.example.smarttrade.catalogue.view.viewProductCatalogueScreen
+import com.example.smarttrade.catalogue.viewmodel.viewProductCatalogueViewModel
 import com.example.smarttrade.product_management.presentation.view.addProductBooksScreen
 import com.example.smarttrade.product_management.presentation.view.addProductClothesScreen
 import com.example.smarttrade.product_management.presentation.view.addProductFoodScreen

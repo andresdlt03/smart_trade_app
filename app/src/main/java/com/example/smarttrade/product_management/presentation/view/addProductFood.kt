@@ -33,9 +33,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.smarttrade.R
-import com.example.smarttrade.catalogue.ui.mainCatalogueViewModel
+import com.example.smarttrade.catalogue.viewmodel.mainCatalogueViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.AddProductFoodViewModel
-import com.example.smarttrade.product_management.presentation.viewmodel.AddProductTechnologyViewModel
 
 @Composable
 fun addProductFoodScreen(viewModel: AddProductFoodViewModel = hiltViewModel(),

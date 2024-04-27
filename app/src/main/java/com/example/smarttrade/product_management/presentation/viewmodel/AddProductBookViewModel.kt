@@ -3,8 +3,8 @@ package com.example.smarttrade.product_management.presentation.viewmodel
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
-import com.example.smarttrade.catalogue.ui.Product
-import com.example.smarttrade.catalogue.ui.mainCatalogueViewModel
+import com.example.smarttrade.catalogue.viewmodel.Product
+import com.example.smarttrade.catalogue.viewmodel.mainCatalogueViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.state.ProductBookState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -96,7 +96,7 @@ class AddProductBookViewModel @Inject constructor() : ViewModel() {
     }
 
     fun addProduct(viewModel: mainCatalogueViewModel){
-        val producto :Product = Product(_state.value.photo1, _state.value.name, _state.value.price, _state.value.description, "Libros")
+        val producto : Product = Product(_state.value.photo1, _state.value.name, _state.value.price, _state.value.description, "Libros")
         viewModel.addtoCatalogue(producto)
     }
 

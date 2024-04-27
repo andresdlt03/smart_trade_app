@@ -1,13 +1,10 @@
-package com.example.smarttrade.catalogue.ui
+package com.example.smarttrade.catalogue.viewmodel
 
 import android.net.Uri
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavHostController
-import com.example.smarttrade.product_management.presentation.viewmodel.Category
+import com.example.smarttrade.auth.domain.model.User
 
 class mainCatalogueViewModel : ViewModel() {
 
@@ -129,6 +126,7 @@ class mainCatalogueViewModel : ViewModel() {
     val priceRange: ClosedFloatingPointRange<Float> = 0f..1000f
 
     private var _product: Product? = null
+    private var _user: User? = null
 
     fun setProduct(uri: Uri?, name: String, price: String, description: String, cat: String) {
         _product = Product(uri, name, price, description, cat)
