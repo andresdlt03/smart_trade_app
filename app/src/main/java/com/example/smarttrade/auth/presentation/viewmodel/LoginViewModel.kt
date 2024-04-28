@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.smarttrade.auth.domain.repository.UserRepository
 import com.example.smarttrade.auth.http.login.LoginFailed
+import com.example.smarttrade.auth.http.login.LoginSuccess
 import com.example.smarttrade.auth.presentation.validation.ValidateEmail
 import com.example.smarttrade.auth.presentation.validation.ValidatePassword
 import com.example.smarttrade.auth.presentation.viewmodel.state.LoginState
@@ -27,6 +28,8 @@ class LoginViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     private var loggedUserEmail: String? = null
+    private var loggedUserType: String? = null
+
     fun updateEmail(email: String) {
         _state.value = _state.value.copy(email = email)
     }
@@ -42,9 +45,25 @@ class LoginViewModel @Inject constructor(
             loginError = null
         )
     }
-    val userLoggedInEmail: String?
+    val getUserLoggedInEmail: String?
         get() = loggedUserEmail
 
+    fun getLoggedUserType(): String? {
+        return loggedUserType
+    }
+
+//    fun isSeller(response: LoginSuccess): Boolean {
+//        return response.cif != ""
+//
+//    }
+//
+//    fun isClient(response: LoginSuccess): Boolean {
+//        return response.dni != ""
+//    }
+//
+//    fun isAdmin(response: LoginSuccess): Boolean {
+//        return response.email.startsWith("admin@")
+//    }
     fun onLogin() {
 
         val emailValidation = validateEmail.execute(_state.value.email)
@@ -67,10 +86,16 @@ class LoginViewModel @Inject constructor(
             try {
                 val call = userRepository.loginUser(_state.value.email, _state.value.password)
                 if(call.isSuccessful) {
+
+                    val responseBody = call.body()
+                    val response = gson.fromJson(responseBody, LoginSuccess::class.java)
+
                     _state.value = _state.value.copy(
                         loginSuccess = true
                     )
                     loggedUserEmail = _state.value.email
+                    loggedUserType = determineUserType(response)
+
                 } else {
                     val body = call.errorBody()?.string()
                     val error = gson.fromJson(body, LoginFailed::class.java)
@@ -82,5 +107,16 @@ class LoginViewModel @Inject constructor(
                 println(e.message)
             }
         }
+    }
+    private fun determineUserType(response: LoginSuccess?): String {
+        if (response != null) {
+            return when {
+                response.dni != "" -> "Client"
+                response.cif != "" -> "Seller"
+                response.email.startsWith("admin@") -> "Admin"
+                else -> "Unknown"
+            }
+        }
+        return "Unknown"
     }
 }

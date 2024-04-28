@@ -3,6 +3,7 @@ package com.example.smarttrade
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.rememberScrollState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,7 +13,10 @@ import com.example.smarttrade.auth.presentation.view.LoginScreen
 import com.example.smarttrade.auth.presentation.view.SellerRegisterScreen
 import com.example.smarttrade.catalogue.view.mainCatalogueScreen
 import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
+import com.example.smarttrade.auth.presentation.viewmodel.LoginViewModel
 import com.example.smarttrade.catalogue.view.viewProductCatalogueScreen
+import com.example.smarttrade.catalogue.viewmodel.adminCatalogueViewModel
+import com.example.smarttrade.catalogue.viewmodel.clientCatalogueViewModel
 import com.example.smarttrade.catalogue.viewmodel.sellerCatalogueViewModel
 import com.example.smarttrade.catalogue.viewmodel.viewProductCatalogueViewModel
 import com.example.smarttrade.product_management.presentation.view.addProductBooksScreen
@@ -25,13 +29,21 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private val loginViewModel: LoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val viewmodel = sellerCatalogueViewModel()
+
+            val viewModel = when (loginViewModel.getLoggedUserType()) {
+                "Client" -> clientCatalogueViewModel()
+                "Seller" -> sellerCatalogueViewModel()
+                "Admin" -> adminCatalogueViewModel()
+                else -> throw IllegalArgumentException("Tipo de usuario desconocido")
+            }
             SmartTradeTheme {
                 val navController = rememberNavController()
                 val scrollState = rememberScrollState()
+                val viewmodel = sellerCatalogueViewModel()
 
                 NavHost(navController = navController, startDestination = "initial_screen") {
                     composable("initial_screen") {

@@ -28,6 +28,7 @@ class UserRepositoryImpl @Inject constructor(
             val credentials = LoginCredentials(email, password)
             val loginRequest = LoginRequest(credentials)
             val json = gson.toJson(loginRequest)
+
             return userApi.loginUser(json)
         } catch (e: Exception) {
             throw NetworkException(e.message.toString())
