@@ -22,11 +22,8 @@ import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
@@ -49,15 +46,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import com.example.smarttrade.auth.domain.model.User
 import com.example.smarttrade.catalogue.viewmodel.Product
-import com.example.smarttrade.catalogue.viewmodel.mainCatalogueViewModel
+import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.Category
 
 @Composable
 fun mainCatalogueScreen(
     // user: User,
-    viewModel: mainCatalogueViewModel,
+    viewModel: catalogueViewModel,
     navController: NavHostController,
     scrollState: ScrollState
 ){
@@ -76,7 +72,7 @@ fun mainCatalogueScreen(
 @Composable
 fun mainCatalogue(
     // user: User,
-    viewModel: mainCatalogueViewModel,
+    viewModel: catalogueViewModel,
     navController: NavHostController,
     scrollState: ScrollState
 ){
@@ -127,14 +123,14 @@ fun outLinedTextManage(
     activeFilterPrice:() -> Unit,
     UnActiveFilterCategory:() -> Unit,
     UnActiveFilterPrice:() -> Unit,
-    viewModel: mainCatalogueViewModel,
+    viewModel: catalogueViewModel,
     navController: NavHostController,
     scrollState: ScrollState
 
 ){
     val filteredProducts :List<Product> by viewModel.filteredProduct.observeAsState(initial =
     listOf())
-    val filterCategory :Boolean by viewModel.filterCatgegory.observeAsState(initial = false)
+    val filterCategory :Boolean by viewModel.filterCategory.observeAsState(initial = false)
     val filterPrice:Boolean by viewModel.filterPrice.observeAsState(initial = false)
 
     val filterC :Boolean by viewModel.filterC.observeAsState(initial = false)
@@ -423,7 +419,7 @@ fun CheckBoxItem(
 
 @Composable
 fun ProductItem(
-    viewModel: mainCatalogueViewModel,
+    viewModel: catalogueViewModel,
     navController: NavHostController,
     nombre : String,
     uri: Uri?,

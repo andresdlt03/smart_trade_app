@@ -1,11 +1,9 @@
 package com.example.smarttrade.catalogue.viewmodel
 
-
 import com.example.smarttrade.auth.domain.model.User
-import com.example.smarttrade.catalogue.view.Catalogue
 
-class adminCatalogueViewModel : Catalogue {
-    override fun loadAndShowProducts(user: User) {
+class adminCatalogueViewModel : catalogueViewModel() {
+
         // val approvedProducts = ProductService.getAllApprovedProducts()
         // val notApprovedProducts = ProductService.getAllNotApprovedProducts()
 
@@ -15,10 +13,9 @@ class adminCatalogueViewModel : Catalogue {
         *
         * SE MOSTRARÁN EN SECCIONES DISTINTAS
         * */
-    }
-    override fun removeProduct(user: User, product: Product) {
+
         // user = product.getSeller
         // ProductService.removeProductByUser(user, product)
-    }
+
 
 }

@@ -11,7 +11,7 @@ import com.example.smarttrade.auth.presentation.view.ClientRegisterScreen
 import com.example.smarttrade.auth.presentation.view.LoginScreen
 import com.example.smarttrade.auth.presentation.view.SellerRegisterScreen
 import com.example.smarttrade.catalogue.view.mainCatalogueScreen
-import com.example.smarttrade.catalogue.viewmodel.mainCatalogueViewModel
+import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
 import com.example.smarttrade.catalogue.view.viewProductCatalogueScreen
 import com.example.smarttrade.catalogue.viewmodel.viewProductCatalogueViewModel
 import com.example.smarttrade.product_management.presentation.view.addProductBooksScreen
@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val viewmodel = mainCatalogueViewModel()
+            val viewmodel = catalogueViewModel()
             SmartTradeTheme {
                 val navController = rememberNavController()
                 val scrollState = rememberScrollState()

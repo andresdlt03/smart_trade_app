@@ -27,14 +27,14 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.smarttrade.catalogue.viewmodel.Product
-import com.example.smarttrade.catalogue.viewmodel.mainCatalogueViewModel
+import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
 import com.example.smarttrade.catalogue.viewmodel.viewProductCatalogueViewModel
 
 @Composable
 fun viewProductCatalogueScreen(
     viewModel: viewProductCatalogueViewModel,
     navControler: NavHostController,
-    viewModel2: mainCatalogueViewModel
+    viewModel2: catalogueViewModel
 ){
     Column {
         viewProductCatalogue(viewModel, navControler, viewModel2)
@@ -42,7 +42,7 @@ fun viewProductCatalogueScreen(
 }
 
 @Composable
-fun viewProductCatalogue(viewModel: viewProductCatalogueViewModel, navControler :NavHostController, viewModel2: mainCatalogueViewModel) {
+fun viewProductCatalogue(viewModel: viewProductCatalogueViewModel, navControler :NavHostController, viewModel2: catalogueViewModel) {
     val producto: Product? = viewModel2.getProduct()
     if(producto != null) {
         topBarManage(producto.category, navControler)

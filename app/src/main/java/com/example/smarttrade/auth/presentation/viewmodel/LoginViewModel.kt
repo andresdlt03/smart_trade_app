@@ -26,6 +26,7 @@ class LoginViewModel @Inject constructor(
     private val _state = MutableStateFlow(LoginState())
     val state = _state.asStateFlow()
 
+    private var loggedUserEmail: String? = null
     fun updateEmail(email: String) {
         _state.value = _state.value.copy(email = email)
     }
@@ -41,6 +42,8 @@ class LoginViewModel @Inject constructor(
             loginError = null
         )
     }
+    val userLoggedInEmail: String?
+        get() = loggedUserEmail
 
     fun onLogin() {
 
@@ -67,6 +70,7 @@ class LoginViewModel @Inject constructor(
                     _state.value = _state.value.copy(
                         loginSuccess = true
                     )
+                    loggedUserEmail = _state.value.email
                 } else {
                     val body = call.errorBody()?.string()
                     val error = gson.fromJson(body, LoginFailed::class.java)
