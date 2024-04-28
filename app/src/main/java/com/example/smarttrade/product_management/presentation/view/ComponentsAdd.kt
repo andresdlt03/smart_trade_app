@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.smarttrade.R
 import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
+import com.example.smarttrade.catalogue.viewmodel.sellerCatalogueViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.AddProductBookViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.AddProductClothesViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.AddProductFoodViewModel
@@ -110,7 +111,7 @@ fun addImage(){
 }
 
 @Composable
-fun publishProductButton1(viewModel: AddProductTechnologyViewModel, vm: catalogueViewModel, navController: NavHostController){
+fun publishProductButton1(viewModel: AddProductTechnologyViewModel, vm: sellerCatalogueViewModel, navController: NavHostController){
     Box(
         modifier = Modifier
             .fillMaxWidth(),
@@ -133,7 +134,7 @@ fun publishProductButton1(viewModel: AddProductTechnologyViewModel, vm: catalogu
 }
 
 @Composable
-fun publishProductButton2(viewModel: AddProductFoodViewModel, vm: catalogueViewModel, navController: NavHostController){
+fun publishProductButton2(viewModel: AddProductFoodViewModel, vm: sellerCatalogueViewModel, navController: NavHostController){
     Box(
         modifier = Modifier
             .fillMaxWidth(),
@@ -156,7 +157,7 @@ fun publishProductButton2(viewModel: AddProductFoodViewModel, vm: catalogueViewM
 }
 
 @Composable
-fun publishProductButton3(viewModel: AddProductClothesViewModel, vm: catalogueViewModel, navController: NavHostController){
+fun publishProductButton3(viewModel: AddProductClothesViewModel, vm: sellerCatalogueViewModel, navController: NavHostController){
     Box(
         modifier = Modifier
             .fillMaxWidth(),
@@ -179,7 +180,7 @@ fun publishProductButton3(viewModel: AddProductClothesViewModel, vm: catalogueVi
 }
 
 @Composable
-fun publishProductButton4(viewModel: AddProductBookViewModel, vm: catalogueViewModel, navController: NavHostController){
+fun publishProductButton4(viewModel: AddProductBookViewModel, vm: sellerCatalogueViewModel, navController: NavHostController){
     Box(
         modifier = Modifier
             .fillMaxWidth(),
