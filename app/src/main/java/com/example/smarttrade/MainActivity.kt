@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val scrollState = rememberScrollState()
 
-                NavHost(navController = navController, startDestination = "gift") {
+                NavHost(navController = navController, startDestination = "giftList") {
                     composable("initial_screen") {
                         InitialScreen(
                             navController = navController
@@ -98,8 +98,8 @@ class MainActivity : ComponentActivity() {
                             viewmodel
                         )
                     }
-                    composable("gift"){
-                        giftScreen(navController =navController , viewModel = giftViewModel())
+                    composable("giftList"){
+                        giftScreen(giftViewModel(),navController)
                     }
                 }
             }

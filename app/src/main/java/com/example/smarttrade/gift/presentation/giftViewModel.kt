@@ -1,18 +1,14 @@
 package com.example.smarttrade.gift.presentation
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
-import com.example.smarttrade.catalogue.ui.Product
-import javax.inject.Inject
 
 class giftViewModel : ViewModel() {
 
-
-    fun goBackCategories(navControler: NavHostController){
-        navControler.navigate("catalogue")
+    fun goBackCategories(navController: NavHostController){
+        navController.navigate("catalogue")
     }
 
     private val _lists = MutableLiveData<List<String>>()
@@ -44,6 +40,10 @@ class giftViewModel : ViewModel() {
     }
 
     fun getFirstofList(): String{
-        return listas.get(0)
+        return if(!listas.isEmpty()){
+            listas[0]
+        } else{
+            ""
+        }
     }
 }

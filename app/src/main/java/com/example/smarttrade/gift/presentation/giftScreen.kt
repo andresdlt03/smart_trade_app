@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -42,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.smarttrade.catalogue.ui.Product
 import  com.example.smarttrade.gift.presentation.giftViewModel
 
@@ -57,7 +60,7 @@ fun giftScreen(viewModel: giftViewModel ,
             .padding(32.dp),
         verticalArrangement = Arrangement.Top,
     ) {
-        gift(viewModel = viewModel, navController)
+        gift(viewModel, navController)
     }
 }
 
@@ -69,7 +72,8 @@ fun gift(viewModel: giftViewModel, navController: NavHostController){
     topBarAdd(goBackCategories = {viewModel.goBackCategories(navController)}, navController = navController)
     Spacer(modifier = Modifier.height(15.dp))
     listToGift(viewModel)
-    if(activePop == true){MyPopupWindow(viewModel,{})}
+    if(activePop){MyPopupWindow(viewModel) { viewModel.unActivePop() }
+    }
 }
 
 
@@ -119,7 +123,6 @@ fun boton1(viewModel: giftViewModel){
     }
 }
 
-
 @Composable
 
 fun boton2(viewModel: giftViewModel){
@@ -132,43 +135,61 @@ fun boton2(viewModel: giftViewModel){
     }
 }
 
-
 @Composable
 fun MyPopupWindow(viewModel: giftViewModel, onDismiss: () -> Unit) {
     val newString = remember { mutableStateOf("") }
     val lists :List<String> by viewModel.lists.observeAsState(initial =
     listOf())
 
-    Dialog(onDismissRequest = {viewModel.unActivePop()}) {
+    Dialog(
+        onDismissRequest = {viewModel.unActivePop()},
+
+    ) {
 
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier
+                .padding(26.dp)
+                .background(color = Color.Gray, shape = RoundedCornerShape(15))
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+
         ) {
-            Text(text = "Listas de Regalo")
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(text = "Listas de Regalo", fontSize = 25.sp)
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(text = "Selecciona o crea una lista nueva", fontSize = 15.sp)
+            Spacer(modifier = Modifier.height(12.dp))
+
             for (i in lists){
                 Text(
                     text = i,
-                    modifier = Modifier.clickable { viewModel.changeSelectedList(i);viewModel.unActivePop() }
+                    modifier = Modifier
+                        .clickable { viewModel.changeSelectedList(i);viewModel.unActivePop() }
+                        .background(color = Color.LightGray, shape = RoundedCornerShape(15))
+                        .padding(5.dp),
+
+                    fontSize = 20.sp
                 )
+                Spacer(modifier = Modifier.height(5.dp))
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Campo de entrada para la nueva cadena
             OutlinedTextField(
                 value = newString.value,
                 onValueChange = { newString.value = it },
-                label = { Text("Selecciona o añade una lista de regalo") }
+                label = { Text("Crea una lista de regalo") },
+                modifier = Modifier.padding(9.dp)
+
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(9.dp))
 
-            // Botón para agregar la nueva cadena a la lista
             Button(
                 onClick = {
+                    if(newString.value != "") {
                     viewModel.addStringToList(newString.value)
-                    newString.value = ""
+                    newString.value = ""}
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
@@ -177,3 +198,4 @@ fun MyPopupWindow(viewModel: giftViewModel, onDismiss: () -> Unit) {
         }
     }
 }
+
