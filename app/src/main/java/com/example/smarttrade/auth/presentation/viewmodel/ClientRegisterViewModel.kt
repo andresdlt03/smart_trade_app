@@ -48,12 +48,12 @@ class ClientRegisterViewModel @Inject constructor(
         _state.value = _state.value.copy(dni = dni)
     }
 
-    fun updateDeliverDir(dni: String) {
-        _state.value = _state.value.copy(deliverDir = dni)
+    fun updateDeliveryAddress(dni: String) {
+        _state.value = _state.value.copy(deliveryAddress = dni)
     }
 
-    fun updatefactDire(dni: String) {
-        _state.value = _state.value.copy(factDir = dni)
+    fun updateBillingAddress(dni: String) {
+        _state.value = _state.value.copy(billingAddress = dni)
     }
 
     fun updateCreditCard(dni: String) {
@@ -87,7 +87,7 @@ class ClientRegisterViewModel @Inject constructor(
         val nameValidation = validateNotEmpty.execute(state.value.name)
         val surnameValidation = validateNotEmpty.execute(state.value.surname)
         val dniValidation = validateNotEmpty.execute(state.value.dni)
-        val deliveryDirValidation = validateNotEmpty.execute(state.value.deliverDir)
+        val deliveryDirValidation = validateNotEmpty.execute(state.value.deliveryAddress)
 
 
         val hasError = listOf(
@@ -117,7 +117,10 @@ class ClientRegisterViewModel @Inject constructor(
                 surname = state.value.surname,
                 email = state.value.email,
                 password = state.value.password,
-                dni = state.value.dni
+                dni = state.value.dni,
+                deliveryAddress = state.value.deliveryAddress,
+                billingAddress = state.value.billingAddress,
+                creditCard = state.value.creditCard
             )
             try {
                 val call = userRepository.registerUser(client, "client")

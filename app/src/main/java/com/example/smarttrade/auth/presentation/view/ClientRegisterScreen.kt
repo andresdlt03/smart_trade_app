@@ -1,16 +1,10 @@
 package com.example.smarttrade.auth.presentation.view
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -19,8 +13,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.smarttrade.auth.presentation.viewmodel.ClientRegisterViewModel
-import com.example.smarttrade.auth.presentation.viewmodel.state.ClientRegisterState
-import com.example.smarttrade.ui.theme.md_theme_light_error
 
 @Composable
 fun ClientRegisterScreen(
@@ -56,9 +48,9 @@ fun ClientRegisterForm(
         state.value.passwordError?.let { ErrorText(text = it) }
         outlinedText(value = state.value.dni,  label = "DNI *", {viewModel.updateDni(it)})
         state.value.dniError?.let { ErrorText(text = it)}
-        outlinedText(value = state.value.deliverDir,  label = "Dirección de entrega *", {viewModel.updateDeliverDir(it)})
+        outlinedText(value = state.value.deliveryAddress,  label = "Dirección de entrega *", {viewModel.updateDeliveryAddress(it)})
         state.value.deliverDirError?.let { ErrorText(text = it)}
-        outlinedText(value = state.value.factDir, label = "Dirección de facturación", {viewModel.updatefactDire(it)})
+        outlinedText(value = state.value.billingAddress, label = "Dirección de facturación", {viewModel.updateBillingAddress(it)})
         state.value.factDirError?.let { ErrorText(text = it)}
         outlinedText(value = state.value.creditCard, label = "Tarjeta de crédito", {viewModel.updateCreditCard(it)})
         state.value.creditCardError?.let { ErrorText(text = it)}

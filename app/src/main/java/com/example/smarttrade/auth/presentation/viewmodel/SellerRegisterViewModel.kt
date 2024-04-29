@@ -117,7 +117,8 @@ class SellerRegisterViewModel @Inject constructor(
                 email = _state.value.email,
                 password = _state.value.password,
                 companyName = _state.value.companyName,
-                cif = _state.value.cif
+                cif = _state.value.cif,
+                bankAccount = _state.value.bankAccount
             )
             try {
                 val call = userRepository.registerUser(seller, "seller")
