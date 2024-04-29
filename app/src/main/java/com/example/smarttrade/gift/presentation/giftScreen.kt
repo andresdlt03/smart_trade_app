@@ -187,7 +187,7 @@ fun MyPopupWindow(viewModel: giftViewModel, onDismiss: () -> Unit) {
 
             Button(
                 onClick = {
-                    if(newString.value != "") {
+                    if(newString.value.trim() != "") {
                     viewModel.addStringToList(newString.value)
                     newString.value = ""}
                 },
