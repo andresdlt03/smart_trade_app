@@ -14,6 +14,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import javax.inject.Inject
 
 @HiltViewModel
@@ -45,25 +46,13 @@ class LoginViewModel @Inject constructor(
             loginError = null
         )
     }
-    val getUserLoggedInEmail: String?
+    val getLoggedInEmail: String?
         get() = loggedUserEmail
 
     fun getLoggedUserType(): String? {
         return loggedUserType
     }
 
-//    fun isSeller(response: LoginSuccess): Boolean {
-//        return response.cif != ""
-//
-//    }
-//
-//    fun isClient(response: LoginSuccess): Boolean {
-//        return response.dni != ""
-//    }
-//
-//    fun isAdmin(response: LoginSuccess): Boolean {
-//        return response.email.startsWith("admin@")
-//    }
     fun onLogin() {
 
         val emailValidation = validateEmail.execute(_state.value.email)
@@ -88,13 +77,12 @@ class LoginViewModel @Inject constructor(
                 if(call.isSuccessful) {
 
                     val responseBody = call.body()
-                    val response = gson.fromJson(responseBody, LoginSuccess::class.java)
 
                     _state.value = _state.value.copy(
                         loginSuccess = true
                     )
                     loggedUserEmail = _state.value.email
-                    loggedUserType = determineUserType(response)
+                    loggedUserType = extractUserTypeFromResponse(responseBody)
 
                 } else {
                     val body = call.errorBody()?.string()
@@ -108,15 +96,9 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
-    private fun determineUserType(response: LoginSuccess?): String {
-        if (response != null) {
-            return when {
-                response.dni != "" -> "Client"
-                response.cif != "" -> "Seller"
-                response.email.startsWith("admin@") -> "Admin"
-                else -> "Unknown"
-            }
-        }
-        return "Unknown"
-    }
+}
+
+fun extractUserTypeFromResponse(responseBody: String?): String {
+    val jsonObject = JSONObject(responseBody)
+    return jsonObject.optString("userType", "Tipo de usuario no especificado")
 }
