@@ -7,4 +7,5 @@ data class Seller (
     override val password: String,
     val companyName: String,
     val cif: String,
+    val bankAccount: String
 ): User

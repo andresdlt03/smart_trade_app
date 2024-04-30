@@ -34,6 +34,7 @@ fun RegisterLayout(
     navController: NavController,
     content: @Composable () -> Unit
 ) {
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier

@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.smarttrade.auth.domain.model.Seller
 import com.example.smarttrade.auth.domain.repository.UserRepository
 import com.example.smarttrade.auth.http.register.RegisterFailed
+import com.example.smarttrade.auth.presentation.validation.ValidateBankAccount
 import com.example.smarttrade.auth.presentation.validation.ValidateEmail
 import com.example.smarttrade.auth.presentation.validation.ValidateNotEmpty
 import com.example.smarttrade.auth.presentation.validation.ValidatePassword
@@ -22,6 +23,7 @@ class SellerRegisterViewModel @Inject constructor(
     private val validateEmail: ValidateEmail,
     private val validatePassword: ValidatePassword,
     private val validateNotEmpty: ValidateNotEmpty,
+    private val validateBankAccount: ValidateBankAccount,
     private val gson: Gson
     ) : RegisterViewModel() {
 
@@ -52,6 +54,10 @@ class SellerRegisterViewModel @Inject constructor(
         _state.value = _state.value.copy(cif = cif)
     }
 
+    fun updateBankAccount(account: String){
+        _state.value = _state.value.copy(bankAccount = account)
+    }
+
     fun clearError() {
         _state.value = _state.value.copy(
             emailError = null,
@@ -61,6 +67,7 @@ class SellerRegisterViewModel @Inject constructor(
             companyNameError = null,
             cifError = null,
             registerError = null,
+            bankAccountError = null,
         )
     }
 
@@ -78,6 +85,7 @@ class SellerRegisterViewModel @Inject constructor(
         val surnameValidation = validateNotEmpty.execute(_state.value.surname)
         val companyNameValidation = validateNotEmpty.execute(_state.value.companyName)
         val cifValidation = validateNotEmpty.execute(_state.value.cif)
+        val bankAccountValidation = validateBankAccount.execute(_state.value.bankAccount)
 
         val hasError = listOf(
             emailValidation,
@@ -85,7 +93,8 @@ class SellerRegisterViewModel @Inject constructor(
             nameValidation,
             surnameValidation,
             companyNameValidation,
-            cifValidation
+            cifValidation,
+            bankAccountValidation
         ).any { !it.successful }
 
         if (hasError) {
@@ -95,7 +104,8 @@ class SellerRegisterViewModel @Inject constructor(
                 nameError = nameValidation.errorMessage,
                 surnameError = surnameValidation.errorMessage,
                 companyNameError = companyNameValidation.errorMessage,
-                cifError = cifValidation.errorMessage
+                cifError = cifValidation.errorMessage,
+                bankAccountError = bankAccountValidation.errorMessage
             )
             return
         }
@@ -107,7 +117,8 @@ class SellerRegisterViewModel @Inject constructor(
                 email = _state.value.email,
                 password = _state.value.password,
                 companyName = _state.value.companyName,
-                cif = _state.value.cif
+                cif = _state.value.cif,
+                bankAccount = _state.value.bankAccount
             )
             try {
                 val call = userRepository.registerUser(seller, "seller")

@@ -48,6 +48,19 @@ class ClientRegisterViewModel @Inject constructor(
         _state.value = _state.value.copy(dni = dni)
     }
 
+    fun updateDeliveryAddress(dni: String) {
+        _state.value = _state.value.copy(deliveryAddress = dni)
+    }
+
+    fun updateBillingAddress(dni: String) {
+        _state.value = _state.value.copy(billingAddress = dni)
+    }
+
+    fun updateCreditCard(dni: String) {
+        _state.value = _state.value.copy(creditCard = dni)
+    }
+
+
     fun clearError() {
         _state.value = _state.value.copy(
             emailError = null,
@@ -55,7 +68,10 @@ class ClientRegisterViewModel @Inject constructor(
             nameError = null,
             surnameError = null,
             dniError = null,
-            registerError = null
+            registerError = null,
+            deliverDirError = null,
+            factDirError = null,
+            creditCardError = null
         )
     }
 
@@ -71,13 +87,16 @@ class ClientRegisterViewModel @Inject constructor(
         val nameValidation = validateNotEmpty.execute(state.value.name)
         val surnameValidation = validateNotEmpty.execute(state.value.surname)
         val dniValidation = validateNotEmpty.execute(state.value.dni)
+        val deliveryDirValidation = validateNotEmpty.execute(state.value.deliveryAddress)
+
 
         val hasError = listOf(
             emailValidation,
             passwordValidation,
             nameValidation,
             surnameValidation,
-            dniValidation
+            dniValidation,
+            deliveryDirValidation
         ).any { !it.successful }
 
         if(hasError) {
@@ -86,7 +105,8 @@ class ClientRegisterViewModel @Inject constructor(
                 passwordError = passwordValidation.errorMessage,
                 nameError = nameValidation.errorMessage,
                 surnameError = surnameValidation.errorMessage,
-                dniError = dniValidation.errorMessage
+                dniError = dniValidation.errorMessage,
+                deliverDirError = deliveryDirValidation.errorMessage
             )
             return
         }
@@ -97,7 +117,10 @@ class ClientRegisterViewModel @Inject constructor(
                 surname = state.value.surname,
                 email = state.value.email,
                 password = state.value.password,
-                dni = state.value.dni
+                dni = state.value.dni,
+                deliveryAddress = state.value.deliveryAddress,
+                billingAddress = state.value.billingAddress,
+                creditCard = state.value.creditCard
             )
             try {
                 val call = userRepository.registerUser(client, "client")
@@ -108,7 +131,8 @@ class ClientRegisterViewModel @Inject constructor(
                 } else {
                     val error = gson.fromJson(call.errorBody()?.string(), RegisterFailed::class.java)
                     _state.value = _state.value.copy(
-                        registerError = error.errorMessage
+                        registerError = error.errorMessage,
+                        registerSuccess = false
                     )
                 }
             } catch (e: NetworkException) {
