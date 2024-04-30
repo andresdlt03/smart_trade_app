@@ -14,6 +14,8 @@ import com.example.smarttrade.catalogue.ui.mainCatalogueScreen
 import com.example.smarttrade.catalogue.ui.mainCatalogueViewModel
 import com.example.smarttrade.catalogue.ui.viewProductCatalogueScreen
 import com.example.smarttrade.catalogue.ui.viewProductCatalogueViewModel
+import com.example.smarttrade.gift.presentation.giftScreen
+import com.example.smarttrade.gift.presentation.giftViewModel
 import com.example.smarttrade.product_management.presentation.view.addProductBooksScreen
 import com.example.smarttrade.product_management.presentation.view.addProductClothesScreen
 import com.example.smarttrade.product_management.presentation.view.addProductFoodScreen
@@ -95,6 +97,9 @@ class MainActivity : ComponentActivity() {
                             navController,
                             viewmodel
                         )
+                    }
+                    composable("giftList"){
+                        giftScreen(giftViewModel(),navController)
                     }
                 }
             }
