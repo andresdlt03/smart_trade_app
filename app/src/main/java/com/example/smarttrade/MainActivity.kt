@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
                     else -> throw IllegalArgumentException("Tipo de usuario desconocido")
                 }
 
-                NavHost(navController = navController, startDestination = "catalogue") {
+                NavHost(navController = navController, startDestination = "initial_screen") {
                     composable("initial_screen") {
                         InitialScreen(
                             navController = navController
@@ -102,7 +102,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     composable("catalogue") {
-                        mainCatalogueScreen(viewmodel, navController,scrollState)
+                        mainCatalogueScreen(viewmodel, navController,scrollState, loginViewModel)
                     }
                     composable("viewProduct") {
                         viewProductCatalogueScreen(
