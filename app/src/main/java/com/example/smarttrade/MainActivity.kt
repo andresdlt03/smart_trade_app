@@ -3,6 +3,7 @@ package com.example.smarttrade
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.rememberScrollState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -26,13 +27,22 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private val loginViewModel: LoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val viewmodel = mainCatalogueViewModel()
+
+
             SmartTradeTheme {
                 val navController = rememberNavController()
                 val scrollState = rememberScrollState()
+                val viewmodel =
+                    when (loginViewModel.getLoggedUserType()) {
+                    "Client" -> clientCatalogueViewModel()
+                    "Seller" -> sellerCatalogueViewModel()
+                    "Admin" -> adminCatalogueViewModel()
+                    else -> throw IllegalArgumentException("Tipo de usuario desconocido")
+                }
 
                 NavHost(navController = navController, startDestination = "catalogue") {
                     composable("initial_screen") {
@@ -64,28 +74,28 @@ class MainActivity : ComponentActivity() {
                         addProductTechnologyScreen(
                             navHostController = navController,
                             scrollState = scrollState,
-                            vm = viewmodel
+                            vm = sellerCatalogueViewModel()
                         )
                     }
                     composable("add2") {
                         addProductBooksScreen(
                             navHostController = navController,
                             scrollState = scrollState,
-                            vm = viewmodel
+                            vm = sellerCatalogueViewModel()
                         )
                     }
                     composable("add3") {
                         addProductFoodScreen(
                             navHostController = navController,
                             scrollState = scrollState,
-                            vm = viewmodel
+                            vm = sellerCatalogueViewModel()
                         )
                     }
                     composable("add4") {
                         addProductClothesScreen(
                             navHostController = navController,
                             scrollState = scrollState,
-                            vm = viewmodel
+                            vm = sellerCatalogueViewModel()
                         )
                     }
                     composable("catalogue") {

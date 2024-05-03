@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.smarttrade.auth.domain.repository.UserRepository
 import com.example.smarttrade.auth.http.login.LoginFailed
+import com.example.smarttrade.auth.http.login.LoginSuccess
 import com.example.smarttrade.auth.presentation.validation.ValidateEmail
 import com.example.smarttrade.auth.presentation.validation.ValidatePassword
 import com.example.smarttrade.auth.presentation.viewmodel.state.LoginState
@@ -13,6 +14,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,6 +27,9 @@ class LoginViewModel @Inject constructor(
 
     private val _state = MutableStateFlow(LoginState())
     val state = _state.asStateFlow()
+
+    private var loggedUserEmail: String? = null
+    private var loggedUserType: String? = "Seller";
 
     fun updateEmail(email: String) {
         _state.value = _state.value.copy(email = email)
@@ -40,6 +45,12 @@ class LoginViewModel @Inject constructor(
             passwordError = null,
             loginError = null
         )
+    }
+    val getLoggedInEmail: String?
+        get() = loggedUserEmail
+
+    fun getLoggedUserType(): String? {
+        return loggedUserType
     }
 
     fun onLogin() {
@@ -64,9 +75,15 @@ class LoginViewModel @Inject constructor(
             try {
                 val call = userRepository.loginUser(_state.value.email, _state.value.password)
                 if(call.isSuccessful) {
+
+                    val responseBody = call.body()
+
                     _state.value = _state.value.copy(
                         loginSuccess = true
                     )
+                    loggedUserEmail = _state.value.email
+                    loggedUserType = extractUserTypeFromResponse(responseBody)
+
                 } else {
                     val body = call.errorBody()?.string()
                     val error = gson.fromJson(body, LoginFailed::class.java)
@@ -79,4 +96,9 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
+}
+
+fun extractUserTypeFromResponse(responseBody: String?): String {
+    val jsonObject = JSONObject(responseBody)
+    return jsonObject.optString("userType", "Tipo de usuario no especificado")
 }

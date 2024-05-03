@@ -1,8 +1,7 @@
-package com.example.smarttrade.catalogue.ui
+package com.example.smarttrade.catalogue.view
 
 import android.annotation.SuppressLint
 import android.net.Uri
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -42,46 +41,67 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import com.example.smarttrade.R
+import com.example.smarttrade.catalogue.viewmodel.Product
+import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.Category
 
 @Composable
 fun mainCatalogueScreen(
-    viewModel: mainCatalogueViewModel,
-    navControler: NavHostController,
+    // user: User,
+    viewModel: catalogueViewModel,
+    navController: NavHostController,
     scrollState: ScrollState
 ){
+    /*
+        val viewModel: mainCatalogueViewModel = when (user) {
+            is Seller -> SellerCatalogueViewModel()
+            is Client -> ClientCatalogueViewModel()
+            is Admin -> AdminCatalogueViewModel()
+    }*/
     Column {
-        mainCatalogue(viewModel, navControler, scrollState)
+        mainCatalogue(viewModel, navController, scrollState)
     }
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun mainCatalogue(
-    viewModel: mainCatalogueViewModel,
-    navControler: NavHostController,
+    // user: User,
+    viewModel: catalogueViewModel,
+    navController: NavHostController,
     scrollState: ScrollState
 ){
+    /*
+        val viewModel: mainCatalogueViewModel = when (user) {
+            is Seller -> SellerCatalogueViewModel()
+            is Client -> ClientCatalogueViewModel()
+            is Admin -> AdminCatalogueViewModel()
+    }*/
+
     val search :String by viewModel.search.observeAsState(initial = "")
-
-
+    /*
+        val bottomBar: @Composable () -> Unit = when (user) {
+            is Seller -> { SellerBottomBar(navController) }
+            is Client -> { ClientBottomBar(navController) }
+            is Admin -> { AdminBottomBar(navController) }
+        }
+    */
     Scaffold (
         modifier = Modifier
             .background(color = Color.White
             ),
         containerColor = Color.White,
+
         bottomBar =  {
-            BottomBar(navControler)
+            //bottomBar
+            BottomBar(navController)
         }
     )
-
     {
         outLinedTextManage(
             search = search,
@@ -90,14 +110,11 @@ fun mainCatalogue(
             UnActiveFilterCategory = { viewModel.unActiveFilterCategory() },
             UnActiveFilterPrice = { viewModel.unActiveFilterPrice() },
             viewModel = viewModel,
-            navControler,
+            navController,
             scrollState = scrollState
         )
     }
-
-
 }
-
 
 @Composable
 fun outLinedTextManage(
@@ -106,14 +123,14 @@ fun outLinedTextManage(
     activeFilterPrice:() -> Unit,
     UnActiveFilterCategory:() -> Unit,
     UnActiveFilterPrice:() -> Unit,
-    viewModel: mainCatalogueViewModel,
-    navControler: NavHostController,
+    viewModel: catalogueViewModel,
+    navController: NavHostController,
     scrollState: ScrollState
 
 ){
     val filteredProducts :List<Product> by viewModel.filteredProduct.observeAsState(initial =
     listOf())
-    val filterCategory :Boolean by viewModel.filterCatgegory.observeAsState(initial = false)
+    val filterCategory :Boolean by viewModel.filterCategory.observeAsState(initial = false)
     val filterPrice:Boolean by viewModel.filterPrice.observeAsState(initial = false)
 
     val filterC :Boolean by viewModel.filterC.observeAsState(initial = false)
@@ -317,9 +334,9 @@ fun outLinedTextManage(
                 if (filterC && filterP) {
                     val m: String = viewModel.returnCategoriesChecked()
                     if (i.category in m && i.price.toFloatOrNull()!! >= minPrice && i.price.toFloatOrNull()!! <= maxPrice) {
-                        ProductoItem(
+                        ProductItem(
                             viewModel = viewModel,
-                            navControler = navControler,
+                            navController = navController,
                             nombre = i.name,
                             uri = i.uri,
                             precio = i.price,
@@ -330,9 +347,9 @@ fun outLinedTextManage(
                 } else if (filterC && !filterP) {
                     val m: String = viewModel.returnCategoriesChecked()
                     if (i.category in m) {
-                        ProductoItem(
+                        ProductItem(
                             viewModel = viewModel,
-                            navControler = navControler,
+                            navController = navController,
                             nombre = i.name,
                             uri = i.uri,
                             precio = i.price,
@@ -342,9 +359,9 @@ fun outLinedTextManage(
                     }
                 } else if (filterC && !filterP) {
                     if (i.price.toFloatOrNull()!! >= minPrice && i.price.toFloatOrNull()!! <= maxPrice) {
-                        ProductoItem(
+                        ProductItem(
                             viewModel = viewModel,
-                            navControler = navControler,
+                            navController = navController,
                             nombre = i.name,
                             uri = i.uri,
                             precio = i.price,
@@ -353,9 +370,9 @@ fun outLinedTextManage(
                         )
                     }
                 } else if (!filterC && !filterP) {
-                    ProductoItem(
+                    ProductItem(
                         viewModel = viewModel,
-                        navControler = navControler,
+                        navController = navController,
                         nombre = i.name,
                         uri = i.uri,
                         precio = i.price,
@@ -363,9 +380,9 @@ fun outLinedTextManage(
                         cat = i.category
                     )
                 } else {
-                    ProductoItem(
+                    ProductItem(
                         viewModel = viewModel,
-                        navControler = navControler,
+                        navController = navController,
                         nombre = i.name,
                         uri = i.uri,
                         precio = i.price,
@@ -375,12 +392,8 @@ fun outLinedTextManage(
                 }
             }
         }
-
     }
-
 }
-
-
 
 @Composable
 fun CheckBoxItem(
@@ -405,15 +418,14 @@ fun CheckBoxItem(
 }
 
 @Composable
-fun ProductoItem(
-viewModel: mainCatalogueViewModel,
-navControler: NavHostController,
-nombre : String,
-uri: Uri?,
-precio: String,
-descripcion: String,
-cat : String
-
+fun ProductItem(
+    viewModel: catalogueViewModel,
+    navController: NavHostController,
+    nombre : String,
+    uri: Uri?,
+    precio: String,
+    descripcion: String,
+    cat : String
 ) {
     Row(
         modifier = Modifier
@@ -425,11 +437,10 @@ cat : String
                     precio,
                     descripcion,
                     cat
-                ); navControler.navigate("viewProduct")
+                ); navController.navigate("viewProduct")
             }
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
-
     ) {
         AsyncImage(
             model = uri,
@@ -455,8 +466,6 @@ cat : String
     }
 }
 
-
-
 @Composable
 fun BottomBar(navController: NavHostController) {
     BottomAppBar(
@@ -470,10 +479,90 @@ fun BottomBar(navController: NavHostController) {
             IconButton(onClick = { navController.navigate("initial_screen") }) {
                 Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
             }
+            IconButton(onClick = { navController.navigate("product_management") }) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Añadir")
+            }
+        }
+    }
+}
+
+@Composable
+fun adminBottomBar(navController: NavHostController) {
+    BottomAppBar(
+        containerColor = Color(android.graphics.Color.parseColor("#FFA8F5A6"))
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = { navController.navigate("initial_screen") }) {
+                Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
+            }
+            /*
+                IconButton(onClick = { navController.navigate("approved_product") }) {
+                    Icon(imageVector = Icons.Default.Check, contentDescription = "Productos verificados")
+                }
+
+                IconButton(onClick = { navController.navigate("pending_product") }) {
+                    Icon(imageVector = Icons.Default.List, contentDescription = "Productos pendientes")
+                }
+            */
 
             IconButton(onClick = { navController.navigate("product_management") }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Añadir")
             }
+        }
+    }
+}
+
+// Este es el que tenemos implementado ya "BottomBar"
+@Composable
+fun sellerBottomBar(navController: NavHostController) {
+    BottomAppBar(
+        containerColor = Color(android.graphics.Color.parseColor("#FFA8F5A6"))
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = { navController.navigate("initial_screen") }) {
+                Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
+            }
+            IconButton(onClick = { navController.navigate("product_management") }) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Añadir")
+            }
+        }
+    }
+}
+
+@Composable
+fun clientBottomBar(navController: NavHostController) {
+    BottomAppBar(
+        containerColor = Color(android.graphics.Color.parseColor("#FFA8F5A6"))
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = { navController.navigate("initial_screen") }) {
+                Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
+            }
+            /*
+                IconButton(onClick = { navController.navigate("shopping_cart") }) {
+                    Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = "Carrito")
+                }
+
+                IconButton(onClick = { navController.navigate("wishing_list") }) {
+                    Icon(imageVector = Icons.Default.Favorite, contentDescription = "Lista de deseos")
+                }
+
+                IconButton(onClick = { navController.navigate("gift_list") }) {
+                    Icon(imageVector = Icons.Default.Star, contentDescription = "Listas de regalos")
+                }
+            * */
         }
     }
 }

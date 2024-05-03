@@ -18,17 +18,16 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.smarttrade.R
-import com.example.smarttrade.catalogue.ui.mainCatalogueViewModel
+import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
+import com.example.smarttrade.catalogue.viewmodel.sellerCatalogueViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.AddProductBookViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.AddProductClothesViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.AddProductFoodViewModel
@@ -112,7 +111,7 @@ fun addImage(){
 }
 
 @Composable
-fun publishProductButton1(viewModel: AddProductTechnologyViewModel, vm: mainCatalogueViewModel, navController: NavHostController){
+fun publishProductButton1(viewModel: AddProductTechnologyViewModel, vm: sellerCatalogueViewModel, navController: NavHostController){
     Box(
         modifier = Modifier
             .fillMaxWidth(),
@@ -135,7 +134,7 @@ fun publishProductButton1(viewModel: AddProductTechnologyViewModel, vm: mainCata
 }
 
 @Composable
-fun publishProductButton2(viewModel: AddProductFoodViewModel, vm: mainCatalogueViewModel, navController: NavHostController){
+fun publishProductButton2(viewModel: AddProductFoodViewModel, vm: sellerCatalogueViewModel, navController: NavHostController){
     Box(
         modifier = Modifier
             .fillMaxWidth(),
@@ -158,7 +157,7 @@ fun publishProductButton2(viewModel: AddProductFoodViewModel, vm: mainCatalogueV
 }
 
 @Composable
-fun publishProductButton3(viewModel: AddProductClothesViewModel, vm: mainCatalogueViewModel, navController: NavHostController){
+fun publishProductButton3(viewModel: AddProductClothesViewModel, vm: sellerCatalogueViewModel, navController: NavHostController){
     Box(
         modifier = Modifier
             .fillMaxWidth(),
@@ -181,7 +180,7 @@ fun publishProductButton3(viewModel: AddProductClothesViewModel, vm: mainCatalog
 }
 
 @Composable
-fun publishProductButton4(viewModel: AddProductBookViewModel, vm: mainCatalogueViewModel, navController: NavHostController){
+fun publishProductButton4(viewModel: AddProductBookViewModel, vm: sellerCatalogueViewModel, navController: NavHostController){
     Box(
         modifier = Modifier
             .fillMaxWidth(),

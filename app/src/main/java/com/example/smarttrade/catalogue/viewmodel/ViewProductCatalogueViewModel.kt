@@ -1,4 +1,4 @@
-package com.example.smarttrade.catalogue.ui
+package com.example.smarttrade.catalogue.viewmodel
 
 import androidx.lifecycle.ViewModel
 

@@ -1,7 +1,6 @@
-package com.example.smarttrade.catalogue.ui
+package com.example.smarttrade.catalogue.view
 
 import android.net.Uri
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,20 +21,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import com.example.smarttrade.R
+import com.example.smarttrade.catalogue.viewmodel.Product
+import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
+import com.example.smarttrade.catalogue.viewmodel.viewProductCatalogueViewModel
 
 @Composable
 fun viewProductCatalogueScreen(
     viewModel: viewProductCatalogueViewModel,
     navControler: NavHostController,
-    viewModel2: mainCatalogueViewModel
+    viewModel2: catalogueViewModel
 ){
     Column {
         viewProductCatalogue(viewModel, navControler, viewModel2)
@@ -43,7 +42,7 @@ fun viewProductCatalogueScreen(
 }
 
 @Composable
-fun viewProductCatalogue(viewModel: viewProductCatalogueViewModel,navControler :NavHostController, viewModel2: mainCatalogueViewModel) {
+fun viewProductCatalogue(viewModel: viewProductCatalogueViewModel, navControler :NavHostController, viewModel2: catalogueViewModel) {
     val producto: Product? = viewModel2.getProduct()
     if(producto != null) {
         topBarManage(producto.category, navControler)

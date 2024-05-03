@@ -33,7 +33,6 @@ fun InitialScreen(navController: NavController) {
         Content(navController)
     }
 }
-
 @Composable
 fun Content(navController: NavController) {
     Box(modifier = Modifier.fillMaxSize()) {

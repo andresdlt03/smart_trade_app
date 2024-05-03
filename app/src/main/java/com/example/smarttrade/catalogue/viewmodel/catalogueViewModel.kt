@@ -1,126 +1,123 @@
-package com.example.smarttrade.catalogue.ui
+package com.example.smarttrade.catalogue.viewmodel
 
 import android.net.Uri
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavHostController
-import com.example.smarttrade.product_management.presentation.viewmodel.Category
+import com.example.smarttrade.auth.domain.model.User
 
-class mainCatalogueViewModel : ViewModel() {
+open class catalogueViewModel : ViewModel() {
 
-    private val _search = MutableLiveData<String>()
+    protected val _search = MutableLiveData<String>()
     val search: LiveData<String> = _search
 
-    private val _filterCatgegory = MutableLiveData<Boolean>()
-    val filterCatgegory: LiveData<Boolean> = _filterCatgegory
+    protected val _filterCategory = MutableLiveData<Boolean>()
+    val filterCategory: LiveData<Boolean> = _filterCategory
 
-    private val _filterPrice = MutableLiveData<Boolean>()
+    protected val _filterPrice = MutableLiveData<Boolean>()
     val filterPrice: LiveData<Boolean> = _filterPrice
 
-    private val _filterC = MutableLiveData<Boolean>()
+    protected val _filterC = MutableLiveData<Boolean>()
     val filterC: LiveData<Boolean> = _filterC
 
-    private val _filterP = MutableLiveData<Boolean>()
+    protected val _filterP = MutableLiveData<Boolean>()
     val filterP: LiveData<Boolean> = _filterP
 
-    fun activeFilterC(){
+    open fun activeFilterC(){
         _filterC.value = true
     }
 
-    fun activeFilterP(){
+    open fun activeFilterP(){
         _filterP.value = true
     }
 
-    fun unActiveFilterC(){
+    open fun unActiveFilterC(){
         _filterC.value = false
     }
 
-    fun unActiveFilterP(){
+    open fun unActiveFilterP(){
         _filterP.value = false
     }
 
 
-    private val _technologyChecked = MutableLiveData(false)
-    private val _booksChecked = MutableLiveData(false)
-    private val _clothingChecked = MutableLiveData(false)
-    private val _foodChecked = MutableLiveData(false)
+    protected val _technologyChecked = MutableLiveData(false)
+    protected val _booksChecked = MutableLiveData(false)
+    protected val _clothingChecked = MutableLiveData(false)
+    protected val _foodChecked = MutableLiveData(false)
 
     val technologyChecked: LiveData<Boolean> = _technologyChecked
     val booksChecked: LiveData<Boolean> = _booksChecked
     val clothingChecked: LiveData<Boolean> = _clothingChecked
     val foodChecked: LiveData<Boolean> = _foodChecked
 
-    fun searchChanged(it: String){
+    open fun searchChanged(it: String){
         _search.value = it
     }
 
-    fun clearSelected(){
+    open fun clearSelected(){
         _search.value = ""
     }
 
-    fun setTechnologyChecked(checked: Boolean) {
+    open fun setTechnologyChecked(checked: Boolean) {
         _technologyChecked.value = checked
     }
 
-    fun setBooksChecked(checked: Boolean) {
+    open fun setBooksChecked(checked: Boolean) {
         _booksChecked.value = checked
     }
 
-    fun setClothingChecked(checked: Boolean) {
+    open fun setClothingChecked(checked: Boolean) {
         _clothingChecked.value = checked
     }
 
-    fun setFoodChecked(checked: Boolean) {
+    open fun setFoodChecked(checked: Boolean) {
         _foodChecked.value = checked
     }
 
-    fun activeFilterCategory(){
-        _filterCatgegory.value = true
+    open fun activeFilterCategory(){
+        _filterCategory.value = true
     }
 
-    fun activeFilterPrice(){
+    open fun activeFilterPrice(){
         _filterPrice.value = true
     }
 
-    fun unActiveFilterCategory(){
-        _filterCatgegory.value = false
+    open fun unActiveFilterCategory(){
+        _filterCategory.value = false
     }
 
-    fun unActiveFilterPrice(){
+    open fun unActiveFilterPrice(){
         _filterPrice.value = false
     }
 
-    fun cancelFilterCategory(){
+    open fun cancelFilterCategory(){
         _technologyChecked.value = false
         _booksChecked.value = false
         _clothingChecked.value = false
         _foodChecked.value = false
     }
 
-    private val _minPrice = MutableLiveData<Float>()
+    protected val _minPrice = MutableLiveData<Float>()
     val minPrice: LiveData<Float> = _minPrice
 
-    private val _maxPrice = MutableLiveData<Float>()
+    protected val _maxPrice = MutableLiveData<Float>()
     val maxPrice: LiveData<Float> = _maxPrice
 
-    private val _activePrice = MutableLiveData<Boolean>()
+    protected val _activePrice = MutableLiveData<Boolean>()
     val activePrice: LiveData<Boolean> = _activePrice
 
-    fun setMinPrice(price: Float) {
+    open fun setMinPrice(price: Float) {
         _minPrice.value = price
         _activePrice.value = true
     }
 
-    fun setMaxPrice(price: Float) {
+    open fun setMaxPrice(price: Float) {
         _maxPrice.value = price
         _activePrice.value = true
 
     }
 
-    fun disablePriceFilter(){
+    open fun disablePriceFilter(){
         _activePrice.value = false
         _maxPrice.value = 1000F
         _minPrice.value = 0F
@@ -128,31 +125,28 @@ class mainCatalogueViewModel : ViewModel() {
 
     val priceRange: ClosedFloatingPointRange<Float> = 0f..1000f
 
-    private var _product: Product? = null
+    protected var _product: Product? = null
+    protected var _user: User? = null
 
-    fun setProduct(uri: Uri?, name: String, price: String, description: String, cat: String) {
+    open fun setProduct(uri: Uri?, name: String, price: String, description: String, cat: String) {
         _product = Product(uri, name, price, description, cat)
     }
 
-    fun getProduct(): Product? {
+    open fun getProduct(): Product? {
         return _product
     }
 
 
-    private val _filteredProduct = MutableLiveData<List<Product>>()
+    protected val _filteredProduct = MutableLiveData<List<Product>>()
     val filteredProduct : LiveData<List<Product>> = _filteredProduct
 
     var listaCatalogo: MutableList<Product> = mutableListOf()
 
-    fun addtoCatalogue(Producto: Product){
-        listaCatalogo.add(Producto)
-        _filteredProduct.value = listaCatalogo
-    }
-    fun getLista():MutableList<Product> {
+    open fun getLista():MutableList<Product> {
         return listaCatalogo
     }
 
-    fun returnCategoriesChecked(): String{
+    open fun returnCategoriesChecked(): String{
         var aux: String  = ""
         if(technologyChecked.value != null && technologyChecked.value == true){
             aux = aux + ("Tecnología")
