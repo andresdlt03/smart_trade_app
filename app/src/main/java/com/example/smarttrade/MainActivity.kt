@@ -38,7 +38,8 @@ class MainActivity : ComponentActivity() {
             SmartTradeTheme {
                 val navController = rememberNavController()
                 val scrollState = rememberScrollState()
-                val viewmodel = when (loginViewModel.getLoggedUserType()) {
+                val viewmodel =
+                    when (loginViewModel.getLoggedUserType()) {
                     "Client" -> clientCatalogueViewModel()
                     "Seller" -> sellerCatalogueViewModel()
                     "Admin" -> adminCatalogueViewModel()

@@ -29,7 +29,7 @@ class LoginViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     private var loggedUserEmail: String? = null
-    private var loggedUserType: String? = null
+    private var loggedUserType: String? = "Seller";
 
     fun updateEmail(email: String) {
         _state.value = _state.value.copy(email = email)
