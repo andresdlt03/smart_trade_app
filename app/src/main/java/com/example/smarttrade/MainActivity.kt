@@ -8,6 +8,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.smarttrade.catalogue.ui.mainCatalogueScreen
+import com.example.smarttrade.catalogue.ui.mainCatalogueViewModel
+import com.example.smarttrade.catalogue.ui.viewProductCatalogueScreen
+import com.example.smarttrade.catalogue.ui.viewProductCatalogueViewModel
+import com.example.smarttrade.gift.presentation.giftScreen
+import com.example.smarttrade.gift.presentation.giftViewModel
 import com.example.smarttrade.auth.presentation.view.ClientRegisterScreen
 import com.example.smarttrade.auth.presentation.view.LoginScreen
 import com.example.smarttrade.auth.presentation.view.SellerRegisterScreen
