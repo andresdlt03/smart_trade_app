@@ -77,12 +77,13 @@ class LoginViewModel @Inject constructor(
                 if(call.isSuccessful) {
 
                     val responseBody = call.body()
+                    val response = gson.fromJson(responseBody, LoginSuccess::class.java);
 
                     _state.value = _state.value.copy(
                         loginSuccess = true
                     )
-                    loggedUserEmail = _state.value.email
-                    loggedUserType = extractUserTypeFromResponse(responseBody)
+
+                    
 
                 } else {
                     val body = call.errorBody()?.string()
@@ -96,9 +97,4 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
-}
-
-fun extractUserTypeFromResponse(responseBody: String?): String {
-    val jsonObject = JSONObject(responseBody)
-    return jsonObject.optString("userType", "Tipo de usuario no especificado")
 }
