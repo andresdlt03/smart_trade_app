@@ -54,10 +54,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.smarttrade.R
 import com.example.smarttrade.auth.presentation.viewmodel.LoginViewModel
-import com.example.smarttrade.auth.sigleton.SingletonValue
+import com.example.smarttrade.singleton.SingletonValue
 import com.example.smarttrade.catalogue.viewmodel.Product
 import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.Category
+import com.example.smarttrade.singleton.UserRegistered
 
 @Composable
 fun mainCatalogueScreen(
@@ -83,7 +84,7 @@ fun mainCatalogue(
 ){
 
     val search :String by viewModel.search.observeAsState(initial = "")
-    val typeUser = SingletonValue.value
+    val typeUser = UserRegistered.usertype
 
     Scaffold (
         modifier = Modifier
