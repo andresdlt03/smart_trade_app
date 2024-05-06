@@ -3,6 +3,8 @@ package com.example.smarttrade.di
 import com.example.smarttrade.auth.data.remote.UserApi
 import com.example.smarttrade.auth.data.repository.UserRepositoryImpl
 import com.example.smarttrade.auth.domain.repository.UserRepository
+import com.example.smarttrade.catalogue.data.remote.CatalogueApi
+import com.example.smarttrade.catalogue.data.repository.CatalogueRepositoryImpl
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -23,5 +25,11 @@ object AppModule {
     @Singleton
     fun provideGsonInstance(): Gson {
         return Gson()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCatalogueRepository(catalogueApi: CatalogueApi): CatalogueRepository {
+        return CatalogueRepositoryImpl(catalogueApi)
     }
 }
