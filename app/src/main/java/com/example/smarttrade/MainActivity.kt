@@ -15,7 +15,7 @@ import com.example.smarttrade.auth.presentation.viewmodel.LoginViewModel
 import com.example.smarttrade.catalogue.view.mainCatalogueScreen
 import com.example.smarttrade.catalogue.view.viewAlertBox
 import com.example.smarttrade.catalogue.view.viewProductCatalogueScreen
-import com.example.smarttrade.catalogue.viewmodel.adminCatalogueViewModel
+import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
 import com.example.smarttrade.catalogue.viewmodel.viewProductCatalogueViewModel
 import com.example.smarttrade.gift.presentation.giftScreen
 import com.example.smarttrade.gift.presentation.giftViewModel
@@ -30,6 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val loginViewModel: LoginViewModel by viewModels()
+    private val catalogueViewModel: catalogueViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -38,13 +39,6 @@ class MainActivity : ComponentActivity() {
             SmartTradeTheme {
                 val navController = rememberNavController()
                 val scrollState = rememberScrollState()
-                val viewmodel =
-                    when (loginViewModel.getLoggedUserType()) {
-                    "Client" -> clientCatalogueViewModel()
-                    "Seller" -> sellerCatalogueViewModel()
-                    "Admin" -> adminCatalogueViewModel()
-                    else -> throw IllegalArgumentException("Tipo de usuario desconocido")
-                }
 
                 NavHost(navController = navController, startDestination = "prueba") {
                     composable("initial_screen") {
@@ -76,38 +70,38 @@ class MainActivity : ComponentActivity() {
                         addProductTechnologyScreen(
                             navHostController = navController,
                             scrollState = scrollState,
-                            vm = sellerCatalogueViewModel()
+                            vm = catalogueViewModel
                         )
                     }
                     composable("add2") {
                         addProductBooksScreen(
                             navHostController = navController,
                             scrollState = scrollState,
-                            vm = sellerCatalogueViewModel()
+                            vm = catalogueViewModel
                         )
                     }
                     composable("add3") {
                         addProductFoodScreen(
                             navHostController = navController,
                             scrollState = scrollState,
-                            vm = sellerCatalogueViewModel()
+                            vm = catalogueViewModel
                         )
                     }
                     composable("add4") {
                         addProductClothesScreen(
                             navHostController = navController,
                             scrollState = scrollState,
-                            vm = sellerCatalogueViewModel()
+                            vm = catalogueViewModel
                         )
                     }
                     composable("catalogue") {
-                        mainCatalogueScreen(viewmodel, navController,scrollState, loginViewModel)
+                        mainCatalogueScreen(catalogueViewModel, navController,scrollState, loginViewModel)
                     }
                     composable("viewProduct") {
                         viewProductCatalogueScreen(
                             viewProductCatalogueViewModel(),
                             navController,
-                            viewmodel
+                            catalogueViewModel
                         )
                     }
                     composable("giftList"){

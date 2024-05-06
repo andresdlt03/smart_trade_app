@@ -111,8 +111,5 @@ class AddProductTechnologyViewModel @Inject constructor() : ViewModel(){
         return (_state.value.textError != "")
     }
 
-    fun addProduct(viewModel: sellerCatalogueViewModel){
-        val producto : Product = Product(_state.value.photo1, _state.value.name, _state.value.price, _state.value.description, "Tecnología")
-        viewModel.addToCatalogue(producto)
-    }
+
 }
