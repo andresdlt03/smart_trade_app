@@ -8,7 +8,6 @@ import com.example.smarttrade.auth.http.login.LoginSuccess
 import com.example.smarttrade.auth.presentation.validation.ValidateEmail
 import com.example.smarttrade.auth.presentation.validation.ValidatePassword
 import com.example.smarttrade.auth.presentation.viewmodel.state.LoginState
-import com.example.smarttrade.singleton.SingletonValue
 import com.example.smarttrade.network.Exception.NetworkException
 import com.example.smarttrade.singleton.UserRegistered
 import com.google.gson.Gson
