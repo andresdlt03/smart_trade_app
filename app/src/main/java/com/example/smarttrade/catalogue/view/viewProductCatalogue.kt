@@ -1,6 +1,5 @@
 package com.example.smarttrade.catalogue.view
 
-import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,8 +31,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import coil.compose.AsyncImage
 import com.example.smarttrade.R
 import com.example.smarttrade.catalogue.viewmodel.Product
 import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
@@ -43,12 +42,12 @@ import com.example.smarttrade.singleton.UserLogged
 
 @Composable
 fun viewProductCatalogueScreen(
-    viewModel: viewProductCatalogueViewModel,
-    navControler: NavHostController,
+    viewModel: viewProductCatalogueViewModel = hiltViewModel(),
+    navController: NavHostController,
     viewModel2: catalogueViewModel
 ){
     Column {
-        viewProductCatalogue(viewModel, navControler, viewModel2)
+        viewProductCatalogue(viewModel, navController, viewModel2)
     }
 }
 

@@ -1,6 +1,5 @@
 package com.example.smarttrade.catalogue.view
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,9 +15,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -33,41 +30,34 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
 import com.example.smarttrade.catalogue.viewmodel.viewProductCatalogueViewModel
-import okhttp3.internal.wait
 
 @Composable
-fun clientViewProduct()
-{
+fun clientViewProduct() {
     var iconPressed by remember { mutableStateOf(false) }
-    BottomAppBar(
-        containerColor = Color(android.graphics.Color.parseColor("#FFFFFFFF")),
-        content = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                if(iconPressed) {
-                    BottomBarItem(icon = Icons.Filled.Favorite, onClick = {
-                        iconPressed = !iconPressed
-                    })
-                }else{
-                    BottomBarItem(icon = Icons.Filled.FavoriteBorder, onClick = {
-                        iconPressed = !iconPressed
-                    })}
-                BottomBarItem(icon = Icons.Filled.AddCircle, onClick = { })
-                BottomBarItem(icon = Icons.Filled.ShoppingCart, onClick = { })
-            }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .padding(8.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        if (iconPressed) {
+            BottomBarItem(icon = Icons.Filled.Favorite, onClick = {
+                iconPressed = !iconPressed
+            })
+        } else {
+            BottomBarItem(icon = Icons.Filled.FavoriteBorder, onClick = {
+                iconPressed = !iconPressed
+            })
         }
-    )
+        BottomBarItem(icon = Icons.Filled.AddCircle, onClick = { })
+        BottomBarItem(icon = Icons.Filled.ShoppingCart, onClick = { })
+    }
 }
 
 @Composable
@@ -81,28 +71,24 @@ fun BottomBarItem(
             contentDescription = null,
             tint = Color.Black
         )
+
     }
 }
 
 @Composable
-fun adminViewProduct(viewModel: viewProductCatalogueViewModel)
-{
-    BottomAppBar(
-        containerColor = Color(android.graphics.Color.parseColor("#FFFFFFFF")),
-        content = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                BottomBarItem2(text = "Aprobar", onClick = { }, color = Color.Green)
-                BottomBarItem2(text = "Mantener sin aprobar", onClick = { }, color = Color.Red)
-            }
-        }
-    )
+fun adminViewProduct(viewModel: viewProductCatalogueViewModel) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .padding(8.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        BottomBarItem2(text = "Aprobar", onClick = { }, color = Color.Green)
+        BottomBarItem2(text = "Mantener sin aprobar", onClick = { }, color = Color.Red)
+    }
 }
+
 @Composable
 fun BottomBarItem2(
     text: String,
@@ -111,48 +97,45 @@ fun BottomBarItem2(
 ) {
     Button(
         onClick = onClick,
-        colors = ButtonDefaults.buttonColors(containerColor = color, contentColor = Color.White)
-    ){
+        colors = ButtonDefaults.buttonColors(contentColor = Color.White)
+    ) {
         Text(text = text)
     }
 }
 
-@Composable
-fun sellerViewProduct()
-{
-    BottomAppBar(
-        containerColor = Color(android.graphics.Color.parseColor("#FFFFFFFF")),
-        content = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                Button(
-                    onClick = { },
-                    content = {
-                        Row() {
-                            Icon(
-                                imageVector = Icons.Filled.Create,
-                                contentDescription = null,
-                                tint = Color.Black
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                text = "Editar",
-                                fontSize = 20.sp,
-                                textAlign = TextAlign.Center,
-                            )
-                        }
-                    }
-                )
 
+@Composable
+fun sellerViewProduct() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .padding(8.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        Button(
+            onClick = { },
+            content = {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Filled.Create,
+                        contentDescription = null,
+                        tint = Color.Black
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "Editar",
+                        fontSize = 20.sp,
+                        textAlign = TextAlign.Center,
+                    )
+                }
             }
-        }
-    )
+        )
+    }
 }
+
+
+
 
 
 @Composable
@@ -168,8 +151,8 @@ fun alertBox(
         onDismissRequest = onDismissRequest,
         title = {
             Text(text = "Editar Producto",
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center)},
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center)},
         text = {
             Column {
                 OutlinedTextField(
@@ -208,7 +191,7 @@ fun alertBox(
         dismissButton = {
             Button(
                 onClick = onDismissRequest,
-                ) {
+            ) {
                 Text("Cancelar")
             }
         }
