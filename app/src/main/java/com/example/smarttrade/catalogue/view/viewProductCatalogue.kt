@@ -1,6 +1,7 @@
 package com.example.smarttrade.catalogue.view
 
 import android.net.Uri
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,11 +22,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import com.example.smarttrade.R
 import com.example.smarttrade.catalogue.viewmodel.Product
 import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
 import com.example.smarttrade.catalogue.viewmodel.viewProductCatalogueViewModel
@@ -47,7 +50,7 @@ fun viewProductCatalogue(viewModel: viewProductCatalogueViewModel, navControler 
     if(producto != null) {
         topBarManage(producto.category, navControler)
         Spacer(modifier = Modifier.height(20.dp))
-        ProductoEnPantalla(imagenResId = producto.uri, nombre = producto.name, precio = producto.price, descripcion = producto.description)
+        ProductoEnPantalla( nombre = producto.name, precio = producto.price, descripcion = producto.description)
     }
 }
 
@@ -75,7 +78,6 @@ fun topBarManage(text : String, navControler: NavHostController){
 
 @Composable
 fun ProductoEnPantalla(
-    imagenResId: Uri?,
     nombre: String,
     precio: String,
     descripcion: String
@@ -87,12 +89,12 @@ fun ProductoEnPantalla(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        AsyncImage(
-            model = imagenResId,
+        Image(
+            painter = painterResource(id = R.drawable.default_product),
             contentDescription = null,
             modifier = Modifier
-                .clickable { }
-                .size(200.dp, 200.dp),
+                .clickable { /* acción al hacer clic */ }
+                .size(80.dp, 80.dp),
             contentScale = ContentScale.Crop
         )
         Spacer(modifier = Modifier.height(10.dp))
