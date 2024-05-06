@@ -8,6 +8,7 @@ import com.example.smarttrade.auth.http.login.LoginSuccess
 import com.example.smarttrade.auth.presentation.validation.ValidateEmail
 import com.example.smarttrade.auth.presentation.validation.ValidatePassword
 import com.example.smarttrade.auth.presentation.viewmodel.state.LoginState
+import com.example.smarttrade.auth.sigleton.SingletonValue
 import com.example.smarttrade.network.Exception.NetworkException
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -79,6 +80,7 @@ class LoginViewModel @Inject constructor(
                     val response = gson.fromJson(responseBody, LoginSuccess::class.java);
 
                     loggedUserType = response.userType
+                    SingletonValue.value = response.userType
 
                     _state.value = _state.value.copy(
                         loginSuccess = true
