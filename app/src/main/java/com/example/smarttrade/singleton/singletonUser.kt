@@ -3,7 +3,7 @@ package com.example.smarttrade.singleton
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 
-object UserRegistered {
+object UserLogged {
     private val _value: MutableState<String> = mutableStateOf("")
 
     var usertype: String
