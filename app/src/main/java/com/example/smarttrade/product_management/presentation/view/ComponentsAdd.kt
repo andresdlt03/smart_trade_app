@@ -26,8 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.smarttrade.R
-import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
-import com.example.smarttrade.catalogue.viewmodel.sellerCatalogueViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.AddProductBookViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.AddProductClothesViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.AddProductFoodViewModel

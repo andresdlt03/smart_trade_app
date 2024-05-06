@@ -34,8 +34,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.smarttrade.R
-import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
-import com.example.smarttrade.catalogue.viewmodel.sellerCatalogueViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.AddProductTechnologyViewModel
 
 @Composable

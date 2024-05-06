@@ -5,6 +5,7 @@ import com.example.smarttrade.auth.data.repository.UserRepositoryImpl
 import com.example.smarttrade.auth.domain.repository.UserRepository
 import com.example.smarttrade.catalogue.data.remote.CatalogueApi
 import com.example.smarttrade.catalogue.data.repository.CatalogueRepositoryImpl
+import com.example.smarttrade.catalogue.domain.repository.CatalogueRepository
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides

@@ -5,7 +5,6 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import com.example.smarttrade.catalogue.viewmodel.Product
-import com.example.smarttrade.catalogue.viewmodel.sellerCatalogueViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.state.ProductTechnologyState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

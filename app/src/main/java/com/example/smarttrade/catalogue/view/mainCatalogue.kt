@@ -2,6 +2,7 @@ package com.example.smarttrade.catalogue.view
 
 import android.annotation.SuppressLint
 import android.net.Uri
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -47,17 +48,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import coil.compose.rememberImagePainter
+import com.example.smarttrade.R
 import com.example.smarttrade.auth.presentation.viewmodel.LoginViewModel
 import com.example.smarttrade.catalogue.viewmodel.Product
-import com.example.smarttrade.catalogue.viewmodel.adminCatalogueViewModel
 import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
-import com.example.smarttrade.catalogue.viewmodel.clientCatalogueViewModel
-import com.example.smarttrade.catalogue.viewmodel.sellerCatalogueViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.Category
 
 @Composable
@@ -68,15 +69,8 @@ fun mainCatalogueScreen(
     scrollState: ScrollState,
     loginViewModel: LoginViewModel
 ){
-    var viewModelHeredado = viewModel
-    when (loginViewModel.getLoggedUserType()) {
-        "Client" -> viewModelHeredado = clientCatalogueViewModel()
-        "Seller" -> viewModelHeredado = sellerCatalogueViewModel()
-        "Admin" -> viewModelHeredado = adminCatalogueViewModel()
-        else -> throw IllegalArgumentException("Tipo de usuario desconocido")
-    }
-    Column {
-        mainCatalogue(viewModelHeredado, navController, scrollState, loginViewModel)
+Column {
+        mainCatalogue(viewModel, navController, scrollState, loginViewModel)
     }
 }
 
@@ -89,12 +83,6 @@ fun mainCatalogue(
     scrollState: ScrollState,
     loginViewModel: LoginViewModel
 ){
-    /*
-        val viewModel: mainCatalogueViewModel = when (user) {
-            is Seller -> SellerCatalogueViewModel()
-            is Client -> ClientCatalogueViewModel()
-            is Admin -> AdminCatalogueViewModel()
-    }*/
 
     val search :String by viewModel.search.observeAsState(initial = "")
     val typeUser = (loginViewModel.getLoggedUserType())
@@ -352,7 +340,6 @@ fun outLinedTextManage(
                             viewModel = viewModel,
                             navController = navController,
                             nombre = i.name,
-                            uri = i.uri,
                             precio = i.price,
                             descripcion = i.description,
                             cat = i.category
@@ -365,7 +352,6 @@ fun outLinedTextManage(
                             viewModel = viewModel,
                             navController = navController,
                             nombre = i.name,
-                            uri = i.uri,
                             precio = i.price,
                             descripcion = i.description,
                             cat = i.category
@@ -377,7 +363,6 @@ fun outLinedTextManage(
                             viewModel = viewModel,
                             navController = navController,
                             nombre = i.name,
-                            uri = i.uri,
                             precio = i.price,
                             descripcion = i.description,
                             cat = i.category
@@ -388,7 +373,6 @@ fun outLinedTextManage(
                         viewModel = viewModel,
                         navController = navController,
                         nombre = i.name,
-                        uri = i.uri,
                         precio = i.price,
                         descripcion = i.description,
                         cat = i.category
@@ -398,7 +382,6 @@ fun outLinedTextManage(
                         viewModel = viewModel,
                         navController = navController,
                         nombre = i.name,
-                        uri = i.uri,
                         precio = i.price,
                         descripcion = i.description,
                         cat = i.category
@@ -436,7 +419,6 @@ fun ProductItem(
     viewModel: catalogueViewModel,
     navController: NavHostController,
     nombre : String,
-    uri: Uri?,
     precio: String,
     descripcion: String,
     cat : String
@@ -444,23 +426,16 @@ fun ProductItem(
     Row(
         modifier = Modifier
             .padding(16.dp)
-            .clickable {
-                viewModel.setProduct(
-                    uri,
-                    nombre,
-                    precio,
-                    descripcion,
-                    cat
-                ); navController.navigate("viewProduct")
+            .clickable {; navController.navigate("viewProduct")
             }
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        AsyncImage(
-            model = uri,
+        Image(
+            painter = painterResource(id = R.drawable.default_product),
             contentDescription = null,
             modifier = Modifier
-                .clickable { }
+                .clickable { /* acción al hacer clic */ }
                 .size(80.dp, 80.dp),
             contentScale = ContentScale.Crop
         )

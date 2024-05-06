@@ -4,9 +4,20 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.smarttrade.auth.domain.model.User
+import com.example.smarttrade.catalogue.domain.repository.CatalogueRepository
+import com.example.smarttrade.network.Exception.NetworkException
+import com.google.gson.Gson
+import com.google.gson.JsonElement
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-open class catalogueViewModel : ViewModel() {
+@HiltViewModel
+open class catalogueViewModel @Inject constructor(
+    private val catalogueRepository: CatalogueRepository,
+): ViewModel(){
 
     protected val _search = MutableLiveData<String>()
     val search: LiveData<String> = _search
@@ -125,19 +136,15 @@ open class catalogueViewModel : ViewModel() {
 
     val priceRange: ClosedFloatingPointRange<Float> = 0f..1000f
 
-    protected var _product: Product? = null
-    protected var _user: User? = null
-
-    open fun setProduct(uri: Uri?, name: String, price: String, description: String, cat: String) {
-        _product = Product(uri, name, price, description, cat)
-    }
+    private var _product: Product? = null
+    private var _user: User? = null
 
     open fun getProduct(): Product? {
         return _product
     }
 
 
-    protected val _filteredProduct = MutableLiveData<List<Product>>()
+    private val _filteredProduct = MutableLiveData<List<Product>>()
     val filteredProduct : LiveData<List<Product>> = _filteredProduct
 
     var listaCatalogo: MutableList<Product> = mutableListOf()
@@ -162,12 +169,91 @@ open class catalogueViewModel : ViewModel() {
         }
         return aux
     }
+
+
+    fun getVerifiedProducts(){
+
+        viewModelScope.launch {
+            try {
+                val call = catalogueRepository.getVerifiedProducts()
+                if(call.isSuccessful) {
+
+                    val responseBody = call.body()
+                    responseBody?.let { jsonString ->
+
+                        _filteredProduct.value = parseJson(jsonString)}
+
+                } else {
+                    val body = call.errorBody()?.string()
+                }
+            } catch(e: NetworkException) {
+                println(e.message)
+            }
+        }
+
+    }
+
+    fun getUnverifiedProducts(){
+
+        viewModelScope.launch {
+            try {
+                val call = catalogueRepository.getUnverifiedProducts()
+                if(call.isSuccessful) {
+
+                    val responseBody = call.body()
+                    responseBody?.let { jsonString ->
+
+                        _filteredProduct.value = parseJson(jsonString)}
+                } else {
+                    val body = call.errorBody()?.string()
+                }
+            } catch(e: NetworkException) {
+                println(e.message)
+            }
+        }
+
+    }
 }
 
 data class Product(
-    val uri: Uri?,
     val name: String,
-    val price: String,
     val description: String,
-    val category : String
+    val dataSheet: String,
+    val verified: Boolean,
+    val category: String,
+    val additionalFields: List<String> = emptyList(),
+    val price: String
 )
+
+fun parseJson(jsonString: String): List<Product> {
+    val gson = Gson()
+    val productsJsonArray = gson.fromJson(jsonString, Array<JsonElement>::class.java)
+
+    return productsJsonArray.map { jsonElement ->
+        val productCategory = jsonElement.asJsonObject.get("category").asString
+        val productJsonObject = jsonElement.asJsonObject.get("product").asJsonObject
+
+        val additionalFields = mutableListOf<String>()
+
+        when (productCategory) {
+            "technology", "food", "book", "clothes" -> {
+                productJsonObject.entrySet().forEach { (key, value) ->
+                    if (key != "category") {
+                        additionalFields.add("$key: ${value.asString}")
+                    }
+                }
+            }
+            else -> throw IllegalArgumentException("Unknown product category: $productCategory")
+        }
+
+        Product(
+            name = productJsonObject.get("name").asString,
+            description = productJsonObject.get("description").asString,
+            dataSheet = productJsonObject.get("dataSheet").asString,
+            verified = productJsonObject.get("verified").asBoolean,
+            category = productCategory,
+            additionalFields = additionalFields,
+            price = "23"
+        )
+    }
+}

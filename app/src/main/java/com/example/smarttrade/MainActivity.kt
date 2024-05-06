@@ -12,15 +12,10 @@ import com.example.smarttrade.auth.presentation.view.ClientRegisterScreen
 import com.example.smarttrade.auth.presentation.view.LoginScreen
 import com.example.smarttrade.auth.presentation.view.SellerRegisterScreen
 import com.example.smarttrade.auth.presentation.viewmodel.LoginViewModel
-import com.example.smarttrade.catalogue.view.adminViewProduct
-import com.example.smarttrade.catalogue.view.clientViewProduct
 import com.example.smarttrade.catalogue.view.mainCatalogueScreen
-import com.example.smarttrade.catalogue.view.sellerViewProduct
 import com.example.smarttrade.catalogue.view.viewAlertBox
 import com.example.smarttrade.catalogue.view.viewProductCatalogueScreen
 import com.example.smarttrade.catalogue.viewmodel.adminCatalogueViewModel
-import com.example.smarttrade.catalogue.viewmodel.clientCatalogueViewModel
-import com.example.smarttrade.catalogue.viewmodel.sellerCatalogueViewModel
 import com.example.smarttrade.catalogue.viewmodel.viewProductCatalogueViewModel
 import com.example.smarttrade.gift.presentation.giftScreen
 import com.example.smarttrade.gift.presentation.giftViewModel
