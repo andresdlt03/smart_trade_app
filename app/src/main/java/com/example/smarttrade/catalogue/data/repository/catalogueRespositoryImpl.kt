@@ -42,4 +42,12 @@ class CatalogueRepositoryImpl @Inject constructor(
             throw NetworkException(e.message.toString())
         }
     }
+
+    override suspend fun verifyProduct(productId: String): Response<String> {
+        try {
+            return CatalogueApi.verifyProduct(productId)
+        } catch (e: Exception) {
+            throw NetworkException(e.message.toString())
+        }
+    }
 }
