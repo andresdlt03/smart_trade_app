@@ -14,7 +14,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,7 +28,7 @@ class LoginViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     private var loggedUserEmail: String? = null
-    private var loggedUserType: String? = "Seller";
+    private var loggedUserType: String? = null;
 
     fun updateEmail(email: String) {
         _state.value = _state.value.copy(email = email)
@@ -84,8 +83,6 @@ class LoginViewModel @Inject constructor(
                     _state.value = _state.value.copy(
                         loginSuccess = true
                     )
-
-                    
 
                 } else {
                     val body = call.errorBody()?.string()

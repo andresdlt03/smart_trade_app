@@ -1,7 +1,6 @@
 package com.example.smarttrade.catalogue.view
 
 import android.annotation.SuppressLint
-import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -53,8 +52,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import coil.compose.AsyncImage
-import coil.compose.rememberImagePainter
 import com.example.smarttrade.R
 import com.example.smarttrade.auth.presentation.viewmodel.LoginViewModel
 import com.example.smarttrade.catalogue.viewmodel.Product
@@ -96,9 +93,9 @@ fun mainCatalogue(
         bottomBar =  {
             //bottomBar
             when (typeUser){
-                "Seller" -> sellerBottomBar(navController)
-                "Client" ->  clientBottomBar(navController)
-                "Admin" -> adminBottomBar(navController)
+                "seller" -> sellerBottomBar(navController)
+                "client" ->  clientBottomBar(navController)
+                "admin" -> adminBottomBar(navController)
                 else -> throw IllegalArgumentException("Tipo de usuario desconocido")
             }
 
