@@ -53,11 +53,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.smarttrade.R
-import com.example.smarttrade.auth.presentation.viewmodel.LoginViewModel
 import com.example.smarttrade.catalogue.viewmodel.Product
 import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.Category
-import com.example.smarttrade.singleton.UserRegistered
+import com.example.smarttrade.singleton.UserLogged
 
 @Composable
 fun mainCatalogueScreen(
@@ -65,10 +64,9 @@ fun mainCatalogueScreen(
     viewModel: catalogueViewModel,
     navController: NavHostController,
     scrollState: ScrollState,
-    loginViewModel: LoginViewModel
 ){
 Column {
-        mainCatalogue(viewModel, navController, scrollState, loginViewModel)
+        mainCatalogue(viewModel, navController, scrollState)
     }
 }
 
@@ -79,12 +77,12 @@ fun mainCatalogue(
     viewModel: catalogueViewModel,
     navController: NavHostController,
     scrollState: ScrollState,
-    loginViewModel: LoginViewModel
 ){
 
     val search :String by viewModel.search.observeAsState(initial = "")
-    val typeUser = UserRegistered.usertype
-    viewModel.getVerifiedProducts()
+    val typeUser = UserLogged.usertype
+
+    viewModel.getUnverifiedProducts()
 
     Scaffold (
         modifier = Modifier

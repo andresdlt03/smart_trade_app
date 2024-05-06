@@ -95,7 +95,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     composable("catalogue") {
-                        mainCatalogueScreen(catalogueViewModel, navController,scrollState, loginViewModel)
+                        mainCatalogueScreen(catalogueViewModel, navController,scrollState)
                     }
                     composable("viewProduct") {
                         viewProductCatalogueScreen(

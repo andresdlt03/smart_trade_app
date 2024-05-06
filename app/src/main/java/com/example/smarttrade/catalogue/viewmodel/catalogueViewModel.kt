@@ -1,6 +1,5 @@
 package com.example.smarttrade.catalogue.viewmodel
 
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,19 +18,19 @@ open class catalogueViewModel @Inject constructor(
     private val catalogueRepository: CatalogueRepository,
 ): ViewModel(){
 
-    protected val _search = MutableLiveData<String>()
+    private val _search = MutableLiveData<String>()
     val search: LiveData<String> = _search
 
-    protected val _filterCategory = MutableLiveData<Boolean>()
+    private val _filterCategory = MutableLiveData<Boolean>()
     val filterCategory: LiveData<Boolean> = _filterCategory
 
-    protected val _filterPrice = MutableLiveData<Boolean>()
+    private val _filterPrice = MutableLiveData<Boolean>()
     val filterPrice: LiveData<Boolean> = _filterPrice
 
-    protected val _filterC = MutableLiveData<Boolean>()
+    private val _filterC = MutableLiveData<Boolean>()
     val filterC: LiveData<Boolean> = _filterC
 
-    protected val _filterP = MutableLiveData<Boolean>()
+    private val _filterP = MutableLiveData<Boolean>()
     val filterP: LiveData<Boolean> = _filterP
 
     open fun activeFilterC(){
@@ -177,11 +176,8 @@ open class catalogueViewModel @Inject constructor(
             try {
                 val call = catalogueRepository.getVerifiedProducts()
                 if(call.isSuccessful) {
-
                     val responseBody = call.body()
-                    responseBody?.let { jsonString ->
-
-                        _filteredProduct.value = parseJson(jsonString)}
+                    responseBody?.let { jsonString -> _filteredProduct.value = parseJson(jsonString)}
 
                 } else {
                     val body = call.errorBody()?.string()
@@ -199,11 +195,8 @@ open class catalogueViewModel @Inject constructor(
             try {
                 val call = catalogueRepository.getUnverifiedProducts()
                 if(call.isSuccessful) {
-
                     val responseBody = call.body()
-                    responseBody?.let { jsonString ->
-
-                        _filteredProduct.value = parseJson(jsonString)}
+                    responseBody?.let { jsonString -> _filteredProduct.value = parseJson(jsonString)}
                 } else {
                     val body = call.errorBody()?.string()
                 }
@@ -233,26 +226,12 @@ fun parseJson(jsonString: String): List<Product> {
         val productCategory = jsonElement.asJsonObject.get("category").asString
         val productJsonObject = jsonElement.asJsonObject.get("product").asJsonObject
 
-        val additionalFields = mutableListOf<String>()
-
-        when (productCategory) {
-            "technology", "food", "book", "clothes" -> {
-                productJsonObject.entrySet().forEach { (key, value) ->
-                    if (key != "category") {
-                        additionalFields.add("$key: ${value.asString}")
-                    }
-                }
-            }
-            else -> throw IllegalArgumentException("Unknown product category: $productCategory")
-        }
-
         Product(
             name = productJsonObject.get("name").asString,
             description = productJsonObject.get("description").asString,
             dataSheet = productJsonObject.get("dataSheet").asString,
             verified = productJsonObject.get("verified").asBoolean,
             category = productCategory,
-            additionalFields = additionalFields,
             price = "23"
         )
     }
