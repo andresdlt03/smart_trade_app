@@ -142,6 +142,10 @@ open class catalogueViewModel @Inject constructor(
         return _product
     }
 
+    fun setProduct(p: Product){
+        _product = p
+    }
+
 
     private val _filteredProduct = MutableLiveData<List<Product>>()
     val filteredProduct : LiveData<List<Product>> = _filteredProduct

@@ -37,6 +37,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
+import com.example.smarttrade.catalogue.viewmodel.viewProductCatalogueViewModel
 import okhttp3.internal.wait
 
 @Composable
@@ -83,7 +85,7 @@ fun BottomBarItem(
 }
 
 @Composable
-fun adminViewProduct()
+fun adminViewProduct(viewModel: viewProductCatalogueViewModel)
 {
     BottomAppBar(
         containerColor = Color(android.graphics.Color.parseColor("#FFFFFFFF")),
@@ -211,17 +213,4 @@ fun alertBox(
             }
         }
     )
-}
-
-@Composable
-fun viewAlertBox(){
-    val p = "13"
-    val s = "21"
-
-
-    alertBox(onDismissRequest = { /*TODO*/ }, onConfirmClicked = { p1,s1 -> ejemplo(p1,s1)}, p = p, s = s)
-}
-
-fun ejemplo(texto1: String, texto2: String): Unit {
-    // Código de la función aquí
 }

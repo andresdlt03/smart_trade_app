@@ -339,7 +339,8 @@ fun outLinedTextManage(
                             nombre = i.name,
                             precio = i.price,
                             descripcion = i.description,
-                            cat = i.category
+                            cat = i.category,
+                            product = i
                         )
                     }
                 } else if (filterC && !filterP) {
@@ -351,7 +352,8 @@ fun outLinedTextManage(
                             nombre = i.name,
                             precio = i.price,
                             descripcion = i.description,
-                            cat = i.category
+                            cat = i.category,
+                            product = i
                         )
                     }
                 } else if (filterC && !filterP) {
@@ -362,7 +364,8 @@ fun outLinedTextManage(
                             nombre = i.name,
                             precio = i.price,
                             descripcion = i.description,
-                            cat = i.category
+                            cat = i.category,
+                            product = i
                         )
                     }
                 } else if (!filterC && !filterP) {
@@ -372,7 +375,8 @@ fun outLinedTextManage(
                         nombre = i.name,
                         precio = i.price,
                         descripcion = i.description,
-                        cat = i.category
+                        cat = i.category,
+                        product = i
                     )
                 } else {
                     ProductItem(
@@ -381,7 +385,8 @@ fun outLinedTextManage(
                         nombre = i.name,
                         precio = i.price,
                         descripcion = i.description,
-                        cat = i.category
+                        cat = i.category,
+                        product = i
                     )
                 }
             }
@@ -418,12 +423,13 @@ fun ProductItem(
     nombre : String,
     precio: String,
     descripcion: String,
-    cat : String
+    cat : String,
+    product : Product
 ) {
     Row(
         modifier = Modifier
             .padding(16.dp)
-            .clickable {; navController.navigate("viewProduct")
+            .clickable {viewModel.setProduct(product); navController.navigate("viewProduct")
             }
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
