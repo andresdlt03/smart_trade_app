@@ -84,6 +84,7 @@ fun mainCatalogue(
 
     val search :String by viewModel.search.observeAsState(initial = "")
     val typeUser = UserRegistered.usertype
+    viewModel.getVerifiedProducts()
 
     Scaffold (
         modifier = Modifier
