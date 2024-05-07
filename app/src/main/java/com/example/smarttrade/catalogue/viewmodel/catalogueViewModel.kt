@@ -149,7 +149,6 @@ open class catalogueViewModel @Inject constructor(
 
     private val _filteredProduct = MutableLiveData<List<Product>>()
     val filteredProduct : LiveData<List<Product>> = _filteredProduct
-
     var listaCatalogo: MutableList<Product> = mutableListOf()
 
     open fun getLista():MutableList<Product> {
