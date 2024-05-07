@@ -31,12 +31,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
 import com.example.smarttrade.catalogue.viewmodel.viewProductCatalogueViewModel
 
+
 @Composable
-fun clientViewProduct() {
+fun clientViewProduct(viewModel: catalogueViewModel) {
     var iconPressed by remember { mutableStateOf(false) }
 
     Row(
@@ -48,15 +51,25 @@ fun clientViewProduct() {
     ) {
         if (iconPressed) {
             BottomBarItem(icon = Icons.Filled.Favorite, onClick = {
-                iconPressed = !iconPressed
+                iconPressed = !iconPressed;
+                var aux = viewModel.getProduct()
+                if(aux != null)objetcLists.ListaDeseados.addItem(aux)
             })
         } else {
             BottomBarItem(icon = Icons.Filled.FavoriteBorder, onClick = {
-                iconPressed = !iconPressed
+                iconPressed = !iconPressed;
+                var aux = viewModel.getProduct()
+                if(aux != null)objetcLists.ListaDeseados.removeItem(aux)
             })
         }
-        BottomBarItem(icon = Icons.Filled.AddCircle, onClick = { })
-        BottomBarItem(icon = Icons.Filled.ShoppingCart, onClick = { })
+        BottomBarItem(icon = Icons.Filled.AddCircle, onClick = {
+            var aux = viewModel.getProduct()
+            if(aux != null)objetcLists.ListaGuardarTarde.addItem(aux)
+        })
+        BottomBarItem(icon = Icons.Filled.ShoppingCart, onClick = {
+            var aux = viewModel.getProduct()
+            if(aux != null)objetcLists.ListaCarrito.addItem(aux)
+        })
     }
 }
 
