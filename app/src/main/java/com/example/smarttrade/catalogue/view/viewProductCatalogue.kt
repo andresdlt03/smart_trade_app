@@ -54,18 +54,11 @@ fun viewProductCatalogueScreen(
 @Composable
 fun viewProductCatalogue(viewModel: viewProductCatalogueViewModel, navControler :NavHostController, viewModel2: catalogueViewModel) {
     val producto: Product? = viewModel2.getProduct()
-    val typeuser: String = UserLogged.usertype
     if(producto != null) {
         topBarManage(producto.category, navControler)
         Spacer(modifier = Modifier.height(20.dp))
-        ProductoEnPantalla( nombre = producto.name, precio = producto.price, descripcion = producto.description, p = producto)
+        ProductoEnPantalla( nombre = producto.name, precio = producto.price, descripcion = producto.description, p = producto, viewModel2)
         Spacer(modifier = Modifier.height(20.dp))
-        when(typeuser){
-            "client" -> clientViewProduct()
-            "seller" -> sellerViewProduct()
-            "admin" -> adminViewProduct(viewModel)
-        }
-
     }
 }
 
@@ -96,7 +89,8 @@ fun ProductoEnPantalla(
     nombre: String,
     precio: String,
     descripcion: String,
-    p : Product
+    p : Product,
+    vm : catalogueViewModel
 ) {
     var alertPressed by remember { mutableStateOf(false) }
 
@@ -141,6 +135,12 @@ fun ProductoEnPantalla(
                 text(text = "Ver datasheet")
             }
         )
+        val typeuser: String = UserLogged.usertype
+        when(typeuser){
+            "client" -> clientViewProduct(vm)
+            "seller" -> sellerViewProduct()
+            "admin" -> adminViewProduct()
+        }
 
         if(alertPressed){
             datasheet(p.dataSheet, {alertPressed = !alertPressed})

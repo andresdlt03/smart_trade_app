@@ -89,7 +89,7 @@ fun BottomBarItem(
 }
 
 @Composable
-fun adminViewProduct(viewModel: viewProductCatalogueViewModel) {
+fun adminViewProduct() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
