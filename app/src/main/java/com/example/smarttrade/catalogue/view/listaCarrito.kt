@@ -24,7 +24,7 @@ import com.example.smarttrade.catalogue.viewmodel.Product
 
 
 @Composable
-fun carritoCompra(viewModel:viewModelListas) {
+fun carritoCompra() {
 
     Text(text = "Carrito de la Compra")
     Spacer(modifier = Modifier.height(10.dp))

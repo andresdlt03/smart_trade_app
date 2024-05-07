@@ -554,7 +554,7 @@ fun clientBottomBar(navController: NavHostController) {
                 Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = "Carrito")
             }
 
-            IconButton(onClick = { /*navController.navigate("wishing_list") */}) {
+            IconButton(onClick = { navController.navigate("listadeseos")}) {
                 Icon(imageVector = Icons.Default.Favorite, contentDescription = "Lista de deseos")
             }
 
