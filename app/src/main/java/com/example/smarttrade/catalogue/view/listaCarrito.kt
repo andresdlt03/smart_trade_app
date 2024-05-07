@@ -57,8 +57,10 @@ fun carritoCompra(navController : NavHostController, scrollState: ScrollState) {
             }
         ){
         Column (
-            modifier = Modifier.verticalScroll(scrollState)){
-            Text(text = "Carrito de la Compra")
+            modifier = Modifier
+                .padding(10.dp)
+                .verticalScroll(scrollState)){
+            Text(text = "Carrito de la Compra", fontSize = 20.sp)
             Spacer(modifier = Modifier.height(10.dp))
             val listaCarrito :List<Product>  = objetcLists.ListaCarrito.getItems()
             val listaguardarTarde : List<Product> = objetcLists.ListaGuardarTarde.getItems()
@@ -104,7 +106,7 @@ fun carritoCompra(navController : NavHostController, scrollState: ScrollState) {
                 Text(text = "Pagar")
             }
             Spacer(modifier = Modifier.height(30.dp))
-            Text(text = "Guardar para más tarde")
+            Text(text = "Guardar para más tarde", fontSize = 20.sp)
             Spacer(modifier = Modifier.height(10.dp))
 
             for (i in listaguardarTarde) {

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
@@ -15,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.smarttrade.catalogue.viewmodel.Product
 import com.example.smarttrade.singleton.UserLogged
@@ -43,10 +45,10 @@ fun ListaDeseosScreen(navController: NavHostController, scrollState: ScrollState
         }
     ){
         Column (
-            modifier = Modifier.verticalScroll(scrollState)
-        ){
-
-            Text(text = "Lista de deseados")
+            modifier = Modifier
+                .padding(10.dp)
+                .verticalScroll(scrollState)){
+            Text(text = "Lista de Deseos", fontSize = 20.sp)
             Spacer(modifier = Modifier.height(10.dp))
             val listadeseados: List<Product> = objetcLists.ListaDeseados.getItems()
 

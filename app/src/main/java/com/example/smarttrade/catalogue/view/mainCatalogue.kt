@@ -86,7 +86,7 @@ fun mainCatalogue(
 
     Scaffold (
         modifier = Modifier
-            .background(color = Color.White
+                .background(color = Color.White
             ),
         containerColor = Color.White,
 
@@ -391,6 +391,7 @@ fun outLinedTextManage(
                 }
             }
         }
+        Spacer(modifier = Modifier.height(100.dp))
     }
 }
 
@@ -429,7 +430,8 @@ fun ProductItem(
     Row(
         modifier = Modifier
             .padding(16.dp)
-            .clickable {viewModel.setProduct(product); navController.navigate("viewProduct")
+            .clickable {
+                viewModel.setProduct(product); navController.navigate("viewProduct")
             }
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
