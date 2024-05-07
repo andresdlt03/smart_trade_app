@@ -3,8 +3,8 @@ package com.example.smarttrade.auth.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.smarttrade.auth.domain.repository.UserRepository
-import com.example.smarttrade.auth.http.login.LoginFailed
-import com.example.smarttrade.auth.http.login.LoginSuccess
+import com.example.smarttrade.auth.data.remote.http.login.LoginFailed
+import com.example.smarttrade.auth.data.remote.http.login.LoginSuccess
 import com.example.smarttrade.auth.presentation.validation.ValidateEmail
 import com.example.smarttrade.auth.presentation.validation.ValidatePassword
 import com.example.smarttrade.auth.presentation.viewmodel.state.LoginState
