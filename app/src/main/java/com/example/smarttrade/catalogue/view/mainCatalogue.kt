@@ -519,7 +519,7 @@ fun sellerBottomBar(navController: NavHostController) {
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = { navController.navigate("initial_screen") }) {
+            IconButton(onClick = { navController.navigate("catalogue") }) {
                 Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
             }
             IconButton(onClick = { navController.navigate("product_management") }) {
@@ -546,11 +546,11 @@ fun clientBottomBar(navController: NavHostController) {
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = { navController.navigate("initial_screen") }) {
+            IconButton(onClick = { navController.navigate("catalogue") }) {
                 Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
             }
 
-            IconButton(onClick = { /*navController.navigate("shopping_cart")*/ }) {
+            IconButton(onClick = { navController.navigate("carrito") }) {
                 Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = "Carrito")
             }
 

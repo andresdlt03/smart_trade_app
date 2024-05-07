@@ -39,9 +39,12 @@ import com.example.smarttrade.catalogue.viewmodel.viewProductCatalogueViewModel
 
 
 @Composable
-fun clientViewProduct(viewModel: catalogueViewModel) {
+fun clientViewProduct(viewModel: catalogueViewModel, number: Int) {
     var iconPressed by remember { mutableStateOf(false) }
-
+    val product = viewModel.getProduct()
+    if (product != null) {
+        iconPressed = objetcLists.ListaDeseados.containsItem(product)
+    }
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -53,23 +56,25 @@ fun clientViewProduct(viewModel: catalogueViewModel) {
             BottomBarItem(icon = Icons.Filled.Favorite, onClick = {
                 iconPressed = !iconPressed;
                 var aux = viewModel.getProduct()
-                if(aux != null)objetcLists.ListaDeseados.addItem(aux)
+                if(aux != null)objetcLists.ListaDeseados.removeItem(aux)
             })
         } else {
             BottomBarItem(icon = Icons.Filled.FavoriteBorder, onClick = {
                 iconPressed = !iconPressed;
                 var aux = viewModel.getProduct()
-                if(aux != null)objetcLists.ListaDeseados.removeItem(aux)
+                if(aux != null)objetcLists.ListaDeseados.addItem(aux)
             })
         }
         BottomBarItem(icon = Icons.Filled.AddCircle, onClick = {
             var aux = viewModel.getProduct()
             if(aux != null)objetcLists.ListaGuardarTarde.addItem(aux)
         })
-        BottomBarItem(icon = Icons.Filled.ShoppingCart, onClick = {
+        BottomBarItem(icon = Icons.Filled.ShoppingCart) {
             var aux = viewModel.getProduct()
-            if(aux != null)objetcLists.ListaCarrito.addItem(aux)
-        })
+            for (i  in 1..number) {
+                if (aux != null) objetcLists.ListaCarrito.addItem(aux)
+            }
+        }
     }
 }
 

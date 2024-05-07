@@ -12,6 +12,7 @@ import com.example.smarttrade.auth.presentation.view.ClientRegisterScreen
 import com.example.smarttrade.auth.presentation.view.LoginScreen
 import com.example.smarttrade.auth.presentation.view.SellerRegisterScreen
 import com.example.smarttrade.catalogue.view.ListaDeseosScreen
+import com.example.smarttrade.catalogue.view.carritoCompra
 import com.example.smarttrade.catalogue.view.mainCatalogueScreen
 import com.example.smarttrade.catalogue.view.viewProductCatalogueScreen
 import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
@@ -106,7 +107,11 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable("listadeseos"){
-                        ListaDeseosScreen(navController)
+                        ListaDeseosScreen(navController, scrollState)
+                    }
+
+                    composable("carrito"){
+                        carritoCompra(navController, scrollState)
                     }
 
                 }

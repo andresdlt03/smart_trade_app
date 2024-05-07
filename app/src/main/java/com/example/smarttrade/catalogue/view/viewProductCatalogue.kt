@@ -92,7 +92,8 @@ fun ProductoEnPantalla(
     p : Product,
     vm : catalogueViewModel
 ) {
-    var alertPressed by remember { mutableStateOf(false) }
+    var alertPressed by remember { mutableStateOf(false)}
+    var number by remember { mutableStateOf(1)}
 
     Column(
         modifier = Modifier
@@ -100,6 +101,7 @@ fun ProductoEnPantalla(
             .padding(vertical = 16.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
+
     ) {
         Image(
             painter = painterResource(id = R.drawable.default_product),
@@ -135,15 +137,46 @@ fun ProductoEnPantalla(
                 text(text = "Ver datasheet")
             }
         )
+        Spacer(modifier = Modifier.height(20.dp))
+
+        NumberSelector(number) { updatedNumber ->
+            number = updatedNumber
+            // Aquí puedes enviar el número actualizado a otra ventana
+            // mediante algún método o evento
+        }
         val typeuser: String = UserLogged.usertype
+
+
         when(typeuser){
-            "client" -> clientViewProduct(vm)
+            "client" -> clientViewProduct(vm, number)
             "seller" -> sellerViewProduct()
             "admin" -> adminViewProduct()
         }
 
         if(alertPressed){
             datasheet(p.dataSheet, {alertPressed = !alertPressed})
+        }
+    }
+}
+@Composable
+fun NumberSelector(initialNumber: Int, onNumberChanged: (Int) -> Unit) {
+    var number by remember { mutableStateOf(initialNumber) }
+
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Button(onClick = {
+            number--
+            onNumberChanged(number)
+        }) {
+            Text(text = "-")
+        }
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(text = number.toString())
+        Spacer(modifier = Modifier.width(8.dp))
+        Button(onClick = {
+            number++
+            onNumberChanged(number)
+        }) {
+            Text(text = "+")
         }
     }
 }
