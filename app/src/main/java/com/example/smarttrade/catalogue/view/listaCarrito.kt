@@ -1,7 +1,6 @@
 package com.example.smarttrade.catalogue.view
 
 import android.annotation.SuppressLint
-import androidx.collection.objectListOf
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -23,7 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -38,7 +36,7 @@ import java.text.DecimalFormat
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun carritoCompra(navController : NavHostController, scrollState: ScrollState) {
-        val typeUser = UserLogged.usertype
+        val typeUser = UserLogged.userType
         Scaffold (
             modifier = Modifier
                 .background(color = Color.White
@@ -46,7 +44,6 @@ fun carritoCompra(navController : NavHostController, scrollState: ScrollState) {
             containerColor = Color.White,
 
             bottomBar =  {
-                //bottomBar
                 when (typeUser){
                     "seller" -> sellerBottomBar(navController)
                     "client" ->  clientBottomBar(navController)
@@ -64,9 +61,9 @@ fun carritoCompra(navController : NavHostController, scrollState: ScrollState) {
             Spacer(modifier = Modifier.height(10.dp))
             val listaCarrito :List<Product>  = objetcLists.ListaCarrito.getItems()
             val listaguardarTarde : List<Product> = objetcLists.ListaGuardarTarde.getItems()
-            var precio_total = 0
+            var totalPrice = 0
             for (i in listaCarrito) {
-                precio_total = precio_total + i.price.toInt()
+                totalPrice = totalPrice + i.price.toInt()
                 ProductItem2(
                     nombre = i.name,
                     precio = i.price,
@@ -77,31 +74,30 @@ fun carritoCompra(navController : NavHostController, scrollState: ScrollState) {
                 Row {
                     Button(onClick = {
                         objetcLists.ListaCarrito.removeItem(i);
-                        navController.navigate("carrito")
+                        navController.navigate("shoppingCart")
                     }) {
                         Text(text = "Eliminar")
                     }
                     Spacer(modifier = Modifier.width(20.dp))
                     Button(onClick = {
-                        // Mover el elemento de ListaCarrito a ListaDeseados
                         objetcLists.ListaCarrito.removeItem(i)
                         objetcLists.ListaGuardarTarde.addItem(i)
-                        navController.navigate("carrito")
+                        navController.navigate("shoppingCart")
                     }) {
                         Text("Mover a Mas tarde")
                     }
                 }
             }
             Spacer(modifier = Modifier.height(10.dp))
-            val precio_iva = precio_total / 1.21
+            val aux = totalPrice / 1.21
             val df = DecimalFormat("#.##")
             df.maximumFractionDigits = 2
-            val precio_iva_formateado = df.format(precio_iva)
-            Text(text = "El IVA del carrito de compra es : $precio_iva_formateado€")
-            Text(text = "El precio total del carrito de compra es : $precio_total€")
+            val IVA = df.format(aux)
+            Text(text = "El IVA del carrito de compra es : $IVA€")
+            Text(text = "El precio total del carrito de compra es : $totalPrice€")
             Button(onClick = {
                 objetcLists.ListaCarrito.clearItems();
-                navController.navigate("carrito")
+                navController.navigate("shoppingCart")
             }) {
                 Text(text = "Pagar")
             }
@@ -119,7 +115,6 @@ fun carritoCompra(navController : NavHostController, scrollState: ScrollState) {
                 )
 
                 Button(onClick = {
-                    // Mover el elemento de ListaCarrito a ListaDeseados
                     objetcLists.ListaGuardarTarde.removeItem(i)
                     objetcLists.ListaCarrito.addItem(i)
                     navController.navigate("carrito")

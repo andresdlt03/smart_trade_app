@@ -106,14 +106,13 @@ class MainActivity : ComponentActivity() {
                         giftScreen(giftViewModel(),navController)
                     }
 
-                    composable("listadeseos"){
+                    composable("wishingList"){
                         ListaDeseosScreen(navController, scrollState)
                     }
 
-                    composable("carrito"){
+                    composable("shoppingCart"){
                         carritoCompra(navController, scrollState)
                     }
-
                 }
             }
         }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
@@ -25,7 +26,7 @@ import com.example.smarttrade.singleton.UserLogged
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ListaDeseosScreen(navController: NavHostController, scrollState: ScrollState) {
-    val typeUser = UserLogged.usertype
+    val typeUser = UserLogged.userType
 
     Scaffold (
         modifier = Modifier
@@ -61,13 +62,21 @@ fun ListaDeseosScreen(navController: NavHostController, scrollState: ScrollState
                     cat = i.category,
                     product = i
                 )
-
-                Button(onClick = {
-                    objetcLists.ListaDeseados.removeItem(i)
-                    objetcLists.ListaCarrito.addItem(i)
-                    navController.navigate("listadeseos")
-                }) {
-                    Text("Mover a Carrito")
+                Row {
+                    Button(onClick = {
+                        objetcLists.ListaDeseados.removeItem(i)
+                        navController.navigate("wishingList")
+                    }) {
+                        Text(text = "Eliminar")
+                    }
+                    Spacer(modifier = Modifier.width(20.dp))
+                    Button(onClick = {
+                        objetcLists.ListaDeseados.removeItem(i)
+                        objetcLists.ListaCarrito.addItem(i)
+                        navController.navigate("wishingList")
+                    }) {
+                        Text("Mover a Carrito")
+                    }
                 }
             }
         }

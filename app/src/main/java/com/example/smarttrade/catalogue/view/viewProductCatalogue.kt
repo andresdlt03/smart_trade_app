@@ -57,7 +57,7 @@ fun viewProductCatalogue(viewModel: viewProductCatalogueViewModel, navControler 
     if(producto != null) {
         topBarManage(producto.category, navControler)
         Spacer(modifier = Modifier.height(20.dp))
-        ProductoEnPantalla( nombre = producto.name, precio = producto.price, descripcion = producto.description, p = producto, viewModel2)
+        ProductoEnPantalla( name = producto.name, price = producto.price, descripcion = producto.description, p = producto, viewModel2)
         Spacer(modifier = Modifier.height(20.dp))
     }
 }
@@ -86,8 +86,8 @@ fun topBarManage(text : String, navControler: NavHostController){
 
 @Composable
 fun ProductoEnPantalla(
-    nombre: String,
-    precio: String,
+    name: String,
+    price: String,
     descripcion: String,
     p : Product,
     vm : catalogueViewModel
@@ -113,12 +113,12 @@ fun ProductoEnPantalla(
         )
         Spacer(modifier = Modifier.height(10.dp))
         Text(
-            text = nombre,
+            text = name,
             style = TextStyle(fontSize = 24.sp),
         )
         Spacer(modifier = Modifier.height(6.dp))
         Text(
-            text = "Precio: $precio €",
+            text = "Precio: $price €",
             style = TextStyle(fontSize = 15.sp),
             color = Color.Black,
         )
@@ -141,13 +141,9 @@ fun ProductoEnPantalla(
 
         NumberSelector(number) { updatedNumber ->
             number = updatedNumber
-            // Aquí puedes enviar el número actualizado a otra ventana
-            // mediante algún método o evento
         }
-        val typeuser: String = UserLogged.usertype
 
-
-        when(typeuser){
+        when(UserLogged.userType){
             "client" -> clientViewProduct(vm, number)
             "seller" -> sellerViewProduct()
             "admin" -> adminViewProduct()

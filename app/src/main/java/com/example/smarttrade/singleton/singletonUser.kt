@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 object UserLogged {
     private val _value: MutableState<String> = mutableStateOf("")
 
-    var usertype: String
+    var userType: String
         get() = _value.value
         set(newValue) {
             _value.value = newValue

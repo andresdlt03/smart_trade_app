@@ -80,7 +80,7 @@ fun mainCatalogue(
 ){
 
     val search :String by viewModel.search.observeAsState(initial = "")
-    val typeUser = UserLogged.usertype
+    val typeUser = UserLogged.userType
 
     viewModel.getUnverifiedProducts()
 
@@ -91,14 +91,12 @@ fun mainCatalogue(
         containerColor = Color.White,
 
         bottomBar =  {
-            //bottomBar
             when (typeUser){
                 "seller" -> sellerBottomBar(navController)
                 "client" ->  clientBottomBar(navController)
                 "admin" -> adminBottomBar(navController)
                 else -> throw IllegalArgumentException("Tipo de usuario desconocido")
             }
-
         }
     )
     {
