@@ -3,8 +3,8 @@ package com.example.smarttrade.auth.data.repository
 import com.example.smarttrade.auth.data.remote.UserApi
 import com.example.smarttrade.auth.domain.model.User
 import com.example.smarttrade.auth.domain.repository.UserRepository
-import com.example.smarttrade.auth.http.login.LoginCredentials
-import com.example.smarttrade.auth.http.login.LoginRequest
+import com.example.smarttrade.auth.data.remote.http.login.LoginCredentials
+import com.example.smarttrade.auth.data.remote.http.login.LoginRequest
 import com.example.smarttrade.network.Exception.NetworkException
 import com.google.gson.Gson
 import retrofit2.Response

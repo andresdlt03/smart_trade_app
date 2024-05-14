@@ -1,7 +1,7 @@
 package com.example.smarttrade.catalogue.view
 
 import android.annotation.SuppressLint
-import android.net.Uri
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,11 +19,17 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
@@ -41,29 +47,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import coil.compose.AsyncImage
+import com.example.smarttrade.R
 import com.example.smarttrade.catalogue.viewmodel.Product
 import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.Category
+import com.example.smarttrade.singleton.UserLogged
 
 @Composable
 fun mainCatalogueScreen(
     // user: User,
     viewModel: catalogueViewModel,
     navController: NavHostController,
-    scrollState: ScrollState
+    scrollState: ScrollState,
 ){
-    /*
-        val viewModel: mainCatalogueViewModel = when (user) {
-            is Seller -> SellerCatalogueViewModel()
-            is Client -> ClientCatalogueViewModel()
-            is Admin -> AdminCatalogueViewModel()
-    }*/
-    Column {
+Column {
         mainCatalogue(viewModel, navController, scrollState)
     }
 }
@@ -74,32 +76,27 @@ fun mainCatalogue(
     // user: User,
     viewModel: catalogueViewModel,
     navController: NavHostController,
-    scrollState: ScrollState
+    scrollState: ScrollState,
 ){
-    /*
-        val viewModel: mainCatalogueViewModel = when (user) {
-            is Seller -> SellerCatalogueViewModel()
-            is Client -> ClientCatalogueViewModel()
-            is Admin -> AdminCatalogueViewModel()
-    }*/
 
     val search :String by viewModel.search.observeAsState(initial = "")
-    /*
-        val bottomBar: @Composable () -> Unit = when (user) {
-            is Seller -> { SellerBottomBar(navController) }
-            is Client -> { ClientBottomBar(navController) }
-            is Admin -> { AdminBottomBar(navController) }
-        }
-    */
+    val typeUser = UserLogged.userType
+
+    viewModel.getUnverifiedProducts()
+
     Scaffold (
         modifier = Modifier
-            .background(color = Color.White
+                .background(color = Color.White
             ),
         containerColor = Color.White,
 
         bottomBar =  {
-            //bottomBar
-            BottomBar(navController)
+            when (typeUser){
+                "seller" -> sellerBottomBar(navController)
+                "client" ->  clientBottomBar(navController)
+                "admin" -> adminBottomBar(navController)
+                else -> throw IllegalArgumentException("Tipo de usuario desconocido")
+            }
         }
     )
     {
@@ -338,10 +335,10 @@ fun outLinedTextManage(
                             viewModel = viewModel,
                             navController = navController,
                             nombre = i.name,
-                            uri = i.uri,
                             precio = i.price,
                             descripcion = i.description,
-                            cat = i.category
+                            cat = i.category,
+                            product = i
                         )
                     }
                 } else if (filterC && !filterP) {
@@ -351,10 +348,10 @@ fun outLinedTextManage(
                             viewModel = viewModel,
                             navController = navController,
                             nombre = i.name,
-                            uri = i.uri,
                             precio = i.price,
                             descripcion = i.description,
-                            cat = i.category
+                            cat = i.category,
+                            product = i
                         )
                     }
                 } else if (filterC && !filterP) {
@@ -363,10 +360,10 @@ fun outLinedTextManage(
                             viewModel = viewModel,
                             navController = navController,
                             nombre = i.name,
-                            uri = i.uri,
                             precio = i.price,
                             descripcion = i.description,
-                            cat = i.category
+                            cat = i.category,
+                            product = i
                         )
                     }
                 } else if (!filterC && !filterP) {
@@ -374,24 +371,25 @@ fun outLinedTextManage(
                         viewModel = viewModel,
                         navController = navController,
                         nombre = i.name,
-                        uri = i.uri,
                         precio = i.price,
                         descripcion = i.description,
-                        cat = i.category
+                        cat = i.category,
+                        product = i
                     )
                 } else {
                     ProductItem(
                         viewModel = viewModel,
                         navController = navController,
                         nombre = i.name,
-                        uri = i.uri,
                         precio = i.price,
                         descripcion = i.description,
-                        cat = i.category
+                        cat = i.category,
+                        product = i
                     )
                 }
             }
         }
+        Spacer(modifier = Modifier.height(100.dp))
     }
 }
 
@@ -422,31 +420,25 @@ fun ProductItem(
     viewModel: catalogueViewModel,
     navController: NavHostController,
     nombre : String,
-    uri: Uri?,
     precio: String,
     descripcion: String,
-    cat : String
+    cat : String,
+    product : Product
 ) {
     Row(
         modifier = Modifier
             .padding(16.dp)
             .clickable {
-                viewModel.setProduct(
-                    uri,
-                    nombre,
-                    precio,
-                    descripcion,
-                    cat
-                ); navController.navigate("viewProduct")
+                viewModel.setProduct(product); navController.navigate("viewProduct")
             }
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        AsyncImage(
-            model = uri,
+        Image(
+            painter = painterResource(id = R.drawable.default_product),
             contentDescription = null,
             modifier = Modifier
-                .clickable { }
+                .clickable { /* acción al hacer clic */ }
                 .size(80.dp, 80.dp),
             contentScale = ContentScale.Crop
         )
@@ -499,15 +491,15 @@ fun adminBottomBar(navController: NavHostController) {
             IconButton(onClick = { navController.navigate("initial_screen") }) {
                 Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
             }
-            /*
-                IconButton(onClick = { navController.navigate("approved_product") }) {
+
+                IconButton(onClick = { /*navController.navigate("approved_product") */}) {
                     Icon(imageVector = Icons.Default.Check, contentDescription = "Productos verificados")
                 }
 
-                IconButton(onClick = { navController.navigate("pending_product") }) {
+                IconButton(onClick = { /*navController.navigate("pending_product") */}) {
                     Icon(imageVector = Icons.Default.List, contentDescription = "Productos pendientes")
                 }
-            */
+
 
             IconButton(onClick = { navController.navigate("product_management") }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Añadir")
@@ -527,11 +519,18 @@ fun sellerBottomBar(navController: NavHostController) {
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = { navController.navigate("initial_screen") }) {
+            IconButton(onClick = { navController.navigate("catalogue") }) {
                 Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
             }
             IconButton(onClick = { navController.navigate("product_management") }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Añadir")
+            }
+            IconButton(onClick = {/* navController.navigate("product_management") */}) {
+                Icon(imageVector = Icons.Default.Menu, contentDescription = "CatalogueMain")
+            }
+
+            IconButton(onClick = { /*navController.navigate("product_management") */}) {
+                Icon(imageVector = Icons.Default.Face, contentDescription = "CatalogueOwn")
             }
         }
     }
@@ -547,22 +546,22 @@ fun clientBottomBar(navController: NavHostController) {
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = { navController.navigate("initial_screen") }) {
+            IconButton(onClick = { navController.navigate("catalogue") }) {
                 Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
             }
-            /*
-                IconButton(onClick = { navController.navigate("shopping_cart") }) {
-                    Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = "Carrito")
-                }
 
-                IconButton(onClick = { navController.navigate("wishing_list") }) {
-                    Icon(imageVector = Icons.Default.Favorite, contentDescription = "Lista de deseos")
-                }
+            IconButton(onClick = { navController.navigate("carrito") }) {
+                Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = "Carrito")
+            }
 
-                IconButton(onClick = { navController.navigate("gift_list") }) {
-                    Icon(imageVector = Icons.Default.Star, contentDescription = "Listas de regalos")
-                }
-            * */
+            IconButton(onClick = { navController.navigate("listadeseos")}) {
+                Icon(imageVector = Icons.Default.Favorite, contentDescription = "Lista de deseos")
+            }
+
+            IconButton(onClick = { /*navController.navigate("gift_list") */}) {
+                Icon(imageVector = Icons.Default.Star, contentDescription = "Listas de regalos")
+            }
+
         }
     }
 }

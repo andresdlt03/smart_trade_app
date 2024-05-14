@@ -1,4 +1,4 @@
-package com.example.smarttrade.auth.http.login
+package com.example.smarttrade.auth.data.remote.http.login
 
 import com.google.gson.annotations.SerializedName
 

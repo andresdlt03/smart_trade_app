@@ -11,13 +11,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.smarttrade.auth.presentation.view.ClientRegisterScreen
 import com.example.smarttrade.auth.presentation.view.LoginScreen
 import com.example.smarttrade.auth.presentation.view.SellerRegisterScreen
-import com.example.smarttrade.auth.presentation.viewmodel.LoginViewModel
+import com.example.smarttrade.catalogue.view.ListaDeseosScreen
+import com.example.smarttrade.catalogue.view.carritoCompra
 import com.example.smarttrade.catalogue.view.mainCatalogueScreen
 import com.example.smarttrade.catalogue.view.viewProductCatalogueScreen
-import com.example.smarttrade.catalogue.viewmodel.adminCatalogueViewModel
-import com.example.smarttrade.catalogue.viewmodel.clientCatalogueViewModel
-import com.example.smarttrade.catalogue.viewmodel.sellerCatalogueViewModel
-import com.example.smarttrade.catalogue.viewmodel.viewProductCatalogueViewModel
+import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
 import com.example.smarttrade.gift.presentation.giftScreen
 import com.example.smarttrade.gift.presentation.giftViewModel
 import com.example.smarttrade.product_management.presentation.view.addProductBooksScreen
@@ -30,7 +28,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val loginViewModel: LoginViewModel by viewModels()
+    private val catalogueViewModel: catalogueViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -39,15 +38,8 @@ class MainActivity : ComponentActivity() {
             SmartTradeTheme {
                 val navController = rememberNavController()
                 val scrollState = rememberScrollState()
-                val viewmodel =
-                    when (loginViewModel.getLoggedUserType()) {
-                    "Client" -> clientCatalogueViewModel()
-                    "Seller" -> sellerCatalogueViewModel()
-                    "Admin" -> adminCatalogueViewModel()
-                    else -> throw IllegalArgumentException("Tipo de usuario desconocido")
-                }
 
-                NavHost(navController = navController, startDestination = "catalogue") {
+                NavHost(navController = navController, startDestination = "initial_screen") {
                     composable("initial_screen") {
                         InitialScreen(
                             navController = navController
@@ -77,42 +69,49 @@ class MainActivity : ComponentActivity() {
                         addProductTechnologyScreen(
                             navHostController = navController,
                             scrollState = scrollState,
-                            vm = sellerCatalogueViewModel()
+                            vm = catalogueViewModel
                         )
                     }
                     composable("add2") {
                         addProductBooksScreen(
                             navHostController = navController,
                             scrollState = scrollState,
-                            vm = sellerCatalogueViewModel()
+                            vm = catalogueViewModel
                         )
                     }
                     composable("add3") {
                         addProductFoodScreen(
                             navHostController = navController,
                             scrollState = scrollState,
-                            vm = sellerCatalogueViewModel()
+                            vm = catalogueViewModel
                         )
                     }
                     composable("add4") {
                         addProductClothesScreen(
                             navHostController = navController,
                             scrollState = scrollState,
-                            vm = sellerCatalogueViewModel()
+                            vm = catalogueViewModel
                         )
                     }
                     composable("catalogue") {
-                        mainCatalogueScreen(viewmodel, navController,scrollState)
+                        mainCatalogueScreen(catalogueViewModel, navController,scrollState)
                     }
                     composable("viewProduct") {
                         viewProductCatalogueScreen(
-                            viewProductCatalogueViewModel(),
-                            navController,
-                            viewmodel
+                            navController = navController,
+                            viewModel2 = catalogueViewModel
                         )
                     }
                     composable("giftList"){
                         giftScreen(giftViewModel(),navController)
+                    }
+
+                    composable("wishingList"){
+                        ListaDeseosScreen(navController, scrollState)
+                    }
+
+                    composable("shoppingCart"){
+                        carritoCompra(navController, scrollState)
                     }
                 }
             }

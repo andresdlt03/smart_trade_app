@@ -5,7 +5,6 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import com.example.smarttrade.catalogue.viewmodel.Product
-import com.example.smarttrade.catalogue.viewmodel.sellerCatalogueViewModel
 import com.example.smarttrade.product_management.presentation.viewmodel.state.ProductClothesState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -82,10 +81,7 @@ class AddProductClothesViewModel @Inject constructor() : ViewModel() {
         return (_state.value.textError != "")
     }
 
-    fun addProduct(viewModel: sellerCatalogueViewModel){
-        val producto : Product = Product(_state.value.photo1, _state.value.name, _state.value.price, _state.value.description, "Ropa")
-        viewModel.addToCatalogue(producto)
-    }
+
 
 
 }
