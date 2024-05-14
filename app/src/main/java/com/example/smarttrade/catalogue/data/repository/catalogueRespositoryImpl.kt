@@ -50,4 +50,12 @@ class CatalogueRepositoryImpl @Inject constructor(
             throw NetworkException(e.message.toString())
         }
     }
+
+    override suspend fun getList(listType: String): Response<String> {
+        try {
+            return CatalogueApi.getList(listType)
+        } catch (e: Exception) {
+            throw NetworkException(e.message.toString())
+        }
+    }
 }

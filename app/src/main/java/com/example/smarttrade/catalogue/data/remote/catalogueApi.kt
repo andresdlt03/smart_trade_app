@@ -24,6 +24,11 @@ interface CatalogueApi {
     suspend fun getProductsSeller(@Path("sellerEmail") sellerEmail: String): Response<String>
 
     @Headers("content-type: application/json")
-    @PUT("products/{productoId}")
+    @PUT("products/{productId}")
     suspend fun verifyProduct(@Path("productId") sellerEmail: String): Response<String>
+
+    @Headers("content-type: application/json")
+    @GET("api/clients/{clientId}/lists/{listType}")
+    suspend fun getList(@Path("listType") listType: String) : Response<String>
+
 }

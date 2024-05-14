@@ -13,4 +13,7 @@ interface CatalogueRepository {
 
     suspend fun verifyProduct(productId: String): Response<String>
 
+    suspend fun getList(listType: String): Response<String>
+
+
 }
