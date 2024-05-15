@@ -63,20 +63,21 @@ fun ListaDeseosScreen(navController: NavHostController, scrollState: ScrollState
                     product = i
                 )
                 Row {
-                    Button(onClick = {
-                        objetcLists.ListaDeseados.removeItem(i)
-                        navController.navigate("wishingList")
-                    }) {
-                        Text(text = "Eliminar")
-                    }
+
+                    RemoveItemButton(
+                        sourceListName = moveItemButton.deseado,
+                        item = i,
+                        navController =navController
+                    )
+
                     Spacer(modifier = Modifier.width(20.dp))
-                    Button(onClick = {
-                        objetcLists.ListaDeseados.removeItem(i)
-                        objetcLists.ListaCarrito.addItem(i)
-                        navController.navigate("wishingList")
-                    }) {
-                        Text("Mover a Carrito")
-                    }
+
+                    MoveItemButton(
+                        sourceListName = moveItemButton.deseado,
+                        destinationListName = moveItemButton.carrito,
+                        item = i,
+                        navController = navController
+                    )
                 }
             }
         }

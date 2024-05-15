@@ -31,102 +31,125 @@ import com.example.smarttrade.R
 import com.example.smarttrade.catalogue.viewmodel.Product
 import com.example.smarttrade.singleton.UserLogged
 import java.text.DecimalFormat
-
-
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun carritoCompra(navController : NavHostController, scrollState: ScrollState) {
-        val typeUser = UserLogged.userType
-        Scaffold (
-            modifier = Modifier
-                .background(color = Color.White
-                ),
-            containerColor = Color.White,
 
-            bottomBar =  {
-                when (typeUser){
-                    "seller" -> sellerBottomBar(navController)
-                    "client" ->  clientBottomBar(navController)
-                    "admin" -> adminBottomBar(navController)
-                    else -> throw IllegalArgumentException("Tipo de usuario desconocido")
-                }
+    val userType = UserLogged.userType
 
-            }
-        ){
-        Column (
-            modifier = Modifier
-                .padding(10.dp)
-                .verticalScroll(scrollState)){
-            Text(text = "Carrito de la Compra", fontSize = 20.sp)
-            Spacer(modifier = Modifier.height(10.dp))
-            val listaCarrito :List<Product>  = objetcLists.ListaCarrito.getItems()
-            val listaguardarTarde : List<Product> = objetcLists.ListaGuardarTarde.getItems()
-            var totalPrice = 0
-            for (i in listaCarrito) {
-                totalPrice = totalPrice + i.price.toInt()
-                ProductItem2(
-                    nombre = i.name,
-                    precio = i.price,
-                    descripcion = i.description,
-                    cat = i.category,
-                    product = i
-                )
-                Row {
-                    Button(onClick = {
-                        objetcLists.ListaCarrito.removeItem(i);
-                        navController.navigate("shoppingCart")
-                    }) {
-                        Text(text = "Eliminar")
-                    }
-                    Spacer(modifier = Modifier.width(20.dp))
-                    Button(onClick = {
-                        objetcLists.ListaCarrito.removeItem(i)
-                        objetcLists.ListaGuardarTarde.addItem(i)
-                        navController.navigate("shoppingCart")
-                    }) {
-                        Text("Mover a Mas tarde")
-                    }
-                }
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-            val aux = totalPrice / 1.21
-            val df = DecimalFormat("#.##")
-            df.maximumFractionDigits = 2
-            val IVA = df.format(aux)
-            Text(text = "El IVA del carrito de compra es : $IVA€")
-            Text(text = "El precio total del carrito de compra es : $totalPrice€")
-            Button(onClick = {
-                objetcLists.ListaCarrito.clearItems();
-                navController.navigate("shoppingCart")
-            }) {
-                Text(text = "Pagar")
-            }
-            Spacer(modifier = Modifier.height(30.dp))
-            Text(text = "Guardar para más tarde", fontSize = 20.sp)
-            Spacer(modifier = Modifier.height(10.dp))
+    Scaffold (
+        modifier = Modifier
+            .background(color = Color.White
+            ),
+        containerColor = Color.White,
 
-            for (i in listaguardarTarde) {
-                ProductItem2(
-                    nombre = i.name,
-                    precio = i.price,
-                    descripcion = i.description,
-                    cat = i.category,
-                    product = i
+        bottomBar =  {
+            when (userType){
+                "seller" -> sellerBottomBar(navController)
+                "client" ->  clientBottomBar(navController)
+                "admin" -> adminBottomBar(navController)
+                else -> throw IllegalArgumentException("Tipo de usuario desconocido")
+            }
+
+        }
+    ){
+    Column (
+        modifier = Modifier
+            .padding(10.dp)
+            .verticalScroll(scrollState)){
+
+        Text(text = "Carrito de la Compra", fontSize = 20.sp)
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        val listaCarrito :List<Product>  = objetcLists.ListaCarrito.getItems()
+        val listaguardarTarde : List<Product> = objetcLists.ListaGuardarTarde.getItems()
+        var totalPrice = 0
+
+        for (i in listaCarrito) {
+            totalPrice = totalPrice + i.price.toInt()
+            ProductItem2(
+                nombre = i.name,
+                precio = i.price,
+                descripcion = i.description,
+                cat = i.category,
+                product = i
+            )
+            Row {
+                RemoveItemButton(
+                    sourceListName = moveItemButton.carrito,
+                    item = i,
+                    navController = navController
                 )
 
-                Button(onClick = {
-                    objetcLists.ListaGuardarTarde.removeItem(i)
-                    objetcLists.ListaCarrito.addItem(i)
-                    navController.navigate("carrito")
-                }) {
-                    Text("Mover a carrito")
-                }
-            }
+                Spacer(modifier = Modifier.width(20.dp))
 
-            Spacer(modifier = Modifier.height(100.dp))
+                MoveItemButton(
+                    sourceListName = moveItemButton.carrito,
+                    destinationListName = moveItemButton.masTarde,
+                    item = i,
+                    navController = navController
+                )
+            }
         }
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        val aux = totalPrice / 1.21
+        val df = DecimalFormat("#.##")
+        df.maximumFractionDigits = 2
+        val IVA = df.format(aux)
+
+        Text(text = "El IVA del carrito de compra es : $IVA€")
+        Text(text = "El precio total del carrito de compra es : $totalPrice€")
+
+        Button(onClick = {
+            objetcLists.ListaCarrito.clearItems();
+            navController.navigate("shoppingCart")
+        }) {
+            Text(text = "Pagar")
         }
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        Text(text = "Guardar para más tarde", fontSize = 20.sp)
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        for (i in listaguardarTarde) {
+            ProductItem2(
+                nombre = i.name,
+                precio = i.price,
+                descripcion = i.description,
+                cat = i.category,
+                product = i
+            )
+
+            Row {
+                RemoveItemButton(
+                    sourceListName = moveItemButton.masTarde,
+                    item = i,
+                    navController = navController
+                )
+
+                Spacer(modifier = Modifier.width(20.dp))
+
+                MoveItemButton(
+                sourceListName = moveItemButton.masTarde,
+                destinationListName = moveItemButton.carrito,
+                item = i,
+                navController = navController
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(100.dp))
+        }
+    }
 }
+
+
+
 @Composable
 fun ProductItem2(
     nombre : String,

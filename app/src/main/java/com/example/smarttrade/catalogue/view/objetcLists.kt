@@ -6,7 +6,6 @@ class objetcLists {
     object ListaCarrito {
         private val items = mutableListOf<Product>()
 
-
         fun addItem(item: Product) {
             items.add(item)
         }
@@ -63,6 +62,4 @@ class objetcLists {
             return items.contains(item)
         }
     }
-
-
 }
