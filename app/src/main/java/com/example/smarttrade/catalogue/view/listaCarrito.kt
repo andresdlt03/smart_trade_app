@@ -68,8 +68,6 @@ fun carritoCompra(navController : NavHostController, scrollState: ScrollState) {
                     nombre = i.name,
                     precio = i.price,
                     descripcion = i.description,
-                    cat = i.category,
-                    product = i
                 )
                 Row {
                     Button(onClick = {
@@ -110,8 +108,6 @@ fun carritoCompra(navController : NavHostController, scrollState: ScrollState) {
                     nombre = i.name,
                     precio = i.price,
                     descripcion = i.description,
-                    cat = i.category,
-                    product = i
                 )
 
                 Button(onClick = {
@@ -132,8 +128,6 @@ fun ProductItem2(
     nombre : String,
     precio: String,
     descripcion: String,
-    cat : String,
-    product : Product
 ) {
     Row(
         modifier = Modifier

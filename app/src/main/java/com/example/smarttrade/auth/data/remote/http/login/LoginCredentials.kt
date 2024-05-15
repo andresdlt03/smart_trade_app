@@ -7,4 +7,4 @@ data class LoginCredentials (
     val email: String,
     @SerializedName("password")
     val password: String
-    )
+)

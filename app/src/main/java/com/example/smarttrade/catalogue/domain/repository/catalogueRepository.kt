@@ -1,5 +1,6 @@
 package com.example.smarttrade.catalogue.domain.repository;
 
+import com.example.smarttrade.catalogue.data.remote.http.lists.DeleteFromWishListRequest
 import retrofit2.Response;
 
 interface CatalogueRepository {
@@ -15,5 +16,6 @@ interface CatalogueRepository {
 
     suspend fun getList(listType: String): Response<String>
 
+    suspend fun deleteFromWishList(deleteWishList: DeleteFromWishListRequest, clientId: String): Response<String>
 
 }

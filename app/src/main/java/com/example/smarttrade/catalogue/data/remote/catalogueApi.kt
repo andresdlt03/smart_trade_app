@@ -1,6 +1,9 @@
 package com.example.smarttrade.catalogue.data.remote;
 
+import com.example.smarttrade.catalogue.data.remote.http.lists.DeleteFromWishListRequest
 import retrofit2.Response;
+import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Headers;
 import retrofit2.http.PUT
@@ -30,5 +33,9 @@ interface CatalogueApi {
     @Headers("content-type: application/json")
     @GET("api/clients/{clientId}/lists/{listType}")
     suspend fun getList(@Path("listType") listType: String) : Response<String>
+
+    @Headers("content-type: application/json")
+    @DELETE("api/clients/{clientId}/lists/wishlist/product")
+    suspend fun deleteFromWishList(@Body user: String, @Path("clientId") clientId: String) : Response<String>
 
 }
