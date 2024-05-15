@@ -15,6 +15,7 @@ import com.example.smarttrade.catalogue.view.ListaDeseosScreen
 import com.example.smarttrade.catalogue.view.carritoCompra
 import com.example.smarttrade.catalogue.view.mainCatalogueScreen
 import com.example.smarttrade.catalogue.view.viewProductCatalogueScreen
+import com.example.smarttrade.catalogue.viewmodel.ListaDeseadosViewModel
 import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
 import com.example.smarttrade.gift.presentation.giftScreen
 import com.example.smarttrade.gift.presentation.giftViewModel
@@ -29,6 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val catalogueViewModel: catalogueViewModel by viewModels()
+    private val ListaDeseadosViewModel: ListaDeseadosViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,7 +109,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable("wishingList"){
-                        ListaDeseosScreen(navController, scrollState)
+                        ListaDeseosScreen(navController, scrollState, ListaDeseadosViewModel)
                     }
 
                     composable("shoppingCart"){

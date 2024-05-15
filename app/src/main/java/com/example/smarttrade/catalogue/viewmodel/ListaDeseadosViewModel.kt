@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-open class listaDeseadosViewModel @Inject constructor(
+open class ListaDeseadosViewModel @Inject constructor(
     private val catalogueRepository: CatalogueRepository,
 ): ViewModel() {
 

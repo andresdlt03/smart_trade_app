@@ -30,15 +30,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.smarttrade.R
-import com.example.smarttrade.catalogue.viewmodel.Product
-import com.example.smarttrade.catalogue.viewmodel.listaDeseadosViewModel
+import com.example.smarttrade.catalogue.viewmodel.ListaDeseadosViewModel
 import com.example.smarttrade.singleton.UserLogged
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ListaDeseosScreen(navController: NavHostController, scrollState: ScrollState, viewModel: listaDeseadosViewModel) {
+fun ListaDeseosScreen(navController: NavHostController, scrollState: ScrollState, viewModel: ListaDeseadosViewModel) {
     val typeUser = UserLogged.userType
+    viewModel.getListaDeseados()
 
     Scaffold (
         modifier = Modifier
@@ -63,7 +63,7 @@ fun ListaDeseosScreen(navController: NavHostController, scrollState: ScrollState
                 .verticalScroll(scrollState)){
             Text(text = "Lista de Deseos", fontSize = 20.sp)
             Spacer(modifier = Modifier.height(10.dp))
-            val listadeseados :List<listaDeseadosViewModel.ProductListaDeseados> by viewModel.listadeseados.observeAsState(initial =
+            val listadeseados :List<ListaDeseadosViewModel.ProductListaDeseados> by viewModel.listadeseados.observeAsState(initial =
             listOf())
             for (i in listadeseados) {
 
@@ -75,14 +75,14 @@ fun ListaDeseosScreen(navController: NavHostController, scrollState: ScrollState
                 )
                 Row {
                     Button(onClick = {
-                        {/*Quitar lista deseados*/}
+                        viewModel.deleteFromWishList(i)
                         navController.navigate("wishingList")
                     }) {
                         Text(text = "Eliminar")
                     }
                     Spacer(modifier = Modifier.width(20.dp))
                     Button(onClick = {
-                        { /*quitar de lista deseados*/ }
+                        viewModel.deleteFromWishList(i);
                         { /*poner en el carrito*/ }
                         navController.navigate("wishingList")
                     }) {
