@@ -1,8 +1,10 @@
 package com.example.smarttrade.catalogue.view
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -62,22 +64,57 @@ fun RemoveItemButton(
     navController: NavHostController
 ) {
     var showMessage by remember { mutableStateOf(false) }
+    var showDialog by remember { mutableStateOf(false) }
 
     Button(onClick = {
-        when (sourceListName) {
-            "carrito" -> objetcLists.ListaCarrito.removeItem(item)
-            "masTarde" -> objetcLists.ListaGuardarTarde.removeItem(item)
-            "deseado" -> objetcLists.ListaDeseados.removeItem(item)
-        }
-        showMessage = true
-        navController.navigate(sourceListName)
+        showDialog = true
     }) {
         Text("Eliminar")
+    }
+
+    if (showDialog) {
+        ConfirmationDialog(
+            onConfirm = {
+                when (sourceListName) {
+                    "carrito" -> objetcLists.ListaCarrito.removeItem(item)
+                    "masTarde" -> objetcLists.ListaGuardarTarde.removeItem(item)
+                    "deseado" -> objetcLists.ListaDeseados.removeItem(item)
+                }
+                showMessage = true
+                navController.navigate(sourceListName)
+                showDialog = false
+            },
+            onDismiss = {
+                showDialog = false
+            }
+        )
     }
 
     TemporaryMessage(
         message = "Elemento eliminado correctamente",
         visible = showMessage
+    )
+}
+
+@Composable
+fun ConfirmationDialog(
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Confirmar eliminación") },
+        text = { Text("¿Estás seguro de que quieres eliminar este elemento?") },
+        confirmButton = {
+            TextButton(onClick = onConfirm) {
+                Text("Sí")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("No")
+            }
+        }
     )
 }
 

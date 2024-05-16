@@ -135,10 +135,10 @@ fun carritoCompra(navController : NavHostController, scrollState: ScrollState) {
                 Spacer(modifier = Modifier.width(20.dp))
 
                 MoveItemButton(
-                sourceListName = moveItemButton.masTarde,
-                destinationListName = moveItemButton.carrito,
-                item = i,
-                navController = navController
+                    sourceListName = moveItemButton.masTarde,
+                    destinationListName = moveItemButton.carrito,
+                    item = i,
+                    navController = navController
                 )
             }
         }
