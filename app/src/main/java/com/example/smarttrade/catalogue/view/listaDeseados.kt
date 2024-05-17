@@ -76,15 +76,15 @@ fun ListaDeseosScreen(navController: NavHostController, scrollState: ScrollState
                 Row {
                     Button(onClick = {
                         viewModel.deleteFromWishList(i)
-                        navController.navigate("wishingList")
+                        viewModel.getListaDeseados()
                     }) {
                         Text(text = "Eliminar")
                     }
                     Spacer(modifier = Modifier.width(20.dp))
                     Button(onClick = {
                         viewModel.deleteFromWishList(i);
+                        viewModel.getListaDeseados();
                         { /*poner en el carrito*/ }
-                        navController.navigate("wishingList")
                     }) {
                         Text("Mover a Carrito")
                     }
