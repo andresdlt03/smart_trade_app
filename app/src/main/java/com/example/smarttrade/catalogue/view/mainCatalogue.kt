@@ -419,11 +419,11 @@ fun CheckBoxItem(
 fun ProductItem(
     viewModel: catalogueViewModel,
     navController: NavHostController,
-    nombre : String,
+    nombre: String,
     precio: String,
     descripcion: String,
-    cat : String,
-    product : Product
+    cat: String,
+    product: Product
 ) {
     Row(
         modifier = Modifier

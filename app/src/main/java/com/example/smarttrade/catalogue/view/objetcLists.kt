@@ -3,7 +3,7 @@ package com.example.smarttrade.catalogue.view
 import com.example.smarttrade.catalogue.viewmodel.Product
 
 class objetcLists {
-    object ListaCarrito {
+    object shoppingCart {
         private val items = mutableListOf<Product>()
 
         fun addItem(item: Product) {
@@ -28,7 +28,7 @@ class objetcLists {
 
     }
 
-    object ListaGuardarTarde {
+    object forLaterList {
         private val items = mutableListOf<Product>()
 
         fun addItem(item: Product) {
@@ -44,7 +44,7 @@ class objetcLists {
         }
     }
 
-    object ListaDeseados {
+    object wishList {
         private val items = mutableListOf<Product>()
 
         fun addItem(item: Product) {

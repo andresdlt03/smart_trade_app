@@ -7,4 +7,8 @@ data class LoginSuccess (
     val email: String,
     @SerializedName("userType")
     val userType: String,
+    @SerializedName("dir")
+    val dir: String,
+    @SerializedName("fullName")
+    val fullName: String,
 )

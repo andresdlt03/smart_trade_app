@@ -1,8 +1,12 @@
 package com.example.smarttrade.catalogue.view
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -14,12 +18,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.smarttrade.catalogue.view.objetcLists
 import com.example.smarttrade.catalogue.viewmodel.Product
-import kotlinx.coroutines.delay
 import java.lang.reflect.Modifier
 
-object moveItemButton {
+object Buttons {
     val masTarde = "masTarde"
     val deseado = "deseado"
     val carrito = "carrito"
@@ -35,15 +37,15 @@ fun MoveItemButton(
 
     Button(onClick = {
         when (sourceListName) {
-            "carrito" -> objetcLists.ListaCarrito.removeItem(item)
-            "masTarde" -> objetcLists.ListaGuardarTarde.removeItem(item)
-            "deseado" -> objetcLists.ListaDeseados.removeItem(item)
+            "carrito" -> objetcLists.shoppingCart.removeItem(item)
+            "masTarde" -> objetcLists.forLaterList.removeItem(item)
+            "deseado" -> objetcLists.wishList.removeItem(item)
         }
 
         when (destinationListName) {
-            "carrito" -> objetcLists.ListaCarrito.addItem(item)
-            "masTarde" -> objetcLists.ListaGuardarTarde.addItem(item)
-            "deseado" -> objetcLists.ListaDeseados.addItem(item)
+            "carrito" -> objetcLists.shoppingCart.addItem(item)
+            "masTarde" -> objetcLists.forLaterList.addItem(item)
+            "deseado" -> objetcLists.wishList.addItem(item)
         }
 
         navController.navigate(sourceListName)
@@ -57,6 +59,23 @@ fun MoveItemButton(
     )
 }
 
+@Composable
+fun GoBackButton(
+    previousPageName: String,
+    navController: NavHostController
+) {
+    IconButton(
+        onClick = {
+            navController.popBackStack()
+        },
+        modifier = androidx.compose.ui.Modifier.padding(8.dp)
+    ) {
+        Icon(
+            imageVector = Icons.Filled.ArrowBack,
+            contentDescription = "Back to $previousPageName"
+        )
+    }
+}
 @Composable
 fun RemoveItemButton(
     sourceListName: String,
@@ -76,9 +95,9 @@ fun RemoveItemButton(
         ConfirmationDialog(
             onConfirm = {
                 when (sourceListName) {
-                    "carrito" -> objetcLists.ListaCarrito.removeItem(item)
-                    "masTarde" -> objetcLists.ListaGuardarTarde.removeItem(item)
-                    "deseado" -> objetcLists.ListaDeseados.removeItem(item)
+                    "carrito" -> objetcLists.shoppingCart.removeItem(item)
+                    "masTarde" -> objetcLists.forLaterList.removeItem(item)
+                    "deseado" -> objetcLists.wishList.removeItem(item)
                 }
                 showMessage = true
                 navController.navigate(sourceListName)

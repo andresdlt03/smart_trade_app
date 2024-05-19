@@ -33,7 +33,7 @@ import com.example.smarttrade.singleton.UserLogged
 import java.text.DecimalFormat
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun carritoCompra(navController : NavHostController, scrollState: ScrollState) {
+fun ShoppingCartScreen(navController : NavHostController, scrollState: ScrollState) {
 
     val userType = UserLogged.userType
 
@@ -62,12 +62,12 @@ fun carritoCompra(navController : NavHostController, scrollState: ScrollState) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        val listaCarrito :List<Product>  = objetcLists.ListaCarrito.getItems()
-        val listaguardarTarde : List<Product> = objetcLists.ListaGuardarTarde.getItems()
-        var totalPrice = 0
+        val shoppingCart :List<Product>  = objetcLists.shoppingCart.getItems()
+        val forLater : List<Product> = objetcLists.forLaterList.getItems()
+        var totalPrice = 0.0
 
-        for (i in listaCarrito) {
-            totalPrice = totalPrice + i.price.toInt()
+        for (i in shoppingCart) {
+            totalPrice += i.price.toDouble()
             ProductItem2(
                 nombre = i.name,
                 precio = i.price,
@@ -77,7 +77,7 @@ fun carritoCompra(navController : NavHostController, scrollState: ScrollState) {
             )
             Row {
                 RemoveItemButton(
-                    sourceListName = moveItemButton.carrito,
+                    sourceListName = Buttons.carrito,
                     item = i,
                     navController = navController
                 )
@@ -85,8 +85,8 @@ fun carritoCompra(navController : NavHostController, scrollState: ScrollState) {
                 Spacer(modifier = Modifier.width(20.dp))
 
                 MoveItemButton(
-                    sourceListName = moveItemButton.carrito,
-                    destinationListName = moveItemButton.masTarde,
+                    sourceListName = Buttons.carrito,
+                    destinationListName = Buttons.masTarde,
                     item = i,
                     navController = navController
                 )
@@ -104,10 +104,9 @@ fun carritoCompra(navController : NavHostController, scrollState: ScrollState) {
         Text(text = "El precio total del carrito de compra es : $totalPrice€")
 
         Button(onClick = {
-            objetcLists.ListaCarrito.clearItems();
-            navController.navigate("shoppingCart")
+            navController.navigate("tramitarPedido")
         }) {
-            Text(text = "Pagar")
+            Text(text = "Tramitar pedido")
         }
 
         Spacer(modifier = Modifier.height(30.dp))
@@ -116,7 +115,7 @@ fun carritoCompra(navController : NavHostController, scrollState: ScrollState) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        for (i in listaguardarTarde) {
+        for (i in forLater) {
             ProductItem2(
                 nombre = i.name,
                 precio = i.price,
@@ -127,7 +126,7 @@ fun carritoCompra(navController : NavHostController, scrollState: ScrollState) {
 
             Row {
                 RemoveItemButton(
-                    sourceListName = moveItemButton.masTarde,
+                    sourceListName = Buttons.masTarde,
                     item = i,
                     navController = navController
                 )
@@ -135,8 +134,8 @@ fun carritoCompra(navController : NavHostController, scrollState: ScrollState) {
                 Spacer(modifier = Modifier.width(20.dp))
 
                 MoveItemButton(
-                    sourceListName = moveItemButton.masTarde,
-                    destinationListName = moveItemButton.carrito,
+                    sourceListName = Buttons.masTarde,
+                    destinationListName = Buttons.carrito,
                     item = i,
                     navController = navController
                 )
@@ -152,11 +151,11 @@ fun carritoCompra(navController : NavHostController, scrollState: ScrollState) {
 
 @Composable
 fun ProductItem2(
-    nombre : String,
+    nombre: String,
     precio: String,
     descripcion: String,
-    cat : String,
-    product : Product
+    cat: String,
+    product: Product
 ) {
     Row(
         modifier = Modifier

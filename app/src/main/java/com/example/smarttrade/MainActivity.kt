@@ -11,8 +11,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.smarttrade.auth.presentation.view.ClientRegisterScreen
 import com.example.smarttrade.auth.presentation.view.LoginScreen
 import com.example.smarttrade.auth.presentation.view.SellerRegisterScreen
-import com.example.smarttrade.catalogue.view.ListaDeseosScreen
-import com.example.smarttrade.catalogue.view.carritoCompra
+import com.example.smarttrade.catalogue.view.ProcessOrder
+import com.example.smarttrade.catalogue.view.WishListScreen
+import com.example.smarttrade.catalogue.view.ShoppingCartScreen
 import com.example.smarttrade.catalogue.view.mainCatalogueScreen
 import com.example.smarttrade.catalogue.view.viewProductCatalogueScreen
 import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
@@ -105,13 +106,14 @@ class MainActivity : ComponentActivity() {
                     composable("giftList"){
                         giftScreen(giftViewModel(),navController)
                     }
-
                     composable("wishingList"){
-                        ListaDeseosScreen(navController, scrollState)
+                        WishListScreen(navController, scrollState)
                     }
-
                     composable("shoppingCart"){
-                        carritoCompra(navController, scrollState)
+                        ShoppingCartScreen(navController, scrollState)
+                    }
+                    composable("tramitarPedido"){
+                        ProcessOrder(navController, scrollState)
                     }
                 }
             }
