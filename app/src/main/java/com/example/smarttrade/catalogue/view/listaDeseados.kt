@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.smarttrade.R
+import com.example.smarttrade.catalogue.data.remote.http.lists.WishListRequest
 import com.example.smarttrade.catalogue.viewmodel.ListaDeseadosViewModel
 import com.example.smarttrade.singleton.UserLogged
 
@@ -75,15 +76,23 @@ fun ListaDeseosScreen(navController: NavHostController, scrollState: ScrollState
                 )
                 Row {
                     Button(onClick = {
-                        viewModel.deleteFromWishList(i)
-                        viewModel.getListaDeseados()
+                        viewModel.deleteFromWishList(
+                            WishListRequest(
+                                productId = i.name,
+                                sellerEmail = i.seller
+                            )
+                        )
                     }) {
                         Text(text = "Eliminar")
                     }
                     Spacer(modifier = Modifier.width(20.dp))
                     Button(onClick = {
-                        viewModel.deleteFromWishList(i);
-                        viewModel.getListaDeseados();
+                        viewModel.deleteFromWishList(
+                            WishListRequest(
+                                productId = i.name,
+                                sellerEmail = i.seller
+                            )
+                        );
                         { /*poner en el carrito*/ }
                     }) {
                         Text("Mover a Carrito")
