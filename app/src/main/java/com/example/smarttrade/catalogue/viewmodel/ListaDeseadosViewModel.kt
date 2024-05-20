@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.smarttrade.catalogue.data.remote.http.lists.DeleteFromWishListRequest
+import com.example.smarttrade.catalogue.data.remote.http.lists.WishListRequest
 import com.example.smarttrade.catalogue.domain.repository.CatalogueRepository
 import com.example.smarttrade.network.Exception.NetworkException
 import com.example.smarttrade.singleton.UserLogged
@@ -27,7 +27,7 @@ open class ListaDeseadosViewModel @Inject constructor(
     fun getListaDeseados(){
         viewModelScope.launch {
             try {
-                val call = catalogueRepository.getUnverifiedProducts()
+                val call = catalogueRepository.getList("wishlist")
                 if(call.isSuccessful) {
                     val responseBody = call.body()
                     responseBody?.let { jsonString -> _listadeseados.value = parseJsonListaDeseados(jsonString)}
@@ -41,6 +41,39 @@ open class ListaDeseadosViewModel @Inject constructor(
 
     }
 
+    fun deleteFromWishList(Product: WishListRequest){
+        viewModelScope.launch {
+            try {
+                var userLoggedEmail = UserLogged.email
+                val call = catalogueRepository.deleteFromWishList(Product, userLoggedEmail)
+                if(call.isSuccessful) {
+                    val responseBody = call.body()
+                    responseBody?.let { jsonString -> _listadeseados.value = parseJsonListaDeseados(jsonString)}
+                } else {
+                    val body = call.errorBody()?.string()
+                }
+            } catch(e: NetworkException) {
+                println(e.message)
+            }
+        }
+    }
+
+    fun addToWishList(Product: WishListRequest){
+        viewModelScope.launch {
+            try {
+                var userLoggedEmail = UserLogged.email
+                val call = catalogueRepository.addToWishList(Product, userLoggedEmail)
+                if(call.isSuccessful) {
+                    val responseBody = call.body()
+                    responseBody?.let { jsonString -> _listadeseados.value = parseJsonListaDeseados(jsonString)}
+                } else {
+                    val body = call.errorBody()?.string()
+                }
+            } catch(e: NetworkException) {
+                println(e.message)
+            }
+        }
+    }
 
     data class ProductListaDeseados(
         val name: String,
@@ -69,27 +102,6 @@ open class ListaDeseadosViewModel @Inject constructor(
                 seller = productSeller
             )
         }
-    }
-    fun deleteFromWishList(Product:ProductListaDeseados){
-        viewModelScope.launch {
-            try {
-                var itemToDelete = DeleteFromWishListRequest(
-                    sellerEmail = Product.seller,
-                    productId = Product.name
-                )
-                var userLoggedEmail = UserLogged.email
-                val call = catalogueRepository.deleteFromWishList(itemToDelete, userLoggedEmail)
-                if(call.isSuccessful) {
-                    val responseBody = call.body()
-                    responseBody?.let { jsonString -> _listadeseados.value = parseJsonListaDeseados(jsonString)}
-                } else {
-                    val body = call.errorBody()?.string()
-                }
-            } catch(e: NetworkException) {
-                println(e.message)
-            }
-        }
-
     }
 
 }
