@@ -17,4 +17,15 @@ object UserLogged {
         set(newValue) {
             _value.value = newValue
         }
+    var dir: String
+        get() = _value.value
+        set(newValue) {
+            _value.value = newValue
+        }
+
+    var fullName: String
+        get() = _value.value
+        set(newValue) {
+            _value.value = newValue
+        }
 }

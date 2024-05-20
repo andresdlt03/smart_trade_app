@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,7 +24,7 @@ import com.example.smarttrade.singleton.UserLogged
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ListaDeseosScreen(navController: NavHostController, scrollState: ScrollState) {
+fun WishListScreen(navController: NavHostController, scrollState: ScrollState) {
     val typeUser = UserLogged.userType
 
     Scaffold (
@@ -51,9 +50,9 @@ fun ListaDeseosScreen(navController: NavHostController, scrollState: ScrollState
                 .verticalScroll(scrollState)){
             Text(text = "Lista de Deseos", fontSize = 20.sp)
             Spacer(modifier = Modifier.height(10.dp))
-            val listadeseados: List<Product> = objetcLists.ListaDeseados.getItems()
+            val wishList: List<Product> = objetcLists.wishList.getItems()
 
-            for (i in listadeseados) {
+            for (i in wishList) {
 
                 ProductItem2(
                     nombre = i.name,
@@ -63,20 +62,21 @@ fun ListaDeseosScreen(navController: NavHostController, scrollState: ScrollState
                     product = i
                 )
                 Row {
-                    Button(onClick = {
-                        objetcLists.ListaDeseados.removeItem(i)
-                        navController.navigate("wishingList")
-                    }) {
-                        Text(text = "Eliminar")
-                    }
+
+                    RemoveItemButton(
+                        sourceListName = Buttons.deseado,
+                        item = i,
+                        navController =navController
+                    )
+
                     Spacer(modifier = Modifier.width(20.dp))
-                    Button(onClick = {
-                        objetcLists.ListaDeseados.removeItem(i)
-                        objetcLists.ListaCarrito.addItem(i)
-                        navController.navigate("wishingList")
-                    }) {
-                        Text("Mover a Carrito")
-                    }
+
+                    MoveItemButton(
+                        sourceListName = Buttons.deseado,
+                        destinationListName = Buttons.carrito,
+                        item = i,
+                        navController = navController
+                    )
                 }
             }
         }
