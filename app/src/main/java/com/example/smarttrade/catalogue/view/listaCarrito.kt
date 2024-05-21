@@ -41,7 +41,7 @@ import java.text.DecimalFormat
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun carritoCompra(navController : NavHostController, scrollState: ScrollState, viewModel:ListaCarritoViewModel) {
+fun listaCarritoScreen(navController : NavHostController, scrollState: ScrollState, viewModel:ListaCarritoViewModel) {
         val typeUser = UserLogged.userType
         viewModel.getListaCarrito()
         viewModel.getListaGuardarTarde()

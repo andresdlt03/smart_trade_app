@@ -30,14 +30,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.smarttrade.R
+import com.example.smarttrade.catalogue.data.remote.http.lists.CarritoListRequest
 import com.example.smarttrade.catalogue.data.remote.http.lists.WishListRequest
+import com.example.smarttrade.catalogue.viewmodel.ListaCarritoViewModel
 import com.example.smarttrade.catalogue.viewmodel.ListaDeseadosViewModel
 import com.example.smarttrade.singleton.UserLogged
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ListaDeseosScreen(navController: NavHostController, scrollState: ScrollState, viewModel: ListaDeseadosViewModel) {
+fun ListaDeseosScreen(
+    navController: NavHostController,
+    scrollState: ScrollState,
+    viewModel: ListaDeseadosViewModel,
+    ListaCarritoViewModel: ListaCarritoViewModel
+) {
     val typeUser = UserLogged.userType
     viewModel.getListaDeseados()
 
@@ -93,7 +100,13 @@ fun ListaDeseosScreen(navController: NavHostController, scrollState: ScrollState
                                 sellerEmail = i.seller
                             )
                         );
-                        { /*poner en el carrito*/ }
+                        ListaCarritoViewModel.addToCarritoList(
+                            CarritoListRequest(
+                                sellerEmail = i.seller,
+                                productId = i.name,
+                                quantity = "1"
+                            )
+                        )
                     }) {
                         Text("Mover a Carrito")
                     }

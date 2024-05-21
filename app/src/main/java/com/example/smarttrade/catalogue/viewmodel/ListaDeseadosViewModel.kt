@@ -103,5 +103,4 @@ open class ListaDeseadosViewModel @Inject constructor(
             )
         }
     }
-
 }
