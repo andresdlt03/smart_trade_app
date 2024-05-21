@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
 
 private val LightColors = lightColorScheme(
@@ -25,11 +26,11 @@ private val LightColors = lightColorScheme(
     onError = md_theme_light_onError,
     onErrorContainer = md_theme_light_onErrorContainer,
     background = md_theme_light_background,
-    onBackground = md_theme_light_onBackground,
+    onBackground = Color.Black,
     surface = md_theme_light_surface,
-    onSurface = md_theme_light_onSurface,
+    onSurface = Color.Black,
     surfaceVariant = md_theme_light_surfaceVariant,
-    onSurfaceVariant = md_theme_light_onSurfaceVariant,
+    onSurfaceVariant = Color.Black,
     outline = md_theme_light_outline,
     inverseOnSurface = md_theme_light_inverseOnSurface,
     inverseSurface = md_theme_light_inverseSurface,
@@ -58,11 +59,11 @@ private val DarkColors = darkColorScheme(
     onError = md_theme_dark_onError,
     onErrorContainer = md_theme_dark_onErrorContainer,
     background = md_theme_dark_background,
-    onBackground = md_theme_dark_onBackground,
+    onBackground = Color.Black,
     surface = md_theme_dark_surface,
-    onSurface = md_theme_dark_onSurface,
+    onSurface = Color.Black,
     surfaceVariant = md_theme_dark_surfaceVariant,
-    onSurfaceVariant = md_theme_dark_onSurfaceVariant,
+    onSurfaceVariant = Color.Black,
     outline = md_theme_dark_outline,
     inverseOnSurface = md_theme_dark_inverseOnSurface,
     inverseSurface = md_theme_dark_inverseSurface,
