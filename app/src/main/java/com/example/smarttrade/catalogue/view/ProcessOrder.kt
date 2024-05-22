@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
@@ -29,7 +31,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.smarttrade.catalogue.viewmodel.Product
 import com.example.smarttrade.singleton.UserLogged
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -112,7 +113,19 @@ fun ProcessOrder(navController : NavHostController, scrollState: ScrollState) {
                     Text(text = "Paypal", fontSize = 16.sp, modifier = Modifier.padding(start = 8.dp))
                 }
             }
+            Spacer(modifier = Modifier.height(24.dp))
+            Row(
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(text = "Total       $34:40")
+            }
+
+            Button(
+                onClick = {/*IR A PEDIDO RECIBIDO*/},
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+                ) {
+                Text(text = "Pagar", color = Color.White)
+                }
         }
     }
 }
-
