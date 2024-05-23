@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.smarttrade.auth.presentation.view.ClientRegisterScreen
 import com.example.smarttrade.auth.presentation.view.LoginScreen
 import com.example.smarttrade.auth.presentation.view.SellerRegisterScreen
+import com.example.smarttrade.catalogue.view.OrderFinishedScreen
 import com.example.smarttrade.catalogue.view.ProcessOrder
 import com.example.smarttrade.catalogue.view.WishListScreen
 import com.example.smarttrade.catalogue.view.ShoppingCartScreen
@@ -114,6 +115,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("tramitarPedido"){
                         ProcessOrder(navController, scrollState)
+                    }
+                    composable("ordenfinalizada"){
+                        OrderFinishedScreen(navController)
                     }
                 }
             }
