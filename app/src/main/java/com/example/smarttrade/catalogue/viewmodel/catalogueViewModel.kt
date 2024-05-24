@@ -230,8 +230,8 @@ fun parseJson(jsonString: String): List<Product> {
             description = productJsonObject.get("description").asString,
             dataSheet = productJsonObject.get("dataSheet").asString,
             verified = productJsonObject.get("verified").asBoolean,
+            price = productJsonObject.get("price").asString,
             category = productCategory,
-            price = "23"
         )
     }
 }

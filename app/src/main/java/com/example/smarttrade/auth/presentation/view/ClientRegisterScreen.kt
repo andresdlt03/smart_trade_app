@@ -38,22 +38,59 @@ fun ClientRegisterForm(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     )
     {
-        outlinedText(value = state.value.name, label = "Nombre *", {viewModel.updateName(it)})
-        state.value.nameError?.let { ErrorText(text = it)}
-        outlinedText(value = state.value.surname, label = "Apellido *", {viewModel.updateSurname(it)})
-        state.value.surnameError?.let { ErrorText(text = it)}
-        outlinedText(value = state.value.email, label = "Email *", {viewModel.updateEmail(it)})
-        state.value.emailError?.let{ ErrorText(text = it)}
-        outlinedText(value = state.value.password, label = "Contraseña *", {viewModel.updatePassword(it)})
-        state.value.passwordError?.let { ErrorText(text = it) }
-        outlinedText(value = state.value.dni,  label = "DNI *", {viewModel.updateDni(it)})
-        state.value.dniError?.let { ErrorText(text = it)}
-        outlinedText(value = state.value.deliveryAddress,  label = "Dirección de entrega *", {viewModel.updateDeliveryAddress(it)})
-        state.value.deliverDirError?.let { ErrorText(text = it)}
-        outlinedText(value = state.value.billingAddress, label = "Dirección de facturación", {viewModel.updateBillingAddress(it)})
-        state.value.factDirError?.let { ErrorText(text = it)}
-        outlinedText(value = state.value.creditCard, label = "Tarjeta de crédito", {viewModel.updateCreditCard(it)})
-        state.value.creditCardError?.let { ErrorText(text = it)}
+        OutlinedText(
+            value = state.value.name,
+            label = "Nombre",
+            upDateField = { viewModel.updateName(it) },
+            errorMessage = state.value.nameError
+        )
+        OutlinedText(
+            value = state.value.surname,
+            label = "Apellido *",
+            upDateField = { viewModel.updateSurname(it) },
+            errorMessage = state.value.surnameError
+        )
+        OutlinedText(
+            value = state.value.email,
+            label = "Email *",
+            upDateField = { viewModel.updateEmail(it) },
+            errorMessage = state.value.emailError
+        )
+
+        OutlinedText(
+            value = state.value.password,
+            label = "Contraseña *",
+            upDateField = { viewModel.updatePassword(it) },
+            errorMessage = state.value.passwordError
+        )
+
+        OutlinedText(
+            value = state.value.dni,
+            label = "DNI *",
+            upDateField = { viewModel.updateDni(it) },
+            errorMessage = state.value.dniError
+        )
+
+        OutlinedText(
+            value = state.value.deliveryAddress,
+            label = "Dirección de entrega *",
+            upDateField = { viewModel.updateDeliveryAddress(it) },
+            errorMessage = state.value.deliverDirError
+        )
+
+        OutlinedText(
+            value = state.value.billingAddress,
+            label = "Dirección de facturación",
+            upDateField = { viewModel.updateBillingAddress(it) },
+            errorMessage = state.value.factDirError
+        )
+
+        OutlinedText(
+            value = state.value.creditCard,
+            label = "Tarjeta de crédito",
+            upDateField = { viewModel.updateCreditCard(it) },
+            errorMessage = state.value.creditCardError
+        )
 
         state.value.registerError?.let {
             AlertDialog(

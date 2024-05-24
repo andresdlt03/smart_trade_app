@@ -2,17 +2,22 @@ package com.example.smarttrade.product_management.presentation.viewmodel
 
 
 import android.net.Uri
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
-import com.example.smarttrade.catalogue.viewmodel.Product
+import com.example.smarttrade.product_management.domain.repository.ProductRepository
+import com.example.smarttrade.product_management.model.Food
 import com.example.smarttrade.product_management.presentation.viewmodel.state.ProductFoodState
+import com.example.smarttrade.singleton.UserLogged
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AddProductFoodViewModel @Inject constructor() : ViewModel(){
+class AddProductFoodViewModel @Inject constructor(
+    val productRepository: ProductRepository
+) : AddProductViewModel(){
 
     private val _state = MutableStateFlow(ProductFoodState())
     val state = _state.asStateFlow()
@@ -23,6 +28,8 @@ class AddProductFoodViewModel @Inject constructor() : ViewModel(){
             2 ->    _state.value = _state.value.copy(description = item)
             3 ->    _state.value = _state.value.copy(calories = item)
             4 ->    _state.value = _state.value.copy(price = item)
+            5 ->    _state.value = _state.value.copy(dataSheet = item)
+            6 ->    _state.value = _state.value.copy(stock = item)
         }
     }
 
@@ -32,6 +39,8 @@ class AddProductFoodViewModel @Inject constructor() : ViewModel(){
             2 ->    _state.value = _state.value.copy(description = "")
             3 ->    _state.value = _state.value.copy(calories = "")
             4 ->    _state.value = _state.value.copy(price = "")
+            5 ->    _state.value = _state.value.copy(dataSheet = "")
+            6 ->    _state.value = _state.value.copy(stock = "")
         }
     }
 
@@ -44,43 +53,22 @@ class AddProductFoodViewModel @Inject constructor() : ViewModel(){
         if(p2 != null){_state.value = _state.value.copy(photo2 = p2)}
     }
 
-    fun checkAllVariables() {
-        _state.value = _state.value.copy(checkVariables = true)
-        _state.value = _state.value.copy(textError = "")
-
-        if (_state.value.name.isNullOrEmpty()) {
-            _state.value = _state.value.copy(checkVariables = false)
-            _state.value = _state.value.copy(textError = "El nombre está vacío")
-            return
-        } else if (_state.value.name.length > 20) {
-            _state.value = _state.value.copy(checkVariables = false)
-            _state.value = _state.value.copy(textError = "El nombre es demasiado largo")
-            return
-        } else if (_state.value.description.isNullOrEmpty()) {
-            _state.value = _state.value.copy(checkVariables = false)
-            _state.value = _state.value.copy(textError = "La descripción está vacía")
-            return
-        } else if (_state.value.description.length > 50) {
-            _state.value = _state.value.copy(checkVariables = false)
-            _state.value = _state.value.copy(textError = "La descripción es demasiado larga")
-            return
-        } else if (_state.value.calories.isNullOrEmpty()) {
-            _state.value = _state.value.copy(checkVariables = false)
-            _state.value = _state.value.copy(textError = "Las calorías están vacías")
-            return
-        } else {
-            val caloriasInt = _state.value.calories.toIntOrNull()
-            if (caloriasInt == null || caloriasInt <= 0) {
-                _state.value = _state.value.copy(checkVariables = false)
-                _state.value = _state.value.copy(textError = "Las calorías no son válidas")
-                return
-            }
-        }
-
-        if (_state.value.photo1 == null) {
-            _state.value = _state.value.copy(checkVariables = false)
-            _state.value = _state.value.copy(textError = "La foto 1 está vacía")
-            return
+    override fun publishProduct() {
+        val product = Food(
+            _state.value.name,
+            _state.value.description,
+            _state.value.dataSheet,
+            listOf(_state.value.photo1.toString(), _state.value.photo2.toString()),
+            "Food",
+            _state.value.calories
+        )
+        viewModelScope.launch {
+            productRepository.createProduct(
+                product,
+                _state.value.price.toDouble(),
+                _state.value.stock.toInt(),
+                UserLogged.email
+            )
         }
     }
 

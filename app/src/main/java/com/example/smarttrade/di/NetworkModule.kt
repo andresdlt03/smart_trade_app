@@ -3,6 +3,7 @@ package com.example.smarttrade.di
 import com.example.smarttrade.BuildConfig
 import com.example.smarttrade.auth.data.remote.UserApi
 import com.example.smarttrade.catalogue.data.remote.CatalogueApi
+import com.example.smarttrade.product_management.data.remote.ProductApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,6 +28,12 @@ object NetworkModule {
     @Singleton
     fun provideUserApi(retrofit: Retrofit): UserApi {
         return retrofit.create(UserApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProductApi(retrofit: Retrofit): ProductApi {
+        return retrofit.create(ProductApi::class.java)
     }
 
     @Provides

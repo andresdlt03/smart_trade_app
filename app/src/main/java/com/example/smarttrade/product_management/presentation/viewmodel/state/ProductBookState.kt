@@ -7,6 +7,8 @@ data class ProductBookState (
     var description: String = "",
     var isbn: String = "",
     var price: String = "",
+    var stock: String = "",
+    var dataSheet: String = "",
     var photo1: Uri? = null,
     var photo2: Uri? = null,
     var checkVariables: Boolean = false,

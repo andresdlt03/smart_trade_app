@@ -79,10 +79,10 @@ class LoginViewModel @Inject constructor(
                     val responseBody = call.body()
                     val response = gson.fromJson(responseBody, LoginSuccess::class.java);
 
-                    loggedUserType = response.userType
                     UserLogged.userType = response.userType
                     UserLogged.email = response.email
-
+                    UserLogged.dir = response.dir
+                    UserLogged.fullName = response.fullName
                     _state.value = _state.value.copy(
                         loginSuccess = true
                     )

@@ -31,11 +31,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
-import com.example.smarttrade.catalogue.viewmodel.viewProductCatalogueViewModel
 
 
 @Composable
@@ -43,7 +41,7 @@ fun clientViewProduct(viewModel: catalogueViewModel, number: Int) {
     var iconPressed by remember { mutableStateOf(false) }
     val product = viewModel.getProduct()
     if (product != null) {
-        iconPressed = objetcLists.ListaDeseados.containsItem(product)
+        iconPressed = objetcLists.wishList.containsItem(product)
     }
     Row(
         modifier = Modifier
@@ -56,23 +54,23 @@ fun clientViewProduct(viewModel: catalogueViewModel, number: Int) {
             BottomBarItem(icon = Icons.Filled.Favorite, onClick = {
                 iconPressed = !iconPressed;
                 var aux = viewModel.getProduct()
-                if(aux != null)objetcLists.ListaDeseados.removeItem(aux)
+                if(aux != null)objetcLists.wishList.removeItem(aux)
             })
         } else {
             BottomBarItem(icon = Icons.Filled.FavoriteBorder, onClick = {
                 iconPressed = !iconPressed;
                 var aux = viewModel.getProduct()
-                if(aux != null)objetcLists.ListaDeseados.addItem(aux)
+                if(aux != null)objetcLists.wishList.addItem(aux)
             })
         }
         BottomBarItem(icon = Icons.Filled.AddCircle, onClick = {
             var aux = viewModel.getProduct()
-            if(aux != null)objetcLists.ListaGuardarTarde.addItem(aux)
+            if(aux != null)objetcLists.forLaterList.addItem(aux)
         })
         BottomBarItem(icon = Icons.Filled.ShoppingCart) {
             var aux = viewModel.getProduct()
             for (i  in 1..number) {
-                if (aux != null) objetcLists.ListaCarrito.addItem(aux)
+                if (aux != null) objetcLists.shoppingCart.addItem(aux)
             }
         }
     }

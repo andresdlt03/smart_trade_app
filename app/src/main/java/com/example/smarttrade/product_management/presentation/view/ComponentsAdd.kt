@@ -26,11 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.smarttrade.R
-import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
-import com.example.smarttrade.product_management.presentation.viewmodel.AddProductBookViewModel
-import com.example.smarttrade.product_management.presentation.viewmodel.AddProductClothesViewModel
-import com.example.smarttrade.product_management.presentation.viewmodel.AddProductFoodViewModel
-import com.example.smarttrade.product_management.presentation.viewmodel.AddProductTechnologyViewModel
+import com.example.smarttrade.product_management.presentation.viewmodel.AddProductViewModel
 
 
 @Composable
@@ -110,7 +106,7 @@ fun addImage(){
 }
 
 @Composable
-fun publishProductButton1(viewModel: AddProductTechnologyViewModel, vm: catalogueViewModel, navController: NavHostController){
+fun onPublishProduct(viewModel: AddProductViewModel, navController: NavHostController){
     Box(
         modifier = Modifier
             .fillMaxWidth(),
@@ -118,78 +114,7 @@ fun publishProductButton1(viewModel: AddProductTechnologyViewModel, vm: catalogu
     ) {
         Button(
             onClick = {
-                viewModel.checkAllVariables()
-                if(viewModel.error() == false){
-
-                    navController.navigate("catalogue")
-
-                }
-
-            })
-        {
-            Text(text = "Publicar producto")
-        }
-    }
-}
-
-@Composable
-fun publishProductButton2(viewModel: AddProductFoodViewModel, vm: catalogueViewModel, navController: NavHostController){
-    Box(
-        modifier = Modifier
-            .fillMaxWidth(),
-        contentAlignment = Alignment.Center
-    ) {
-        Button(
-            onClick = {
-                viewModel.checkAllVariables()
-                if(viewModel.error() == false){
-                    navController.navigate("catalogue")
-
-                }
-
-            })
-        {
-            Text(text = "Publicar producto")
-        }
-    }
-}
-
-@Composable
-fun publishProductButton3(viewModel: AddProductClothesViewModel, vm: catalogueViewModel, navController: NavHostController){
-    Box(
-        modifier = Modifier
-            .fillMaxWidth(),
-        contentAlignment = Alignment.Center
-    ) {
-        Button(
-            onClick = {
-                viewModel.checkAllVariables()
-                if(viewModel.error() == false){
-                    navController.navigate("catalogue")
-
-                }
-
-            })
-        {
-            Text(text = "Publicar producto")
-        }
-    }
-}
-
-@Composable
-fun publishProductButton4(viewModel: AddProductBookViewModel, vm: catalogueViewModel, navController: NavHostController){
-    Box(
-        modifier = Modifier
-            .fillMaxWidth(),
-        contentAlignment = Alignment.Center
-    ) {
-        Button(
-            onClick = {
-                viewModel.checkAllVariables()
-                if(viewModel.error() == false){
-                    navController.navigate("catalogue")
-                }
-
+                viewModel.publishProduct()
             })
         {
             Text(text = "Publicar producto")

@@ -89,8 +89,8 @@ fun ProductoEnPantalla(
     name: String,
     price: String,
     descripcion: String,
-    p : Product,
-    vm : catalogueViewModel
+    p: Product,
+    vm: catalogueViewModel
 ) {
     var alertPressed by remember { mutableStateOf(false)}
     var number by remember { mutableStateOf(1)}

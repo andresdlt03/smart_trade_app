@@ -419,11 +419,11 @@ fun CheckBoxItem(
 fun ProductItem(
     viewModel: catalogueViewModel,
     navController: NavHostController,
-    nombre : String,
+    nombre: String,
     precio: String,
     descripcion: String,
-    cat : String,
-    product : Product
+    cat: String,
+    product: Product
 ) {
     Row(
         modifier = Modifier
@@ -550,11 +550,11 @@ fun clientBottomBar(navController: NavHostController) {
                 Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
             }
 
-            IconButton(onClick = { navController.navigate("carrito") }) {
+            IconButton(onClick = { navController.navigate("shoppingCart") }) {
                 Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = "Carrito")
             }
 
-            IconButton(onClick = { navController.navigate("listadeseos")}) {
+            IconButton(onClick = { navController.navigate("wishingList")}) {
                 Icon(imageVector = Icons.Default.Favorite, contentDescription = "Lista de deseos")
             }
 

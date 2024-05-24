@@ -2,11 +2,9 @@ package com.example.smarttrade.auth.presentation.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -15,7 +13,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.smarttrade.auth.presentation.viewmodel.SellerRegisterViewModel
-import com.example.smarttrade.ui.theme.md_theme_light_error
 
 @Composable
 fun SellerRegisterScreen(viewModel: SellerRegisterViewModel = hiltViewModel(),
@@ -36,20 +33,49 @@ fun SellerRegisterForm(viewModel: SellerRegisterViewModel = hiltViewModel(),
         modifier = Modifier.padding(horizontal = 16.dp)
 
     ) {
-        outlinedText(value = state.value.name, label = "Nombre") { viewModel.updateName(it)  }
-        state.value.nameError?.let {ErrorText(text = it)}
-        outlinedText(value = state.value.surname, label = "Apellido") {viewModel.updateSurname(it)}
-        state.value.surnameError?.let {ErrorText(text = it)}
-        outlinedText(value = state.value.email, label = "Email") {viewModel.updateEmail(it)}
-        state.value.emailError?.let { ErrorText(text = it)}
-        outlinedText(value = state.value.password, label = "Contraseña") { viewModel.updatePassword(it)}
-        state.value.passwordError?.let { ErrorText(text = it)}
-        outlinedText(value = state.value.companyName, label ="Nombre de la empresa" ) {viewModel.updateCompanyName(it)}
-        state.value.companyNameError?.let {ErrorText(text = it)}
-        outlinedText(value = state.value.cif, label = "CIF") {viewModel.updateCif(it)}
-        state.value.cifError?.let { ErrorText(text = it)}
-        outlinedText(value = state.value.bankAccount, label ="IBAN" ) {viewModel.updateBankAccount(it)}
-        state.value.bankAccountError?.let {ErrorText(text = it)}
+        OutlinedText(
+            value = state.value.name,
+            label = "Nombre",
+            upDateField = { viewModel.updateName(it) },
+            errorMessage = state.value.nameError
+        )
+        OutlinedText(
+            value = state.value.surname,
+            label = "Apellido",
+            upDateField = { viewModel.updateSurname(it) },
+            errorMessage = state.value.surnameError
+        )
+        OutlinedText(
+            value = state.value.email,
+            label = "Email",
+            upDateField = { viewModel.updateEmail(it) },
+            errorMessage = state.value.emailError
+        )
+        OutlinedText(
+            value = state.value.password,
+            label = "Contraseña",
+            upDateField = { viewModel.updatePassword(it) },
+            errorMessage = state.value.passwordError
+        )
+        OutlinedText(
+            value = state.value.companyName,
+            label = "Nombre de la empresa",
+            upDateField = { viewModel.updateCompanyName(it) },
+            errorMessage = state.value.companyNameError
+        )
+        OutlinedText(
+            value = state.value.cif,
+            label = "CIF",
+            upDateField = { viewModel.updateCif(it) },
+            errorMessage = state.value.cifError
+        )
+        OutlinedText(
+            value = state.value.bankAccount,
+            label = "IBAN",
+            upDateField = { viewModel.updateBankAccount(it) },
+            errorMessage = state.value.bankAccountError
+        )
+
         state.value.registerError?.let {
             AlertDialog(
                 onDismissRequest = { /*TODO*/ },
