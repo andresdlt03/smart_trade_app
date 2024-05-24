@@ -2,15 +2,22 @@ package com.example.smarttrade.product_management.presentation.viewmodel
 
 
 import android.net.Uri
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import com.example.smarttrade.product_management.domain.repository.ProductRepository
+import com.example.smarttrade.product_management.model.Food
 import com.example.smarttrade.product_management.presentation.viewmodel.state.ProductFoodState
+import com.example.smarttrade.singleton.UserLogged
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AddProductFoodViewModel @Inject constructor() : AddProductViewModel(){
+class AddProductFoodViewModel @Inject constructor(
+    val productRepository: ProductRepository
+) : AddProductViewModel(){
 
     private val _state = MutableStateFlow(ProductFoodState())
     val state = _state.asStateFlow()
@@ -47,7 +54,22 @@ class AddProductFoodViewModel @Inject constructor() : AddProductViewModel(){
     }
 
     override fun publishProduct() {
-
+        val product = Food(
+            _state.value.name,
+            _state.value.description,
+            _state.value.dataSheet,
+            listOf(_state.value.photo1.toString(), _state.value.photo2.toString()),
+            "Food",
+            _state.value.calories
+        )
+        viewModelScope.launch {
+            productRepository.createProduct(
+                product,
+                _state.value.price.toDouble(),
+                _state.value.stock.toInt(),
+                UserLogged.email
+            )
+        }
     }
 
     fun error(): Boolean{

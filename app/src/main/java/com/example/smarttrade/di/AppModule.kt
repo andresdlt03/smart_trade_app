@@ -1,6 +1,5 @@
 package com.example.smarttrade.di
 
-import ProductRepository
 import com.example.smarttrade.auth.data.remote.UserApi
 import com.example.smarttrade.auth.data.repository.UserRepositoryImpl
 import com.example.smarttrade.auth.domain.repository.UserRepository
@@ -9,6 +8,7 @@ import com.example.smarttrade.catalogue.data.repository.CatalogueRepositoryImpl
 import com.example.smarttrade.catalogue.domain.repository.CatalogueRepository
 import com.example.smarttrade.product_management.data.remote.ProductApi
 import com.example.smarttrade.product_management.data.repository.ProductRepositoryImpl
+import com.example.smarttrade.product_management.domain.repository.ProductRepository
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides

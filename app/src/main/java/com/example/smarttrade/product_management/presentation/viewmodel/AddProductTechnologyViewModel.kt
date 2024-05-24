@@ -1,10 +1,10 @@
 package com.example.smarttrade.product_management.presentation.viewmodel
 
 
-import ProductRepository
 import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import com.example.smarttrade.product_management.domain.repository.ProductRepository
 import com.example.smarttrade.product_management.model.Technology
 import com.example.smarttrade.product_management.presentation.viewmodel.state.ProductTechnologyState
 import com.example.smarttrade.singleton.UserLogged
