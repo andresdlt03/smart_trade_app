@@ -82,6 +82,12 @@ fun addProductBooks(viewModel: AddProductBookViewModel, navHostController: NavHo
     outLinedTextAdd(state.value.price, "Precio del producto", 4,{viewModel.onItemChanged(it,4)} ,{ viewModel.clearSelected(4) })
     Spacer(modifier = Modifier.height(54.dp))
 
+    outLinedTextAdd(state.value.dataSheet, "Ficha técnica", 5,{viewModel.onItemChanged(it,5)} ,{ viewModel.clearSelected(5) })
+    Spacer(modifier = Modifier.height(54.dp))
+
+    outLinedTextAdd(state.value.stock, "Stock", 6,{viewModel.onItemChanged(it,6)} ,{ viewModel.clearSelected(6) })
+    Spacer(modifier = Modifier.height(54.dp))
+
 
     Box(
         modifier = Modifier
@@ -141,7 +147,7 @@ fun addProductBooks(viewModel: AddProductBookViewModel, navHostController: NavHo
         )
     }
     Spacer(modifier = Modifier.height(8.dp))
-    publishProductButton4(viewModel, vm, navHostController)
+    onPublishProduct(viewModel, navHostController)
 }
 
 

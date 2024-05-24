@@ -78,6 +78,8 @@ fun addProductTechnology(viewModel: AddProductTechnologyViewModel, navHostContro
     Spacer(modifier = Modifier.height(14.dp))
     outLinedTextAdd(state.value.price, "Precio", 5,{viewModel.onItemChanged(it,5)} ,{ viewModel.clearSelected(5) })
     Spacer(modifier = Modifier.height(54.dp))
+    outLinedTextAdd(state.value.stock, "Stock", 6,{viewModel.onItemChanged(it,6)} ,{ viewModel.clearSelected(6) })
+    Spacer(modifier = Modifier.height(54.dp))
 
     Box(
         modifier = Modifier
@@ -140,8 +142,7 @@ fun addProductTechnology(viewModel: AddProductTechnologyViewModel, navHostContro
         )
     }
     Spacer(modifier = Modifier.height(8.dp))
-    publishProductButton1(viewModel, vm, navHostController)
-
+    onPublishProduct(viewModel, navHostController)
 }
 
 

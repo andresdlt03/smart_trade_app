@@ -7,6 +7,8 @@ data class ProductClothesState (
     var description: String = "",
     var size: String = "",
     var price: String = "",
+    var stock: String = "",
+    var dataSheet: String = "",
     var photo1: Uri? = null,
     var photo2: Uri? = null,
     var checkVariables: Boolean = false,

@@ -7,6 +7,8 @@ data class ProductFoodState (
     var description: String = "",
     var calories: String = "",
     var price: String = "",
+    var stock: String = "",
+    var dataSheet: String = "",
     var photo1: Uri? = null,
     var photo2: Uri? = null,
     var checkVariables: Boolean = false,
