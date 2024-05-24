@@ -1,10 +1,10 @@
 package com.example.smarttrade.product_management.data.repository
 
 import ProductRepository
-import com.example.smarttrade.catalogue.viewmodel.Product
 import com.example.smarttrade.network.Exception.NetworkException
 import com.example.smarttrade.product_management.data.remote.ProductApi
 import com.example.smarttrade.product_management.data.remote.http.CreateProductDTO
+import com.example.smarttrade.product_management.model.Technology
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -12,7 +12,7 @@ class ProductRepositoryImpl @Inject constructor(
     private val productApi: ProductApi
 ): ProductRepository {
     override suspend fun createProduct(
-        product: Product,
+        product: Technology,
         price: Double,
         stock: Int,
         sellerEmail: String,

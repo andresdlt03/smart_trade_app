@@ -1,5 +1,5 @@
 
-import com.example.smarttrade.catalogue.viewmodel.Product
+import com.example.smarttrade.product_management.model.Product
 import retrofit2.Response
 
 interface ProductRepository {

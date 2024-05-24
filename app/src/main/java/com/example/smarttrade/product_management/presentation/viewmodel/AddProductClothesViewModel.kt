@@ -2,9 +2,7 @@ package com.example.smarttrade.product_management.presentation.viewmodel
 
 
 import android.net.Uri
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
-import com.example.smarttrade.catalogue.viewmodel.Product
 import com.example.smarttrade.product_management.presentation.viewmodel.state.ProductClothesState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class AddProductClothesViewModel @Inject constructor() : ViewModel() {
+class AddProductClothesViewModel @Inject constructor() : AddProductViewModel() {
 
     private val _state = MutableStateFlow(ProductClothesState())
     val state = _state.asStateFlow()
@@ -23,6 +21,7 @@ class AddProductClothesViewModel @Inject constructor() : ViewModel() {
             2 ->    _state.value = _state.value.copy(description = item)
             3 ->    _state.value = _state.value.copy(size = item)
             4 ->    _state.value = _state.value.copy(price = item)
+            5 ->    _state.value = _state.value.copy(stock = item)
         }
     }
 
@@ -32,6 +31,7 @@ class AddProductClothesViewModel @Inject constructor() : ViewModel() {
             2 ->    _state.value = _state.value.copy(description = "")
             3 ->    _state.value = _state.value.copy(size = "")
             4 ->    _state.value = _state.value.copy(price = "")
+            5 ->    _state.value = _state.value.copy(stock = "")
         }
     }
 
@@ -44,37 +44,8 @@ class AddProductClothesViewModel @Inject constructor() : ViewModel() {
         if(p2 != null){_state.value = _state.value.copy(photo2 = p2)}
     }
 
-    fun checkAllVariables() {
-        _state.value = _state.value.copy(checkVariables = true)
-        _state.value = _state.value.copy(textError = "")
+    override fun publishProduct() {
 
-        if (_state.value.name.isNullOrEmpty()) {
-            _state.value = _state.value.copy(checkVariables = false)
-            _state.value = _state.value.copy(textError = "El nombre está vacío")
-            return
-        } else if (_state.value.name.length > 20) {
-            _state.value = _state.value.copy(checkVariables = false)
-            _state.value = _state.value.copy(textError = "El nombre es demasiado largo")
-            return
-        } else if (_state.value.description.isNullOrEmpty()) {
-            _state.value = _state.value.copy(checkVariables = false)
-            _state.value = _state.value.copy(textError = "La descripción está vacía")
-            return
-        } else if (_state.value.description.length > 50) {
-            _state.value = _state.value.copy(checkVariables = false)
-            _state.value = _state.value.copy(textError = "La descripción es demasiado larga")
-            return
-        } else if (_state.value.size.isNullOrEmpty()) {
-            _state.value = _state.value.copy(checkVariables = false)
-            _state.value = _state.value.copy(textError = "El tamaño está vacío")
-            return
-        }
-
-        if (_state.value.photo1 == null) {
-            _state.value = _state.value.copy(checkVariables = false)
-            _state.value = _state.value.copy(textError = "La foto 1 está vacía")
-            return
-        }
     }
 
     fun error(): Boolean{
