@@ -21,7 +21,8 @@ class AddProductClothesViewModel @Inject constructor() : AddProductViewModel() {
             2 ->    _state.value = _state.value.copy(description = item)
             3 ->    _state.value = _state.value.copy(size = item)
             4 ->    _state.value = _state.value.copy(price = item)
-            5 ->    _state.value = _state.value.copy(stock = item)
+            5 ->    _state.value = _state.value.copy(dataSheet = item)
+            6 ->    _state.value = _state.value.copy(stock = item)
         }
     }
 
@@ -31,7 +32,8 @@ class AddProductClothesViewModel @Inject constructor() : AddProductViewModel() {
             2 ->    _state.value = _state.value.copy(description = "")
             3 ->    _state.value = _state.value.copy(size = "")
             4 ->    _state.value = _state.value.copy(price = "")
-            5 ->    _state.value = _state.value.copy(stock = "")
+            5 ->    _state.value = _state.value.copy(dataSheet = "")
+            6 ->    _state.value = _state.value.copy(stock = "")
         }
     }
 

@@ -1,15 +1,22 @@
 package com.example.smarttrade.product_management.presentation.viewmodel
 
+import ProductRepository
 import android.net.Uri
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import com.example.smarttrade.product_management.model.Book
 import com.example.smarttrade.product_management.presentation.viewmodel.state.ProductBookState
+import com.example.smarttrade.singleton.UserLogged
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AddProductBookViewModel @Inject constructor() : AddProductViewModel() {
+class AddProductBookViewModel @Inject constructor(
+    val productRepository: ProductRepository
+) : AddProductViewModel() {
 
     private val _state = MutableStateFlow(ProductBookState())
     val state = _state.asStateFlow()
@@ -20,7 +27,8 @@ class AddProductBookViewModel @Inject constructor() : AddProductViewModel() {
             2 ->    _state.value = _state.value.copy(description = item)
             3 ->    _state.value = _state.value.copy(isbn = item)
             4 ->    _state.value = _state.value.copy(price = item)
-            5 ->    _state.value = _state.value.copy(stock = item)
+            5 ->    _state.value = _state.value.copy(dataSheet = item)
+            6 ->    _state.value = _state.value.copy(stock = item)
         }
     }
 
@@ -29,7 +37,9 @@ class AddProductBookViewModel @Inject constructor() : AddProductViewModel() {
             1 ->    _state.value = _state.value.copy(name = "")
             2 ->    _state.value = _state.value.copy(description = "")
             3 ->    _state.value = _state.value.copy(isbn = "")
-            5 ->    _state.value = _state.value.copy(stock = "")
+            4 ->    _state.value = _state.value.copy(price = "")
+            5 ->    _state.value = _state.value.copy(dataSheet = "")
+            6 ->    _state.value = _state.value.copy(stock = "")
         }
     }
 
@@ -48,7 +58,22 @@ class AddProductBookViewModel @Inject constructor() : AddProductViewModel() {
 
 
     override fun publishProduct() {
-
+        val product = Book(
+            _state.value.name,
+            _state.value.description,
+            _state.value.dataSheet,
+            listOf(_state.value.photo1.toString(), _state.value.photo2.toString()),
+            "Book",
+            _state.value.isbn
+        )
+        viewModelScope.launch {
+            productRepository.createProduct(
+                product,
+                _state.value.price.toDouble(),
+                _state.value.stock.toInt(),
+                UserLogged.email
+            )
+        }
     }
 
 }

@@ -67,7 +67,7 @@ class AddProductTechnologyViewModel @Inject constructor(
             productRepository.createProduct(
                 product,
                 _state.value.price.toDouble(),
-                0,
+                _state.value.stock.toInt(),
                 UserLogged.email
             )
         }
