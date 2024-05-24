@@ -12,6 +12,7 @@ import com.example.smarttrade.auth.presentation.view.ClientRegisterScreen
 import com.example.smarttrade.auth.presentation.view.LoginScreen
 import com.example.smarttrade.auth.presentation.view.SellerRegisterScreen
 import com.example.smarttrade.catalogue.view.ListaDeseosScreen
+import com.example.smarttrade.catalogue.view.ProcessOrder
 import com.example.smarttrade.catalogue.view.listaCarritoScreen
 import com.example.smarttrade.catalogue.view.mainCatalogueScreen
 import com.example.smarttrade.catalogue.view.viewProductCatalogueScreen
@@ -117,6 +118,9 @@ class MainActivity : ComponentActivity() {
 
                     composable("shoppingCart"){
                         listaCarritoScreen(navController, scrollState, ListaCarritoViewModel)
+                    }
+                    composable("tramitarPedido"){
+                        ProcessOrder(navController, scrollState)
                     }
                 }
             }
