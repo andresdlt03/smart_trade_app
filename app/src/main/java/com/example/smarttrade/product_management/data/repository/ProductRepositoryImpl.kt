@@ -21,14 +21,14 @@ class ProductRepositoryImpl @Inject constructor(
     ): Response<String> {
         try {
             val productDTO = CreateProductDTO(
-                product = product,
+                info = product,
                 price = price,
                 stock = stock,
                 sellerEmail = sellerEmail
             )
             val json = gson.toJson(productDTO)
 
-            return productApi.createProduct(json, product.category)
+            return productApi.createProduct(product.category, json)
         } catch (e: Exception) {
             throw NetworkException(e.message.toString())
         }
