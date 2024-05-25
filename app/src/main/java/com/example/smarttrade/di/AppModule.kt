@@ -40,6 +40,6 @@ object AppModule {
     @Provides
     @Singleton
     fun provideCatalogueRepository(catalogueApi: CatalogueApi): CatalogueRepository {
-        return CatalogueRepositoryImpl(catalogueApi)
+        return CatalogueRepositoryImpl(catalogueApi, provideGsonInstance())
     }
 }
