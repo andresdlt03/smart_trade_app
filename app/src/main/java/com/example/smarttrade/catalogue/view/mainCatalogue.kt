@@ -60,7 +60,6 @@ import com.example.smarttrade.singleton.UserLogged
 
 @Composable
 fun mainCatalogueScreen(
-    // user: User,
     viewModel: catalogueViewModel,
     navController: NavHostController,
     scrollState: ScrollState,
@@ -73,7 +72,6 @@ Column {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun mainCatalogue(
-    // user: User,
     viewModel: catalogueViewModel,
     navController: NavHostController,
     scrollState: ScrollState,
@@ -508,7 +506,6 @@ fun adminBottomBar(navController: NavHostController) {
     }
 }
 
-// Este es el que tenemos implementado ya "BottomBar"
 @Composable
 fun sellerBottomBar(navController: NavHostController) {
     BottomAppBar(

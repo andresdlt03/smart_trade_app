@@ -2,9 +2,9 @@ package com.example.smarttrade.auth.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.smarttrade.auth.domain.repository.UserRepository
 import com.example.smarttrade.auth.data.remote.http.login.LoginFailed
 import com.example.smarttrade.auth.data.remote.http.login.LoginSuccess
+import com.example.smarttrade.auth.domain.repository.UserRepository
 import com.example.smarttrade.auth.presentation.validation.ValidateEmail
 import com.example.smarttrade.auth.presentation.validation.ValidatePassword
 import com.example.smarttrade.auth.presentation.viewmodel.state.LoginState
@@ -28,9 +28,6 @@ class LoginViewModel @Inject constructor(
     private val _state = MutableStateFlow(LoginState())
     val state = _state.asStateFlow()
 
-    private var loggedUserEmail: String? = null
-    private var loggedUserType: String? = null;
-
     fun updateEmail(email: String) {
         _state.value = _state.value.copy(email = email)
     }
@@ -45,12 +42,6 @@ class LoginViewModel @Inject constructor(
             passwordError = null,
             loginError = null
         )
-    }
-    val getLoggedInEmail: String?
-        get() = loggedUserEmail
-
-    fun getLoggedUserType(): String? {
-        return loggedUserType
     }
 
     fun onLogin() {

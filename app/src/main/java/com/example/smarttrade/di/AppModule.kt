@@ -28,7 +28,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideProductRepository(productApi: ProductApi): ProductRepository {
-        return ProductRepositoryImpl(productApi)
+        return ProductRepositoryImpl(productApi, provideGsonInstance())
     }
 
     @Provides

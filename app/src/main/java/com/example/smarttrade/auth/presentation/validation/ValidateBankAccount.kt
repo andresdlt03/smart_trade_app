@@ -1,6 +1,5 @@
 package com.example.smarttrade.auth.presentation.validation
 
-import android.util.Patterns
 import javax.inject.Inject
 
 public class ValidateBankAccount @Inject constructor() {
@@ -8,13 +7,13 @@ public class ValidateBankAccount @Inject constructor() {
         if (account.isEmpty()) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "Bank account cannot be empty"
+                errorMessage = "Debes añadir una cuenta bancaria"
             )
         }
         if (account.length != 24) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "Bank account must be 24 characters long"
+                errorMessage = "Una cuenta bancaria tiene 24 dígitos"
             )
         }
 

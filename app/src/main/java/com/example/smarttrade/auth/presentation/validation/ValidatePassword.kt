@@ -7,13 +7,13 @@ class ValidatePassword @Inject constructor() {
         if (password.isEmpty()) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "Password cannot be empty"
+                errorMessage = "Debes añadir una contraseña"
             )
         }
         if (password.length < 6) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "Password must be at least 6 characters long"
+                errorMessage = "La contraseña debe tener al menos 6 caracteres"
             )
         }
 
