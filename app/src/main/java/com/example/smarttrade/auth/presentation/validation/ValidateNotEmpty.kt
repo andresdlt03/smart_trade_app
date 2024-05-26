@@ -7,7 +7,7 @@ class ValidateNotEmpty @Inject constructor() {
         if(value.isEmpty()) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "This field cannot be empty"
+                errorMessage = "Este campo no puede estar vacío"
             )
         }
         return ValidationResult(successful = true)

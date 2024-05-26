@@ -107,7 +107,7 @@ fun addProductTechnology(viewModel: AddProductTechnologyViewModel, navHostContro
         upDateField = {viewModel.onItemChanged(it,5)},
         errorMessage = state.value.priceError
     )
-    Spacer(modifier = Modifier.height(54.dp))
+    Spacer(modifier = Modifier.height(14.dp))
 
     OutlinedText(
         value = state.value.stock,
@@ -115,7 +115,7 @@ fun addProductTechnology(viewModel: AddProductTechnologyViewModel, navHostContro
         upDateField = {viewModel.onItemChanged(it,6)},
         errorMessage = state.value.stockError
     )
-    Spacer(modifier = Modifier.height(54.dp))
+    Spacer(modifier = Modifier.height(14.dp))
 
     OutlinedText(
         value = state.value.dataSheet,

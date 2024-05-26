@@ -101,7 +101,7 @@ fun addProductFood(viewModel: AddProductFoodViewModel, navHostController: NavHos
         upDateField = {viewModel.onItemChanged(it,4)},
         errorMessage = state.value.priceError
     )
-    Spacer(modifier = Modifier.height(54.dp))
+    Spacer(modifier = Modifier.height(14.dp))
 
     OutlinedText(
         value = state.value.dataSheet,
@@ -109,7 +109,7 @@ fun addProductFood(viewModel: AddProductFoodViewModel, navHostController: NavHos
         upDateField = {viewModel.onItemChanged(it,5)},
         errorMessage = state.value.dataSheetError
     )
-    Spacer(modifier = Modifier.height(54.dp))
+    Spacer(modifier = Modifier.height(14.dp))
 
     OutlinedText(
         value = state.value.stock,

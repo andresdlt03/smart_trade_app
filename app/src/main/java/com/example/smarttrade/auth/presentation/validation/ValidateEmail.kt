@@ -8,13 +8,13 @@ class ValidateEmail @Inject constructor() {
         if (email.isEmpty()) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "Email cannot be empty"
+                errorMessage = "El email no puede estar vacío"
             )
         }
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "Email is not valid"
+                errorMessage = "El email no es válido"
             )
         }
         return ValidationResult(successful = true)
