@@ -10,7 +10,6 @@ public class ValidateName @Inject constructor() {
                 errorMessage = "El nombre no puede estar vacío"
             )
         }
-
         return ValidationResult(successful = true)
     }
 }

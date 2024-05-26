@@ -10,6 +10,7 @@ import com.example.smarttrade.product_management.presentation.validation.Validat
 import com.example.smarttrade.product_management.presentation.validation.ValidateDescription
 import com.example.smarttrade.product_management.presentation.validation.ValidateExtraFields
 import com.example.smarttrade.product_management.presentation.validation.ValidateName
+import com.example.smarttrade.product_management.presentation.validation.ValidatePrice
 import com.example.smarttrade.product_management.presentation.viewmodel.state.ProductClothesState
 import com.example.smarttrade.singleton.UserLogged
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +25,9 @@ class AddProductClothesViewModel @Inject constructor(
     private val validateName: ValidateName,
     private val validateDescription: ValidateDescription,
     private val validateDataSheet: ValidateDataSheet,
-    private val validateExtraFields: ValidateExtraFields
+    private val validateExtraFields: ValidateExtraFields,
+    private val validatePrice: ValidatePrice,
+    private val validateStock: ValidatePrice
 ) : AddProductViewModel() {
 
     private val _state = MutableStateFlow(ProductClothesState())
@@ -66,12 +69,16 @@ class AddProductClothesViewModel @Inject constructor(
         val descriptionValidation = validateDescription.execute(_state.value.description)
         val dataSheetValidation = validateDataSheet.execute(_state.value.dataSheet)
         val sizeValidation = validateExtraFields.execute(_state.value.size)
+        val priceValidation = validatePrice.execute(_state.value.price)
+        val stockValidation = validateStock.execute(_state.value.stock)
 
         val hasError = listOf(
             nameValidation,
             descriptionValidation,
             dataSheetValidation,
-            sizeValidation
+            sizeValidation,
+            priceValidation,
+            stockValidation
         ).any { !it.successful }
 
         if (hasError) {
@@ -79,7 +86,9 @@ class AddProductClothesViewModel @Inject constructor(
                 nameError = nameValidation.errorMessage,
                 descriptionError = descriptionValidation.errorMessage,
                 dataSheetError = dataSheetValidation.errorMessage,
-                sizeError = sizeValidation.errorMessage
+                sizeError = sizeValidation.errorMessage,
+                priceError = priceValidation.errorMessage,
+                stockError = stockValidation.errorMessage
             )
             return
         }

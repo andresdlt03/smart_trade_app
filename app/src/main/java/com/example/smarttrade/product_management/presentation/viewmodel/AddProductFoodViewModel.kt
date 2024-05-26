@@ -10,6 +10,8 @@ import com.example.smarttrade.product_management.presentation.validation.Validat
 import com.example.smarttrade.product_management.presentation.validation.ValidateDescription
 import com.example.smarttrade.product_management.presentation.validation.ValidateExtraFields
 import com.example.smarttrade.product_management.presentation.validation.ValidateName
+import com.example.smarttrade.product_management.presentation.validation.ValidatePrice
+import com.example.smarttrade.product_management.presentation.validation.ValidateStock
 import com.example.smarttrade.product_management.presentation.viewmodel.state.ProductFoodState
 import com.example.smarttrade.singleton.UserLogged
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +26,10 @@ class AddProductFoodViewModel @Inject constructor(
     private val validateName: ValidateName,
     private val validateDescription: ValidateDescription,
     private val validateDataSheet: ValidateDataSheet,
-    private val validateExtraFields: ValidateExtraFields
+    private val validateExtraFields: ValidateExtraFields,
+    private val validatePrice: ValidatePrice,
+    private val validateStock: ValidateStock
+
 ) : AddProductViewModel(){
 
     private val _state = MutableStateFlow(ProductFoodState())
@@ -66,14 +71,16 @@ class AddProductFoodViewModel @Inject constructor(
         val descriptionValidation = validateDescription.execute(_state.value.description)
         val dataSheetValidation = validateDataSheet.execute(_state.value.dataSheet)
         val caloriesValidation = validateExtraFields.execute(_state.value.calories)
-        val priceValidation = state.value.price.toDoubleOrNull() != null;
-        val stockValidation = state.value.stock.toIntOrNull() != null;
+        val priceValidation = validatePrice.execute(_state.value.price)
+        val stockValidation = validateStock.execute(_state.value.stock);
 
         val hasError = listOf(
             nameValidation,
             descriptionValidation,
             dataSheetValidation,
-            caloriesValidation
+            caloriesValidation,
+            priceValidation,
+            stockValidation
         ).any { !it.successful }
 
         if (hasError) {
@@ -81,7 +88,9 @@ class AddProductFoodViewModel @Inject constructor(
                 nameError = nameValidation.errorMessage,
                 descriptionError = descriptionValidation.errorMessage,
                 dataSheetError = dataSheetValidation.errorMessage,
-                caloriesError = caloriesValidation.errorMessage
+                caloriesError = caloriesValidation.errorMessage,
+                priceError = priceValidation.errorMessage,
+                stockError = stockValidation.errorMessage
             )
             return
         }

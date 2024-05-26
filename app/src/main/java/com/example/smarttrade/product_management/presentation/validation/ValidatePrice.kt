@@ -1,6 +1,6 @@
 package com.example.smarttrade.product_management.presentation.validation
 
-import com.example.smarttrade.auth.presentation.validation.ValidationResult
+import com.example.smarttrade.product_management.presentation.validation.ValidationResult
 import javax.inject.Inject
 
 class ValidatePrice @Inject constructor() {
@@ -10,10 +10,7 @@ class ValidatePrice @Inject constructor() {
                 successful = false,
                 errorMessage = "El precio debe ser un número"
             )
-        } else {
-            return ValidationResult(
-                successful = true
-            )
         }
+        return ValidationResult(successful = true)
     }
 }

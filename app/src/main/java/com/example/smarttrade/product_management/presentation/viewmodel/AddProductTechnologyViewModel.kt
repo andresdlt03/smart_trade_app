@@ -10,6 +10,8 @@ import com.example.smarttrade.product_management.presentation.validation.Validat
 import com.example.smarttrade.product_management.presentation.validation.ValidateDescription
 import com.example.smarttrade.product_management.presentation.validation.ValidateExtraFields
 import com.example.smarttrade.product_management.presentation.validation.ValidateName
+import com.example.smarttrade.product_management.presentation.validation.ValidatePrice
+import com.example.smarttrade.product_management.presentation.validation.ValidateStock
 import com.example.smarttrade.product_management.presentation.viewmodel.state.ProductTechnologyState
 import com.example.smarttrade.singleton.UserLogged
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,6 +27,8 @@ class AddProductTechnologyViewModel @Inject constructor(
     private val validateDescription: ValidateDescription,
     private val validateDataSheet: ValidateDataSheet,
     private val validateExtraFields: ValidateExtraFields,
+    private val validatePrice: ValidatePrice,
+    private val validateStock: ValidateStock
 ) : AddProductViewModel(){
 
     private val _state = MutableStateFlow(ProductTechnologyState())
@@ -68,13 +72,17 @@ class AddProductTechnologyViewModel @Inject constructor(
         val dataSheetValidation = validateDataSheet.execute(_state.value.dataSheet)
         val modelValidation = validateExtraFields.execute(_state.value.model)
         val energyValidation = validateExtraFields.execute(_state.value.energy)
+        val priceValidation = validatePrice.execute(_state.value.price)
+        val stockValidation = validateStock.execute(_state.value.stock)
 
         val hasError = listOf(
             nameValidation,
             descriptionValidation,
             dataSheetValidation,
             modelValidation,
-            energyValidation
+            energyValidation,
+            priceValidation,
+            stockValidation
         ).any { !it.successful }
 
         if (hasError) {
@@ -83,7 +91,9 @@ class AddProductTechnologyViewModel @Inject constructor(
                 descriptionError = descriptionValidation.errorMessage,
                 dataSheetError = dataSheetValidation.errorMessage,
                 modelError = modelValidation.errorMessage,
-                energyError = energyValidation.errorMessage
+                energyError = energyValidation.errorMessage,
+                priceError = priceValidation.errorMessage,
+                stockError = stockValidation.errorMessage
             )
             return
         }
