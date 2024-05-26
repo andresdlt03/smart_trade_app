@@ -35,6 +35,14 @@ open class AddProductViewModel @Inject constructor(): ViewModel() {
         _state.value = _state.value.copy(stock = stock)
     }
 
+    fun setSuccess(success: Boolean){
+        _state.value = _state.value.copy(uploadSuccess = success)
+    }
+
+    fun setUploadError(error: String) {
+        _state.value = _state.value.copy(uploadError = error)
+    }
+
     fun goBackToCategories(navController: NavHostController){
         navController.navigate("product_management")
     }

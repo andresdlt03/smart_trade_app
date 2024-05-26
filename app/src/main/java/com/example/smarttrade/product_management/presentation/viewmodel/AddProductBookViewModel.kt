@@ -65,21 +65,24 @@ class AddProductBookViewModel @Inject constructor(
             )
             return
         }
-
-        val product = Book(
-            super.state.value.name,
-            super.state.value.description,
-            super.state.value.dataSheet,
-            listOf(super.state.value.photo1.toString(), super.state.value.photo2.toString()),
-            _state.value.isbn
-        )
         viewModelScope.launch {
-            productRepository.createProduct(
+            val product = Book(
+                super.state.value.name,
+                super.state.value.description,
+                super.state.value.dataSheet,
+                listOf(super.state.value.photo1.toString(), super.state.value.photo2.toString()),
+                localState.value.isbn
+            )
+            uploadNewProduct(
                 product,
                 super.state.value.price.toDouble(),
                 super.state.value.stock.toInt(),
-                UserLogged.email
+                UserLogged.email,
+                productRepository,
+                {result -> setSuccess(result)},
+                {error -> setUploadError(error)}
             )
+
         }
     }
 

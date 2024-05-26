@@ -15,4 +15,6 @@ data class ProductState (
     var stockError: String? = null,
     var photo1: Uri? = null,
     var photo2: Uri? = null,
+    var uploadSuccess: Boolean = false,
+    var uploadError: String? = null
 )
