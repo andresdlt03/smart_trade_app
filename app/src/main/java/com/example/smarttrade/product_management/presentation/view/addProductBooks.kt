@@ -34,6 +34,8 @@ import coil.compose.AsyncImage
 import com.example.smarttrade.R
 import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
 import com.example.smarttrade.components.OutlinedText
+import com.example.smarttrade.product_management.presentation.view.components.PublishProductButton
+import com.example.smarttrade.product_management.presentation.view.components.TopBar
 import com.example.smarttrade.product_management.presentation.viewmodel.AddProductBookViewModel
 
 @Composable
@@ -67,10 +69,9 @@ fun addProductBooks(viewModel: AddProductBookViewModel, navHostController: NavHo
         photoUri = uri
     }
 
-    topBarAdd({viewModel.goBackCategories(navHostController)},navHostController)
+    TopBar({viewModel.goBackCategories(navHostController)},navHostController)
     Spacer(modifier = Modifier.height(24.dp))
 
-    outLinedTextAdd(state.value.name, "Nombre (20 carácteres)", 1,{viewModel.onItemChanged(it,1)} ,{ viewModel.clearSelected(1) })
     OutlinedText(
         value = state.value.name,
         label = "Nombre",
@@ -168,7 +169,7 @@ fun addProductBooks(viewModel: AddProductBookViewModel, navHostController: NavHo
     }
 
     Spacer(modifier = Modifier.height(8.dp))
-    onPublishProduct(viewModel, navHostController)
+    PublishProductButton(viewModel, navHostController)
 }
 
 

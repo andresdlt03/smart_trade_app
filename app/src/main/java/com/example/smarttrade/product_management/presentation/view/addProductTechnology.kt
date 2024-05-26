@@ -35,6 +35,8 @@ import coil.compose.AsyncImage
 import com.example.smarttrade.R
 import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
 import com.example.smarttrade.components.OutlinedText
+import com.example.smarttrade.gift.presentation.topBarAdd
+import com.example.smarttrade.product_management.presentation.view.components.PublishProductButton
 import com.example.smarttrade.product_management.presentation.viewmodel.AddProductTechnologyViewModel
 
 @Composable
@@ -176,7 +178,7 @@ fun addProductTechnology(viewModel: AddProductTechnologyViewModel, navHostContro
     }
 
     Spacer(modifier = Modifier.height(8.dp))
-    onPublishProduct(viewModel, navHostController)
+    PublishProductButton(viewModel, navHostController)
 }
 
 

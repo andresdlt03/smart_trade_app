@@ -12,8 +12,8 @@ import com.example.smarttrade.auth.presentation.view.ClientRegisterScreen
 import com.example.smarttrade.auth.presentation.view.LoginScreen
 import com.example.smarttrade.auth.presentation.view.SellerRegisterScreen
 import com.example.smarttrade.catalogue.view.ProcessOrder
-import com.example.smarttrade.catalogue.view.WishListScreen
 import com.example.smarttrade.catalogue.view.ShoppingCartScreen
+import com.example.smarttrade.catalogue.view.WishListScreen
 import com.example.smarttrade.catalogue.view.mainCatalogueScreen
 import com.example.smarttrade.catalogue.view.viewProductCatalogueScreen
 import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
@@ -34,7 +34,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
 
             SmartTradeTheme {
                 val navController = rememberNavController()
