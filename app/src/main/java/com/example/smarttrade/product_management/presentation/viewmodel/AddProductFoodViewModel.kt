@@ -66,6 +66,8 @@ class AddProductFoodViewModel @Inject constructor(
         val descriptionValidation = validateDescription.execute(_state.value.description)
         val dataSheetValidation = validateDataSheet.execute(_state.value.dataSheet)
         val caloriesValidation = validateExtraFields.execute(_state.value.calories)
+        val priceValidation = state.value.price.toDoubleOrNull() != null;
+        val stockValidation = state.value.stock.toIntOrNull() != null;
 
         val hasError = listOf(
             nameValidation,
