@@ -89,9 +89,17 @@ fun addProductBooks(viewModel: AddProductBookViewModel, navHostController: NavHo
     Spacer(modifier = Modifier.height(14.dp))
 
     OutlinedText(
+        value = state.value.dataSheet,
+        label = "Ficha técnica",
+        upDateField = {viewModel.onItemChanged(it, 3)},
+        errorMessage = state.value.dataSheetError,
+    )
+    Spacer(modifier = Modifier.height(14.dp))
+
+    OutlinedText(
         value = state.value.isbn,
         label = "Descripción",
-        upDateField = {viewModel.onItemChanged(it, 3)},
+        upDateField = {viewModel.onItemChanged(it, 4)},
         errorMessage = state.value.isbnError,
     )
     Spacer(modifier = Modifier.height(14.dp))
@@ -99,16 +107,8 @@ fun addProductBooks(viewModel: AddProductBookViewModel, navHostController: NavHo
     OutlinedText(
         value = state.value.price,
         label = "Precio",
-        upDateField = {viewModel.onItemChanged(it, 4)},
-        errorMessage = state.value.priceError,
-    )
-    Spacer(modifier = Modifier.height(14.dp))
-
-    OutlinedText(
-        value = state.value.dataSheet,
-        label = "Ficha técnica",
         upDateField = {viewModel.onItemChanged(it, 5)},
-        errorMessage = state.value.dataSheetError,
+        errorMessage = state.value.priceError,
     )
     Spacer(modifier = Modifier.height(14.dp))
 

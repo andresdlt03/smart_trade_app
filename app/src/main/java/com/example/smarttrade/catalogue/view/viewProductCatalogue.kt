@@ -37,7 +37,6 @@ import com.example.smarttrade.R
 import com.example.smarttrade.catalogue.viewmodel.Product
 import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
 import com.example.smarttrade.catalogue.viewmodel.viewProductCatalogueViewModel
-import com.example.smarttrade.product_management.presentation.view.text
 import com.example.smarttrade.singleton.UserLogged
 
 @Composable
@@ -134,7 +133,7 @@ fun ProductoEnPantalla(
 
         Button(onClick = {alertPressed = !alertPressed},
             content = {
-                text(text = "Ver datasheet")
+                Text(text = "Ver ficha técnica")
             }
         )
         Spacer(modifier = Modifier.height(20.dp))

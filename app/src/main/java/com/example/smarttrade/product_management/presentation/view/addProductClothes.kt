@@ -90,9 +90,17 @@ fun addProductClothes(viewModel: AddProductClothesViewModel, navHostController: 
     Spacer(modifier = Modifier.height(14.dp))
 
     OutlinedText(
+        value = state.value.dataSheet,
+        label = "Ficha técnica",
+        upDateField = {viewModel.onItemChanged(it,3)},
+        errorMessage = state.value.dataSheetError,
+    )
+    Spacer(modifier = Modifier.height(14.dp))
+
+    OutlinedText(
         value = state.value.size,
         label = "Talla",
-        upDateField = {viewModel.onItemChanged(it,3)},
+        upDateField = {viewModel.onItemChanged(it,4)},
         errorMessage = state.value.sizeError,
     )
     Spacer(modifier = Modifier.height(14.dp))
@@ -100,16 +108,8 @@ fun addProductClothes(viewModel: AddProductClothesViewModel, navHostController: 
     OutlinedText(
         value = state.value.price,
         label = "Precio",
-        upDateField = {viewModel.onItemChanged(it,4)},
-        errorMessage = state.value.priceError,
-    )
-    Spacer(modifier = Modifier.height(14.dp))
-
-    OutlinedText(
-        value = state.value.dataSheet,
-        label = "Ficha técnica",
         upDateField = {viewModel.onItemChanged(it,5)},
-        errorMessage = state.value.dataSheetError,
+        errorMessage = state.value.priceError,
     )
     Spacer(modifier = Modifier.height(14.dp))
 

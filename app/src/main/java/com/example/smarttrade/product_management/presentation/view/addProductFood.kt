@@ -90,9 +90,17 @@ fun addProductFood(viewModel: AddProductFoodViewModel, navHostController: NavHos
     Spacer(modifier = Modifier.height(14.dp))
 
     OutlinedText(
+        value = state.value.dataSheet,
+        label = "Ficha técnica",
+        upDateField = {viewModel.onItemChanged(it,3)},
+        errorMessage = state.value.dataSheetError
+    )
+    Spacer(modifier = Modifier.height(14.dp))
+
+    OutlinedText(
         value = state.value.calories,
         label = "Calorías",
-        upDateField = {viewModel.onItemChanged(it,3)},
+        upDateField = {viewModel.onItemChanged(it,4)},
         errorMessage = state.value.caloriesError
     )
     Spacer(modifier = Modifier.height(14.dp))
@@ -100,16 +108,8 @@ fun addProductFood(viewModel: AddProductFoodViewModel, navHostController: NavHos
     OutlinedText(
         value = state.value.price,
         label = "Precio",
-        upDateField = {viewModel.onItemChanged(it,4)},
-        errorMessage = state.value.priceError
-    )
-    Spacer(modifier = Modifier.height(14.dp))
-
-    OutlinedText(
-        value = state.value.dataSheet,
-        label = "Ficha técnica",
         upDateField = {viewModel.onItemChanged(it,5)},
-        errorMessage = state.value.dataSheetError
+        errorMessage = state.value.priceError
     )
     Spacer(modifier = Modifier.height(14.dp))
 

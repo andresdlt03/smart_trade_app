@@ -88,9 +88,17 @@ fun addProductTechnology(viewModel: AddProductTechnologyViewModel, navHostContro
     Spacer(modifier = Modifier.height(14.dp))
 
     OutlinedText(
+        value = state.value.dataSheet,
+        label = "Ficha técnica",
+        upDateField = {viewModel.onItemChanged(it,3)},
+        errorMessage = state.value.dataSheetError
+    )
+    Spacer(modifier = Modifier.height(54.dp))
+
+    OutlinedText(
         value = state.value.model,
         label = "Modelo",
-        upDateField = {viewModel.onItemChanged(it,3)},
+        upDateField = {viewModel.onItemChanged(it,4)},
         errorMessage = state.value.modelError
     )
     Spacer(modifier = Modifier.height(14.dp))
@@ -98,7 +106,7 @@ fun addProductTechnology(viewModel: AddProductTechnologyViewModel, navHostContro
     OutlinedText(
         value = state.value.energy,
         label = "Consumo energético",
-        upDateField = {viewModel.onItemChanged(it,4)},
+        upDateField = {viewModel.onItemChanged(it,5)},
         errorMessage = state.value.energyError
     )
     Spacer(modifier = Modifier.height(14.dp))
@@ -106,7 +114,7 @@ fun addProductTechnology(viewModel: AddProductTechnologyViewModel, navHostContro
     OutlinedText(
         value = state.value.price,
         label = "Precio",
-        upDateField = {viewModel.onItemChanged(it,5)},
+        upDateField = {viewModel.onItemChanged(it,6)},
         errorMessage = state.value.priceError
     )
     Spacer(modifier = Modifier.height(14.dp))
@@ -114,19 +122,10 @@ fun addProductTechnology(viewModel: AddProductTechnologyViewModel, navHostContro
     OutlinedText(
         value = state.value.stock,
         label = "Stock",
-        upDateField = {viewModel.onItemChanged(it,6)},
+        upDateField = {viewModel.onItemChanged(it,7)},
         errorMessage = state.value.stockError
     )
     Spacer(modifier = Modifier.height(14.dp))
-
-    OutlinedText(
-        value = state.value.dataSheet,
-        label = "Ficha técnica",
-        upDateField = {viewModel.onItemChanged(it,7)},
-        errorMessage = state.value.dataSheetError
-    )
-    Spacer(modifier = Modifier.height(54.dp))
-
     Box(
         modifier = Modifier
             .fillMaxWidth(),

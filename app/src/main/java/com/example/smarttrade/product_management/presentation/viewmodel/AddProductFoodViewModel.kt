@@ -39,9 +39,9 @@ class AddProductFoodViewModel @Inject constructor(
         when(id){
             1 ->    _state.value = _state.value.copy(name = item)
             2 ->    _state.value = _state.value.copy(description = item)
-            3 ->    _state.value = _state.value.copy(calories = item)
-            4 ->    _state.value = _state.value.copy(price = item)
-            5 ->    _state.value = _state.value.copy(dataSheet = item)
+            3 ->    _state.value = _state.value.copy(dataSheet = item)
+            4 ->    _state.value = _state.value.copy(calories = item)
+            5 ->    _state.value = _state.value.copy(price = item)
             6 ->    _state.value = _state.value.copy(stock = item)
         }
     }
@@ -50,9 +50,9 @@ class AddProductFoodViewModel @Inject constructor(
         when(id){
             1 ->    _state.value = _state.value.copy(name = "")
             2 ->    _state.value = _state.value.copy(description = "")
-            3 ->    _state.value = _state.value.copy(calories = "")
-            4 ->    _state.value = _state.value.copy(price = "")
-            5 ->    _state.value = _state.value.copy(dataSheet = "")
+            3 ->    _state.value = _state.value.copy(dataSheet = "")
+            4 ->    _state.value = _state.value.copy(calories = "")
+            5 ->    _state.value = _state.value.copy(price = "")
             6 ->    _state.value = _state.value.copy(stock = "")
         }
     }

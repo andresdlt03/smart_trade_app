@@ -38,11 +38,11 @@ class AddProductTechnologyViewModel @Inject constructor(
         when(id){
             1 ->    _state.value = _state.value.copy(name = item)
             2 ->    _state.value = _state.value.copy(description = item)
-            3 ->    _state.value = _state.value.copy(model = item)
-            4 ->    _state.value = _state.value.copy(energy = item)
-            5 ->    _state.value = _state.value.copy(price = item)
-            6 ->    _state.value = _state.value.copy(stock = item)
-            7 ->    _state.value = _state.value.copy(dataSheet = item)
+            3 ->    _state.value = _state.value.copy(dataSheet = item)
+            4 ->    _state.value = _state.value.copy(model = item)
+            5 ->    _state.value = _state.value.copy(energy = item)
+            6 ->    _state.value = _state.value.copy(price = item)
+            7 ->    _state.value = _state.value.copy(stock = item)
         }
     }
 
@@ -50,10 +50,11 @@ class AddProductTechnologyViewModel @Inject constructor(
         when(id){
             1 ->    _state.value = _state.value.copy(name = "")
             2 ->    _state.value = _state.value.copy(description = "")
-            3 ->    _state.value = _state.value.copy(model = "")
-            4 ->    _state.value = _state.value.copy(energy = "")
-            5 ->    _state.value = _state.value.copy(price = "")
-            6 ->    _state.value = _state.value.copy(stock = "")
+            3 ->    _state.value = _state.value.copy(dataSheet = "")
+            4 ->    _state.value = _state.value.copy(model = "")
+            5 ->    _state.value = _state.value.copy(energy = "")
+            6 ->    _state.value = _state.value.copy(price = "")
+            7 ->    _state.value = _state.value.copy(stock = "")
         }
     }
 
