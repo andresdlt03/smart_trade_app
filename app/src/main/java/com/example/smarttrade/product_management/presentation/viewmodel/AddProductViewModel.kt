@@ -1,8 +1,10 @@
 package com.example.smarttrade.product_management.presentation.viewmodel
 
+import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
+import com.example.smarttrade.product_management.presentation.utils.convertImageToBytes
 import com.example.smarttrade.product_management.presentation.viewmodel.state.ProductState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,7 +12,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-open class AddProductViewModel @Inject constructor(): ViewModel() {
+open class AddProductViewModel @Inject constructor(
+    private val context: Context
+): ViewModel() {
 
     private val _state = MutableStateFlow(ProductState())
     val state = _state.asStateFlow()
@@ -63,12 +67,17 @@ open class AddProductViewModel @Inject constructor(): ViewModel() {
         )
     }
 
-    fun updatePhotos(p1: Uri?, p2: Uri?){
-        if(p1 != null){
-            _state.value = _state.value.copy(photo1 = p1)
+    fun updatePhotos(photo: Uri?){
+        if(photo != null){
+            _state.value = _state.value.copy(photo = photo)
         }
-        if(p2 != null){
-            _state.value = _state.value.copy(photo2 = p2)
+    }
+
+    fun processPhoto(): ByteArray {
+        if(state.value.photo != null){
+            return convertImageToBytes(state.value.photo!!, context)!!
+        } else {
+            return ByteArray(0)
         }
     }
 

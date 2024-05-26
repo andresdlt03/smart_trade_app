@@ -1,5 +1,7 @@
 package com.example.smarttrade.di
 
+import android.app.Application
+import android.content.Context
 import com.example.smarttrade.auth.data.remote.UserApi
 import com.example.smarttrade.auth.data.repository.UserRepositoryImpl
 import com.example.smarttrade.auth.domain.repository.UserRepository
@@ -41,5 +43,10 @@ object AppModule {
     @Singleton
     fun provideCatalogueRepository(catalogueApi: CatalogueApi): CatalogueRepository {
         return CatalogueRepositoryImpl(catalogueApi)
+    }
+
+    @Provides
+    fun provideContext(application: Application): Context {
+        return application.applicationContext
     }
 }

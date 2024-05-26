@@ -6,7 +6,6 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -127,6 +126,7 @@ fun addProductTechnology(viewModel: AddProductTechnologyViewModel, navHostContro
         errorMessage = productState.value.stockError
     )
     Spacer(modifier = Modifier.height(14.dp))
+
     Box(
         modifier = Modifier
             .fillMaxWidth(),
@@ -146,31 +146,17 @@ fun addProductTechnology(viewModel: AddProductTechnologyViewModel, navHostContro
                     contentDescription = null
                 )
                 if (photoUri != null) {
-                    if(photoUri1 == null && photoUri2 == null){photoUri1 = photoUri; viewModel.updatePhotos(photoUri1, photoUri2)}
-                    if(photoUri1 != null && photoUri2 == null && photoUri1 != photoUri){photoUri2 = photoUri; viewModel.updatePhotos(photoUri1, photoUri2)}
-                    if(photoUri2 != photoUri && photoUri1 != photoUri && photoUri2 != photoUri1){photoUri2 = photoUri1; photoUri1 = photoUri; viewModel.updatePhotos(photoUri1, photoUri2) }
+                    viewModel.updatePhotos(photoUri)
                 }
             }
             Spacer(modifier = Modifier.height(2.dp))
             Text(text = "Añade una o dos fotos del producto")
             Spacer(modifier = Modifier.height(14.dp))
-            if (photoUri1 != null){
+            if (photoUri != null){
                 AsyncImage(
-                    model = photoUri1,
+                    model = photoUri,
                     contentDescription = null,
-                    modifier = Modifier
-                        .clickable { viewModel.updatePhotos(null, photoUri2) }
-                        .fillMaxWidth(),
-                    contentScale = ContentScale.Crop
-                )
-            }
-            Spacer(modifier = Modifier.height(14.dp))
-            if (photoUri2 != null){
-                AsyncImage(
-                    model = photoUri2,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     contentScale = ContentScale.Crop
                 )
             }

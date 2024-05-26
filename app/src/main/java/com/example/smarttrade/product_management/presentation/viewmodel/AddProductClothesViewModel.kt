@@ -1,6 +1,7 @@
 package com.example.smarttrade.product_management.presentation.viewmodel
 
 
+import android.content.Context
 import androidx.lifecycle.viewModelScope
 import com.example.smarttrade.product_management.domain.model.Clothes
 import com.example.smarttrade.product_management.domain.repository.ProductRepository
@@ -25,8 +26,9 @@ class AddProductClothesViewModel @Inject constructor(
     private val validateDataSheet: ValidateDataSheet,
     private val validateExtraFields: ValidateExtraFields,
     private val validatePrice: ValidatePrice,
-    private val validateStock: ValidatePrice
-) : AddProductViewModel() {
+    private val validateStock: ValidatePrice,
+    private val context: Context
+) : AddProductViewModel(context) {
 
     private val _state = MutableStateFlow(ProductClothesState())
     val localState = _state.asStateFlow()
@@ -70,7 +72,7 @@ class AddProductClothesViewModel @Inject constructor(
             super.state.value.name,
             super.state.value.description,
             super.state.value.dataSheet,
-            listOf(super.state.value.photo1.toString(), super.state.value.photo2.toString()),
+            processPhoto(),
             localState.value.size
         )
         viewModelScope.launch {

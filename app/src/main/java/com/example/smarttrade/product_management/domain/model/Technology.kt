@@ -4,14 +4,14 @@ class Technology(
     name: String,
     description: String,
     dataSheet: String,
-    photos: List<String>,
+    photo: ByteArray,
     val consume: String,
     val model: String,
 ): Product(
     name,
     description,
     dataSheet,
-    photos,
+    photo,
     "technology"
 ) {
 }

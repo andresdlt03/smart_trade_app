@@ -4,13 +4,13 @@ class Clothes(
     name: String,
     description: String,
     dataSheet: String,
-    photos: List<String>,
+    photo: ByteArray,
     val size: String,
 ): Product(
     name,
     description,
     dataSheet,
-    photos,
+    photo,
     "clothes"
 ) {
 }
