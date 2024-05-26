@@ -35,11 +35,9 @@ class MainActivity : ComponentActivity() {
     private val ListaDeseadosViewModel: ListaDeseadosViewModel by viewModels()
     private val ListaCarritoViewModel: ListaCarritoViewModel by viewModels()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
 
             SmartTradeTheme {
                 val navController = rememberNavController()

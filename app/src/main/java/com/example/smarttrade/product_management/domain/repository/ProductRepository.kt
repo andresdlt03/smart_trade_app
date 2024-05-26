@@ -1,6 +1,6 @@
 package com.example.smarttrade.product_management.domain.repository
 
-import com.example.smarttrade.product_management.model.Product
+import com.example.smarttrade.product_management.domain.model.Product
 import retrofit2.Response
 
 interface ProductRepository {

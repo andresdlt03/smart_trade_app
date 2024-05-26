@@ -1,6 +1,8 @@
 package com.example.smarttrade.product_management.presentation.validation;
 
-public class ValidateName {
+import javax.inject.Inject
+
+public class ValidateName @Inject constructor() {
     fun execute(name: String): ValidationResult {
         if(name.isNullOrEmpty()) {
             return ValidationResult(
@@ -8,7 +10,6 @@ public class ValidateName {
                 errorMessage = "El nombre no puede estar vacío"
             )
         }
-
         return ValidationResult(successful = true)
     }
 }

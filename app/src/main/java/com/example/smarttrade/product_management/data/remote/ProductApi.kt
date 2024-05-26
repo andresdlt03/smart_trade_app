@@ -9,8 +9,5 @@ import retrofit2.http.Path
 interface ProductApi {
     @Headers("content-type: application/json")
     @POST("products/{productCategory}")
-    suspend fun createProduct(
-        @Path("productCategory") productCategory: String,
-        @Body productDTO: String
-    ): Response<String>
+    suspend fun createProduct(@Body body: String, @Path("productCategory") category: String): Response<String>
 }

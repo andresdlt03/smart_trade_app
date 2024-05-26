@@ -17,5 +17,4 @@ data class SellerRegisterState (
     val bankAccountError: String? = null,
     val registerError: String? = null,
     val registerSuccess: Boolean = false
-
 )

@@ -1,17 +1,16 @@
-package com.example.smarttrade.product_management.model
+package com.example.smarttrade.product_management.domain.model
 
 class Food(
     name: String,
     description: String,
     dataSheet: String,
-    photos: List<String>,
-    category: String,
+    photo: ByteArray,
     val calories: String,
 ): Product(
     name,
     description,
     dataSheet,
-    photos,
-    "Technology"
+    photo,
+    "food"
 ) {
 }

@@ -1,18 +1,17 @@
-package com.example.smarttrade.product_management.model
+package com.example.smarttrade.product_management.domain.model
 
 class Technology(
     name: String,
     description: String,
     dataSheet: String,
-    photos: List<String>,
-    category: String,
+    photo: ByteArray,
     val consume: String,
     val model: String,
 ): Product(
     name,
     description,
     dataSheet,
-    photos,
-    "Technology"
+    photo,
+    "technology"
 ) {
 }

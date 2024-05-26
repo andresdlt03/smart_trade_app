@@ -21,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.smarttrade.R
 import com.example.smarttrade.auth.presentation.viewmodel.LoginViewModel
+import com.example.smarttrade.components.OutlinedText
 import com.example.smarttrade.ui.theme.Typography
 
 @Composable

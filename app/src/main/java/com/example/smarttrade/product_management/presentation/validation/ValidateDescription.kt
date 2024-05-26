@@ -1,6 +1,8 @@
 package com.example.smarttrade.product_management.presentation.validation
 
-class ValidateDescription {
+import javax.inject.Inject
+
+class ValidateDescription @Inject constructor() {
     fun execute(description: String): ValidationResult {
         if (description.isEmpty()) {
             return ValidationResult(

@@ -1,11 +1,16 @@
 package com.example.smarttrade.product_management.presentation.viewmodel
 
 
-import android.net.Uri
+import android.content.Context
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavHostController
+import com.example.smarttrade.product_management.domain.model.Food
 import com.example.smarttrade.product_management.domain.repository.ProductRepository
-import com.example.smarttrade.product_management.model.Food
+import com.example.smarttrade.product_management.presentation.validation.ValidateDataSheet
+import com.example.smarttrade.product_management.presentation.validation.ValidateDescription
+import com.example.smarttrade.product_management.presentation.validation.ValidateExtraFields
+import com.example.smarttrade.product_management.presentation.validation.ValidateName
+import com.example.smarttrade.product_management.presentation.validation.ValidatePrice
+import com.example.smarttrade.product_management.presentation.validation.ValidateStock
 import com.example.smarttrade.product_management.presentation.viewmodel.state.ProductFoodState
 import com.example.smarttrade.singleton.UserLogged
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,68 +21,71 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddProductFoodViewModel @Inject constructor(
-    val productRepository: ProductRepository
-) : AddProductViewModel(){
+    private val productRepository: ProductRepository,
+    private val validateName: ValidateName,
+    private val validateDescription: ValidateDescription,
+    private val validateDataSheet: ValidateDataSheet,
+    private val validateExtraFields: ValidateExtraFields,
+    private val validatePrice: ValidatePrice,
+    private val validateStock: ValidateStock,
+    private val context: Context
+) : AddProductViewModel(context){
 
     private val _state = MutableStateFlow(ProductFoodState())
-    val state = _state.asStateFlow()
+    val localState = _state.asStateFlow()
 
-    fun onItemChanged(item :String, id: Int){
-        when(id){
-            1 ->    _state.value = _state.value.copy(name = item)
-            2 ->    _state.value = _state.value.copy(description = item)
-            3 ->    _state.value = _state.value.copy(calories = item)
-            4 ->    _state.value = _state.value.copy(price = item)
-            5 ->    _state.value = _state.value.copy(dataSheet = item)
-            6 ->    _state.value = _state.value.copy(stock = item)
-        }
-    }
-
-    fun clearSelected(id: Int){
-        when(id){
-            1 ->    _state.value = _state.value.copy(name = "")
-            2 ->    _state.value = _state.value.copy(description = "")
-            3 ->    _state.value = _state.value.copy(calories = "")
-            4 ->    _state.value = _state.value.copy(price = "")
-            5 ->    _state.value = _state.value.copy(dataSheet = "")
-            6 ->    _state.value = _state.value.copy(stock = "")
-        }
-    }
-
-    fun goBackCategories(navControler: NavHostController){
-        navControler.navigate("product_management")
-    }
-
-    fun updatePhotos(p1: Uri?, p2: Uri?){
-        if(p1 != null){_state.value = _state.value.copy(photo1 = p1)}
-        if(p2 != null){_state.value = _state.value.copy(photo2 = p2)}
+    fun updateCalories(calories: String) {
+        _state.value = _state.value.copy(calories = calories)
     }
 
     override fun publishProduct() {
+        val nameValidation = validateName.execute(super.state.value.name)
+        val descriptionValidation = validateDescription.execute(super.state.value.description)
+        val dataSheetValidation = validateDataSheet.execute(super.state.value.dataSheet)
+        val priceValidation = validatePrice.execute(super.state.value.price)
+        val stockValidation = validateStock.execute(super.state.value.stock);
+        val caloriesValidation = validateExtraFields.execute(_state.value.calories)
+
+        val hasError = listOf(
+            nameValidation,
+            descriptionValidation,
+            dataSheetValidation,
+            caloriesValidation,
+            priceValidation,
+            stockValidation
+        ).any { !it.successful }
+
+        if (hasError) {
+            super.setErrors(
+                nameValidation.errorMessage,
+                descriptionValidation.errorMessage,
+                dataSheetValidation.errorMessage,
+                priceValidation.errorMessage,
+                stockValidation.errorMessage
+            )
+            _state.value = _state.value.copy(
+                caloriesError = caloriesValidation.errorMessage,
+            )
+            return
+        }
+
         val product = Food(
-            _state.value.name,
-            _state.value.description,
-            _state.value.dataSheet,
-            listOf(_state.value.photo1.toString(), _state.value.photo2.toString()),
-            "Food",
-            _state.value.calories
+            super.state.value.name,
+            super.state.value.description,
+            super.state.value.dataSheet,
+            processPhoto(),
+            localState.value.calories
         )
         viewModelScope.launch {
-            productRepository.createProduct(
+            uploadNewProduct(
                 product,
-                _state.value.price.toDouble(),
-                _state.value.stock.toInt(),
-                UserLogged.email
+                super.state.value.price.toDouble(),
+                super.state.value.stock.toInt(),
+                UserLogged.email,
+                productRepository,
+                {result -> setSuccess(result)},
+                {error -> setUploadError(error)}
             )
         }
     }
-
-    fun error(): Boolean{
-        return (_state.value.textError != "")
-    }
-
-
-
-
-
 }

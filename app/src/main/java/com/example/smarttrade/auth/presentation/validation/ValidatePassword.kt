@@ -7,7 +7,11 @@ class ValidatePassword @Inject constructor() {
         if (password.isEmpty()) {
             return ValidationResult(
                 successful = false,
+<<<<<<< HEAD
+                errorMessage = "La contraseña no puede estar vacía"
+=======
                 errorMessage = "Debes añadir una contraseña"
+>>>>>>> develop
             )
         }
         if (password.length < 6) {
