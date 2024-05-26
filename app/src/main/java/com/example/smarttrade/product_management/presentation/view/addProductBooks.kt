@@ -25,7 +25,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -34,6 +33,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.smarttrade.R
 import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
+import com.example.smarttrade.components.OutlinedText
 import com.example.smarttrade.product_management.presentation.viewmodel.AddProductBookViewModel
 
 @Composable
@@ -71,21 +71,52 @@ fun addProductBooks(viewModel: AddProductBookViewModel, navHostController: NavHo
     Spacer(modifier = Modifier.height(24.dp))
 
     outLinedTextAdd(state.value.name, "Nombre (20 carácteres)", 1,{viewModel.onItemChanged(it,1)} ,{ viewModel.clearSelected(1) })
+    OutlinedText(
+        value = state.value.name,
+        label = "Nombre",
+        upDateField = {viewModel.onItemChanged(it, 1)},
+        errorMessage = state.value.nameError,
+    )
     Spacer(modifier = Modifier.height(14.dp))
 
-    outLinedTextAdd(state.value.description, "Descripción (50 carácteres)", 2,{viewModel.onItemChanged(it,2)} ,{ viewModel.clearSelected(2) })
+    OutlinedText(
+        value = state.value.description,
+        label = "Descripción",
+        upDateField = {viewModel.onItemChanged(it, 2)},
+        errorMessage = state.value.descriptionError,
+    )
     Spacer(modifier = Modifier.height(14.dp))
 
-    outLinedTextAdd(state.value.isbn, "ISBN", 3,{viewModel.onItemChanged(it,3)} ,{ viewModel.clearSelected(3) })
+    OutlinedText(
+        value = state.value.isbn,
+        label = "Descripción",
+        upDateField = {viewModel.onItemChanged(it, 3)},
+        errorMessage = state.value.isbnError,
+    )
     Spacer(modifier = Modifier.height(14.dp))
 
-    outLinedTextAdd(state.value.price, "Precio del producto", 4,{viewModel.onItemChanged(it,4)} ,{ viewModel.clearSelected(4) })
+    OutlinedText(
+        value = state.value.price,
+        label = "Precio",
+        upDateField = {viewModel.onItemChanged(it, 4)},
+        errorMessage = state.value.priceError,
+    )
     Spacer(modifier = Modifier.height(54.dp))
 
-    outLinedTextAdd(state.value.dataSheet, "Ficha técnica", 5,{viewModel.onItemChanged(it,5)} ,{ viewModel.clearSelected(5) })
+    OutlinedText(
+        value = state.value.dataSheet,
+        label = "Ficha técnica",
+        upDateField = {viewModel.onItemChanged(it, 5)},
+        errorMessage = state.value.dataSheetError,
+    )
     Spacer(modifier = Modifier.height(54.dp))
 
-    outLinedTextAdd(state.value.stock, "Stock", 6,{viewModel.onItemChanged(it,6)} ,{ viewModel.clearSelected(6) })
+    OutlinedText(
+        value = state.value.stock,
+        label = "Stock",
+        upDateField = {viewModel.onItemChanged(it, 6)},
+        errorMessage = state.value.stockError,
+    )
     Spacer(modifier = Modifier.height(54.dp))
 
 
@@ -136,16 +167,6 @@ fun addProductBooks(viewModel: AddProductBookViewModel, navHostController: NavHo
         }
     }
 
-    Spacer(modifier = Modifier.height(34.dp))
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = state.value.textError!!,
-            color = Color.Red
-        )
-    }
     Spacer(modifier = Modifier.height(8.dp))
     onPublishProduct(viewModel, navHostController)
 }

@@ -6,6 +6,10 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.smarttrade.product_management.domain.repository.ProductRepository
 import com.example.smarttrade.product_management.model.Technology
+import com.example.smarttrade.product_management.presentation.validation.ValidateDataSheet
+import com.example.smarttrade.product_management.presentation.validation.ValidateDescription
+import com.example.smarttrade.product_management.presentation.validation.ValidateExtraFields
+import com.example.smarttrade.product_management.presentation.validation.ValidateName
 import com.example.smarttrade.product_management.presentation.viewmodel.state.ProductTechnologyState
 import com.example.smarttrade.singleton.UserLogged
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +20,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddProductTechnologyViewModel @Inject constructor(
-    val productRepository: ProductRepository
+    val productRepository: ProductRepository,
+    val validateName: ValidateName,
+    val validateDescription: ValidateDescription,
+    val validateDataSheet: ValidateDataSheet,
+    val validateExtraFields: ValidateExtraFields,
 ) : AddProductViewModel(){
 
     private val _state = MutableStateFlow(ProductTechnologyState())
@@ -54,6 +62,31 @@ class AddProductTechnologyViewModel @Inject constructor(
     }
 
     override fun publishProduct() {
+        val nameValidation = validateName.execute(_state.value.name)
+        val descriptionValidation = validateDescription.execute(_state.value.description)
+        val dataSheetValidation = validateDataSheet.execute(_state.value.dataSheet)
+        val modelValidation = validateExtraFields.execute(_state.value.model)
+        val energyValidation = validateExtraFields.execute(_state.value.energy)
+
+        val hasError = listOf(
+            nameValidation,
+            descriptionValidation,
+            dataSheetValidation,
+            modelValidation,
+            energyValidation
+        ).any { !it.successful }
+
+        if (hasError) {
+            _state.value = _state.value.copy(
+                nameError = nameValidation.errorMessage,
+                descriptionError = descriptionValidation.errorMessage,
+                dataSheetError = dataSheetValidation.errorMessage,
+                modelError = modelValidation.errorMessage,
+                energyError = energyValidation.errorMessage
+            )
+            return
+        }
+
         val product = Technology(
             _state.value.name,
             _state.value.description,
@@ -72,10 +105,4 @@ class AddProductTechnologyViewModel @Inject constructor(
             )
         }
     }
-
-    fun error(): Boolean{
-        return (_state.value.textError != "")
-    }
-
-
 }

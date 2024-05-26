@@ -26,7 +26,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -131,16 +130,6 @@ fun addProductTechnology(viewModel: AddProductTechnologyViewModel, navHostContro
         }
     }
 
-    Spacer(modifier = Modifier.height(34.dp))
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = state.value.textError,
-            color = Color.Red
-        )
-    }
     Spacer(modifier = Modifier.height(8.dp))
     onPublishProduct(viewModel, navHostController)
 }
