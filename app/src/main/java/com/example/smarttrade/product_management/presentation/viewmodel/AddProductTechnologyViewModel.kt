@@ -76,11 +76,14 @@ class AddProductTechnologyViewModel @Inject constructor(
             localState.value.model
         )
         viewModelScope.launch {
-            productRepository.createProduct(
+            uploadNewProduct(
                 product,
                 super.state.value.price.toDouble(),
                 super.state.value.stock.toInt(),
-                UserLogged.email
+                UserLogged.email,
+                productRepository,
+                {result -> setSuccess(result)},
+                {error -> setUploadError(error)}
             )
         }
     }

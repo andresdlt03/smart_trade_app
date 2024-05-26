@@ -76,11 +76,14 @@ class AddProductFoodViewModel @Inject constructor(
             localState.value.calories
         )
         viewModelScope.launch {
-            productRepository.createProduct(
+            uploadNewProduct(
                 product,
                 super.state.value.price.toDouble(),
                 super.state.value.stock.toInt(),
-                UserLogged.email
+                UserLogged.email,
+                productRepository,
+                {result -> setSuccess(result)},
+                {error -> setUploadError(error)}
             )
         }
     }
