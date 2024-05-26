@@ -58,7 +58,8 @@ fun addProductTechnologyScreen(viewModel: AddProductTechnologyViewModel = hiltVi
 @Composable
 fun addProductTechnology(viewModel: AddProductTechnologyViewModel, navHostController: NavHostController, vm: catalogueViewModel){
 
-    val state = viewModel.state.collectAsState()
+    val productState = viewModel.state.collectAsState()
+    val technologyState = viewModel.localState.collectAsState()
 
     var photoUri: Uri? by remember { mutableStateOf(null) }
     var photoUri1: Uri? by remember { mutableStateOf(null) }
@@ -68,62 +69,62 @@ fun addProductTechnology(viewModel: AddProductTechnologyViewModel, navHostContro
         photoUri = uri
     }
 
-    topBarAdd({viewModel.goBackCategories(navHostController)},navHostController)
+    topBarAdd({viewModel.goBackToCategories(navHostController)},navHostController)
     Spacer(modifier = Modifier.height(24.dp))
 
     OutlinedText(
-        value = state.value.name,
+        value = productState.value.name,
         label = "Nombre",
-        upDateField = {viewModel.onItemChanged(it,1)},
-        errorMessage = state.value.nameError
+        upDateField = {viewModel.updateName(it)},
+        errorMessage = productState.value.nameError
     )
     Spacer(modifier = Modifier.height(14.dp))
 
     OutlinedText(
-        value = state.value.description,
+        value = productState.value.description,
         label = "Descripción",
-        upDateField = {viewModel.onItemChanged(it,2)},
-        errorMessage = state.value.descriptionError
+        upDateField = {viewModel.updateDescription(it)},
+        errorMessage = productState.value.descriptionError
     )
     Spacer(modifier = Modifier.height(14.dp))
 
     OutlinedText(
-        value = state.value.dataSheet,
+        value = productState.value.dataSheet,
         label = "Ficha técnica",
-        upDateField = {viewModel.onItemChanged(it,3)},
-        errorMessage = state.value.dataSheetError
+        upDateField = {viewModel.updateDataSheet(it)},
+        errorMessage = productState.value.dataSheetError
     )
     Spacer(modifier = Modifier.height(54.dp))
 
     OutlinedText(
-        value = state.value.model,
+        value = technologyState.value.model,
         label = "Modelo",
-        upDateField = {viewModel.onItemChanged(it,4)},
-        errorMessage = state.value.modelError
+        upDateField = {viewModel.updateModel(it)},
+        errorMessage = technologyState.value.modelError
     )
     Spacer(modifier = Modifier.height(14.dp))
 
     OutlinedText(
-        value = state.value.energy,
+        value = technologyState.value.energy,
         label = "Consumo energético",
-        upDateField = {viewModel.onItemChanged(it,5)},
-        errorMessage = state.value.energyError
+        upDateField = {viewModel.updateEnergy(it)},
+        errorMessage = technologyState.value.energyError
     )
     Spacer(modifier = Modifier.height(14.dp))
 
     OutlinedText(
-        value = state.value.price,
+        value = productState.value.price,
         label = "Precio",
-        upDateField = {viewModel.onItemChanged(it,6)},
-        errorMessage = state.value.priceError
+        upDateField = {viewModel.updatePrice(it)},
+        errorMessage = productState.value.priceError
     )
     Spacer(modifier = Modifier.height(14.dp))
 
     OutlinedText(
-        value = state.value.stock,
+        value = productState.value.stock,
         label = "Stock",
-        upDateField = {viewModel.onItemChanged(it,7)},
-        errorMessage = state.value.stockError
+        upDateField = {viewModel.updateStock(it)},
+        errorMessage = productState.value.stockError
     )
     Spacer(modifier = Modifier.height(14.dp))
     Box(

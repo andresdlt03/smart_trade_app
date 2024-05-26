@@ -1,9 +1,7 @@
 package com.example.smarttrade.product_management.presentation.viewmodel
 
 
-import android.net.Uri
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavHostController
 import com.example.smarttrade.product_management.domain.model.Clothes
 import com.example.smarttrade.product_management.domain.repository.ProductRepository
 import com.example.smarttrade.product_management.presentation.validation.ValidateDataSheet
@@ -31,46 +29,19 @@ class AddProductClothesViewModel @Inject constructor(
 ) : AddProductViewModel() {
 
     private val _state = MutableStateFlow(ProductClothesState())
-    val state = _state.asStateFlow()
+    val localState = _state.asStateFlow()
 
-    fun onItemChanged(item :String, id: Int){
-        when(id){
-            1 ->    _state.value = _state.value.copy(name = item)
-            2 ->    _state.value = _state.value.copy(description = item)
-            3 ->    _state.value = _state.value.copy(dataSheet = item)
-            4 ->    _state.value = _state.value.copy(size = item)
-            5 ->    _state.value = _state.value.copy(price = item)
-            6 ->    _state.value = _state.value.copy(stock = item)
-        }
-    }
-
-    fun clearSelected(id: Int){
-        when(id){
-            1 ->    _state.value = _state.value.copy(name = "")
-            2 ->    _state.value = _state.value.copy(description = "")
-            3 ->    _state.value = _state.value.copy(dataSheet = "")
-            4 ->    _state.value = _state.value.copy(size = "")
-            5 ->    _state.value = _state.value.copy(price = "")
-            6 ->    _state.value = _state.value.copy(stock = "")
-        }
-    }
-
-    fun goBackCategories(navControler: NavHostController){
-        navControler.navigate("product_management")
-    }
-
-    fun updatePhotos(p1: Uri?,p2: Uri?){
-        if(p1 != null){_state.value = _state.value.copy(photo1 = p1)}
-        if(p2 != null){_state.value = _state.value.copy(photo2 = p2)}
+    fun updateSize(size: String) {
+        _state.value = _state.value.copy(size = size)
     }
 
     override fun publishProduct() {
-        val nameValidation = validateName.execute(_state.value.name)
-        val descriptionValidation = validateDescription.execute(_state.value.description)
-        val dataSheetValidation = validateDataSheet.execute(_state.value.dataSheet)
+        val nameValidation = validateName.execute(super.state.value.name)
+        val descriptionValidation = validateDescription.execute(super.state.value.description)
+        val dataSheetValidation = validateDataSheet.execute(super.state.value.dataSheet)
+        val priceValidation = validatePrice.execute(super.state.value.price)
+        val stockValidation = validateStock.execute(super.state.value.stock)
         val sizeValidation = validateExtraFields.execute(_state.value.size)
-        val priceValidation = validatePrice.execute(_state.value.price)
-        val stockValidation = validateStock.execute(_state.value.stock)
 
         val hasError = listOf(
             nameValidation,
@@ -82,29 +53,31 @@ class AddProductClothesViewModel @Inject constructor(
         ).any { !it.successful }
 
         if (hasError) {
+            super.setErrors(
+                nameValidation.errorMessage,
+                descriptionValidation.errorMessage,
+                dataSheetValidation.errorMessage,
+                priceValidation.errorMessage,
+                stockValidation.errorMessage
+            )
             _state.value = _state.value.copy(
-                nameError = nameValidation.errorMessage,
-                descriptionError = descriptionValidation.errorMessage,
-                dataSheetError = dataSheetValidation.errorMessage,
                 sizeError = sizeValidation.errorMessage,
-                priceError = priceValidation.errorMessage,
-                stockError = stockValidation.errorMessage
             )
             return
         }
 
         val product = Clothes(
-            _state.value.name,
-            _state.value.description,
-            _state.value.dataSheet,
-            listOf(_state.value.photo1.toString(), _state.value.photo2.toString()),
-            _state.value.size
+            super.state.value.name,
+            super.state.value.description,
+            super.state.value.dataSheet,
+            listOf(super.state.value.photo1.toString(), super.state.value.photo2.toString()),
+            localState.value.size
         )
         viewModelScope.launch {
             productRepository.createProduct(
                 product,
-                _state.value.price.toDouble(),
-                _state.value.stock.toInt(),
+                super.state.value.price.toDouble(),
+                super.state.value.stock.toInt(),
                 UserLogged.email
             )
         }
