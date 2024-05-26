@@ -11,11 +11,13 @@ import androidx.navigation.compose.rememberNavController
 import com.example.smarttrade.auth.presentation.view.ClientRegisterScreen
 import com.example.smarttrade.auth.presentation.view.LoginScreen
 import com.example.smarttrade.auth.presentation.view.SellerRegisterScreen
+import com.example.smarttrade.catalogue.view.ListaDeseosScreen
 import com.example.smarttrade.catalogue.view.ProcessOrder
-import com.example.smarttrade.catalogue.view.ShoppingCartScreen
-import com.example.smarttrade.catalogue.view.WishListScreen
+import com.example.smarttrade.catalogue.view.listaCarritoScreen
 import com.example.smarttrade.catalogue.view.mainCatalogueScreen
 import com.example.smarttrade.catalogue.view.viewProductCatalogueScreen
+import com.example.smarttrade.catalogue.viewmodel.ListaCarritoViewModel
+import com.example.smarttrade.catalogue.viewmodel.ListaDeseadosViewModel
 import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
 import com.example.smarttrade.gift.presentation.giftScreen
 import com.example.smarttrade.gift.presentation.giftViewModel
@@ -30,6 +32,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val catalogueViewModel: catalogueViewModel by viewModels()
+    private val ListaDeseadosViewModel: ListaDeseadosViewModel by viewModels()
+    private val ListaCarritoViewModel: ListaCarritoViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -104,11 +109,13 @@ class MainActivity : ComponentActivity() {
                     composable("giftList"){
                         giftScreen(giftViewModel(),navController)
                     }
+
                     composable("wishingList"){
-                        WishListScreen(navController, scrollState)
+                        ListaDeseosScreen(navController, scrollState, ListaDeseadosViewModel, ListaCarritoViewModel)
                     }
+
                     composable("shoppingCart"){
-                        ShoppingCartScreen(navController, scrollState)
+                        listaCarritoScreen(navController, scrollState, ListaCarritoViewModel)
                     }
                     composable("tramitarPedido"){
                         ProcessOrder(navController, scrollState)
