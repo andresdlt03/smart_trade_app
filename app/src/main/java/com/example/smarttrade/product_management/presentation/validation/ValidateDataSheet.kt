@@ -1,6 +1,8 @@
 package com.example.smarttrade.product_management.presentation.validation
 
-class ValidateDataSheet {
+import javax.inject.Inject
+
+class ValidateDataSheet @Inject constructor() {
     fun execute(dataSheet: String): ValidationResult {
         if (dataSheet.isEmpty()) {
             return ValidationResult(

@@ -20,11 +20,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddProductFoodViewModel @Inject constructor(
-    val productRepository: ProductRepository,
-    val validateName: ValidateName,
-    val validateDescription: ValidateDescription,
-    val validateDataSheet: ValidateDataSheet,
-    val validateExtraFields: ValidateExtraFields
+    private val productRepository: ProductRepository,
+    private val validateName: ValidateName,
+    private val validateDescription: ValidateDescription,
+    private val validateDataSheet: ValidateDataSheet,
+    private val validateExtraFields: ValidateExtraFields
 ) : AddProductViewModel(){
 
     private val _state = MutableStateFlow(ProductFoodState())

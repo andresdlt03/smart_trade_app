@@ -20,11 +20,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddProductTechnologyViewModel @Inject constructor(
-    val productRepository: ProductRepository,
-    val validateName: ValidateName,
-    val validateDescription: ValidateDescription,
-    val validateDataSheet: ValidateDataSheet,
-    val validateExtraFields: ValidateExtraFields,
+    private val productRepository: ProductRepository,
+    private val validateName: ValidateName,
+    private val validateDescription: ValidateDescription,
+    private val validateDataSheet: ValidateDataSheet,
+    private val validateExtraFields: ValidateExtraFields,
 ) : AddProductViewModel(){
 
     private val _state = MutableStateFlow(ProductTechnologyState())
@@ -38,6 +38,7 @@ class AddProductTechnologyViewModel @Inject constructor(
             4 ->    _state.value = _state.value.copy(energy = item)
             5 ->    _state.value = _state.value.copy(price = item)
             6 ->    _state.value = _state.value.copy(stock = item)
+            7 ->    _state.value = _state.value.copy(dataSheet = item)
         }
     }
 

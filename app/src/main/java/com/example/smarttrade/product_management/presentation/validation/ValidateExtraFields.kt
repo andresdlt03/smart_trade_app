@@ -1,6 +1,8 @@
 package com.example.smarttrade.product_management.presentation.validation
 
-class ValidateExtraFields {
+import javax.inject.Inject
+
+class ValidateExtraFields @Inject constructor(){
     fun execute(field: String): ValidationResult {
         if (field.isEmpty()) {
             return ValidationResult(

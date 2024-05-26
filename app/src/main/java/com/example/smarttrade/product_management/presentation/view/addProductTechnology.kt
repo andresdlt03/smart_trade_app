@@ -34,6 +34,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.smarttrade.R
 import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
+import com.example.smarttrade.components.OutlinedText
 import com.example.smarttrade.product_management.presentation.viewmodel.AddProductTechnologyViewModel
 
 @Composable
@@ -67,17 +68,61 @@ fun addProductTechnology(viewModel: AddProductTechnologyViewModel, navHostContro
 
     topBarAdd({viewModel.goBackCategories(navHostController)},navHostController)
     Spacer(modifier = Modifier.height(24.dp))
-    outLinedTextAdd(state.value.name, "Nombre (20 carácteres)", 1,{viewModel.onItemChanged(it,1)} ,{ viewModel.clearSelected(1) })
+
+    OutlinedText(
+        value = state.value.name,
+        label = "Nombre",
+        upDateField = {viewModel.onItemChanged(it,1)},
+        errorMessage = state.value.nameError
+    )
     Spacer(modifier = Modifier.height(14.dp))
-    outLinedTextAdd(state.value.description, "Descripción (50 carácteres)", 2,{viewModel.onItemChanged(it,2)} ,{ viewModel.clearSelected(2) })
+
+    OutlinedText(
+        value = state.value.description,
+        label = "Descripción",
+        upDateField = {viewModel.onItemChanged(it,2)},
+        errorMessage = state.value.descriptionError
+    )
     Spacer(modifier = Modifier.height(14.dp))
-    outLinedTextAdd(state.value.model, "Modelo (20 carácteres)", 3,{viewModel.onItemChanged(it,3)} ,{ viewModel.clearSelected(3) })
+
+    OutlinedText(
+        value = state.value.model,
+        label = "Modelo",
+        upDateField = {viewModel.onItemChanged(it,3)},
+        errorMessage = state.value.modelError
+    )
     Spacer(modifier = Modifier.height(14.dp))
-    outLinedTextAdd(state.value.energy, "Consumo energético (kWh)", 4,{viewModel.onItemChanged(it,4)} ,{ viewModel.clearSelected(4) })
+
+    OutlinedText(
+        value = state.value.energy,
+        label = "Consumo energético",
+        upDateField = {viewModel.onItemChanged(it,4)},
+        errorMessage = state.value.energyError
+    )
     Spacer(modifier = Modifier.height(14.dp))
-    outLinedTextAdd(state.value.price, "Precio", 5,{viewModel.onItemChanged(it,5)} ,{ viewModel.clearSelected(5) })
+
+    OutlinedText(
+        value = state.value.price,
+        label = "Precio",
+        upDateField = {viewModel.onItemChanged(it,5)},
+        errorMessage = state.value.priceError
+    )
     Spacer(modifier = Modifier.height(54.dp))
-    outLinedTextAdd(state.value.stock, "Stock", 6,{viewModel.onItemChanged(it,6)} ,{ viewModel.clearSelected(6) })
+
+    OutlinedText(
+        value = state.value.stock,
+        label = "Stock",
+        upDateField = {viewModel.onItemChanged(it,6)},
+        errorMessage = state.value.stockError
+    )
+    Spacer(modifier = Modifier.height(54.dp))
+
+    OutlinedText(
+        value = state.value.dataSheet,
+        label = "Ficha técnica",
+        upDateField = {viewModel.onItemChanged(it,7)},
+        errorMessage = state.value.dataSheetError
+    )
     Spacer(modifier = Modifier.height(54.dp))
 
     Box(
