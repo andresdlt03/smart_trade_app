@@ -1,4 +1,4 @@
-package com.example.smarttrade.product_management.model;
+package com.example.smarttrade.product_management.domain.model;
 
 abstract class Product(
     val name: String,

@@ -4,8 +4,8 @@ package com.example.smarttrade.product_management.presentation.viewmodel
 import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import com.example.smarttrade.product_management.domain.model.Clothes
 import com.example.smarttrade.product_management.domain.repository.ProductRepository
-import com.example.smarttrade.product_management.model.Clothes
 import com.example.smarttrade.product_management.presentation.validation.ValidateDataSheet
 import com.example.smarttrade.product_management.presentation.validation.ValidateDescription
 import com.example.smarttrade.product_management.presentation.validation.ValidateExtraFields
@@ -98,7 +98,6 @@ class AddProductClothesViewModel @Inject constructor(
             _state.value.description,
             _state.value.dataSheet,
             listOf(_state.value.photo1.toString(), _state.value.photo2.toString()),
-            "Clothes",
             _state.value.size
         )
         viewModelScope.launch {

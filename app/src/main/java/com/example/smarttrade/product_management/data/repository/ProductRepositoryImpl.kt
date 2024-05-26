@@ -4,7 +4,7 @@ import com.example.smarttrade.network.Exception.NetworkException
 import com.example.smarttrade.product_management.data.remote.ProductApi
 import com.example.smarttrade.product_management.data.remote.http.CreateProductDTO
 import com.example.smarttrade.product_management.domain.repository.ProductRepository
-import com.example.smarttrade.product_management.model.Product
+import com.example.smarttrade.product_management.domain.model.Product
 import retrofit2.Response
 import javax.inject.Inject
 
