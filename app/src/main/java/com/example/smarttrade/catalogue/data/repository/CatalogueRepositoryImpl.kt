@@ -1,7 +1,6 @@
 package com.example.smarttrade.catalogue.data.repository;
 
-import javax.inject.Inject;
-import com.example.smarttrade.catalogue.data.remote.CatalogueApi;
+import com.example.smarttrade.catalogue.data.remote.CatalogueApi
 import com.example.smarttrade.catalogue.data.remote.http.lists.CarritoListRequest
 import com.example.smarttrade.catalogue.data.remote.http.lists.GuardarTardeListRequest
 import com.example.smarttrade.catalogue.data.remote.http.lists.WishListRequest
@@ -9,10 +8,11 @@ import com.example.smarttrade.catalogue.domain.repository.CatalogueRepository
 import com.example.smarttrade.network.Exception.NetworkException
 import com.google.gson.Gson
 import retrofit2.Response
+import javax.inject.Inject
 
 
 class CatalogueRepositoryImpl @Inject constructor(
-    private val CatalogueApi:CatalogueApi,
+    private val CatalogueApi: CatalogueApi,
     private val gson: Gson
 
 ): CatalogueRepository {
