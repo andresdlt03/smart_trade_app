@@ -59,13 +59,7 @@ fun RegisterLayout(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-<<<<<<< HEAD
         Button(onClick = { viewModel.onRegister() }) {
-=======
-        Button(onClick = {
-            viewModel.onRegister();
-        }) {
->>>>>>> develop
             Text(text = "Registrarse")
         }
     }
