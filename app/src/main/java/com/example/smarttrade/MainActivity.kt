@@ -11,27 +11,14 @@ import androidx.navigation.compose.rememberNavController
 import com.example.smarttrade.auth.presentation.view.ClientRegisterScreen
 import com.example.smarttrade.auth.presentation.view.LoginScreen
 import com.example.smarttrade.auth.presentation.view.SellerRegisterScreen
-import com.example.smarttrade.catalogue.view.ListaDeseosScreen
-import com.example.smarttrade.catalogue.view.ProcessOrder
-import com.example.smarttrade.catalogue.view.listaCarritoScreen
-import com.example.smarttrade.catalogue.view.mainCatalogueScreen
-import com.example.smarttrade.catalogue.view.viewProductCatalogueScreen
-import com.example.smarttrade.catalogue.viewmodel.ListaCarritoViewModel
-import com.example.smarttrade.catalogue.viewmodel.ListaDeseadosViewModel
-import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
-import com.example.smarttrade.gift.presentation.giftScreen
-import com.example.smarttrade.gift.presentation.giftViewModel
-import com.example.smarttrade.product_management.presentation.view.addProductBooksScreen
-import com.example.smarttrade.product_management.presentation.view.addProductClothesScreen
-import com.example.smarttrade.product_management.presentation.view.addProductFoodScreen
-import com.example.smarttrade.product_management.presentation.view.addProductTechnologyScreen
-import com.example.smarttrade.product_management.presentation.view.productManagementScreen
+import com.example.smarttrade.catalogue.presentation.view.HomeCatalogueScreen
+import com.example.smarttrade.catalogue.presentation.viewmodel.ListaCarritoViewModel
+import com.example.smarttrade.catalogue.presentation.viewmodel.ListaDeseadosViewModel
 import com.example.smarttrade.ui.theme.SmartTradeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val catalogueViewModel: catalogueViewModel by viewModels()
     private val ListaDeseadosViewModel: ListaDeseadosViewModel by viewModels()
     private val ListaCarritoViewModel: ListaCarritoViewModel by viewModels()
 
@@ -44,81 +31,28 @@ class MainActivity : ComponentActivity() {
                 val scrollState = rememberScrollState()
 
                 NavHost(navController = navController, startDestination = "initial_screen") {
-                    composable("initial_screen") {
+                    composable(NavRoutes.INITIAL_SCREEN.route) {
                         InitialScreen(
                             navController = navController
                         )
                     }
-                    composable("login") {
+                    composable(NavRoutes.LOGIN.route) {
                         LoginScreen(
                             navController = navController
                         )
                     }
-                    composable("register_client") {
+                    composable(NavRoutes.REGISTER_CLIENT.route) {
                         ClientRegisterScreen(
                             navController = navController
                         )
                     }
-                    composable("register_seller") {
+                    composable(NavRoutes.REGISTER_SELLER.route) {
                         SellerRegisterScreen(
                             navController = navController
                         )
                     }
-                    composable("product_management") {
-                        productManagementScreen(
-                            navController = navController
-                        )
-                    }
-                    composable("add1") {
-                        addProductTechnologyScreen(
-                            navHostController = navController,
-                            scrollState = scrollState,
-                            vm = catalogueViewModel
-                        )
-                    }
-                    composable("add2") {
-                        addProductBooksScreen(
-                            navHostController = navController,
-                            scrollState = scrollState,
-                            vm = catalogueViewModel
-                        )
-                    }
-                    composable("add3") {
-                        addProductFoodScreen(
-                            navHostController = navController,
-                            scrollState = scrollState,
-                            vm = catalogueViewModel
-                        )
-                    }
-                    composable("add4") {
-                        addProductClothesScreen(
-                            navHostController = navController,
-                            scrollState = scrollState,
-                            vm = catalogueViewModel
-                        )
-                    }
-                    composable("catalogue") {
-                        mainCatalogueScreen(catalogueViewModel, navController,scrollState)
-                    }
-                    composable("viewProduct") {
-                        viewProductCatalogueScreen(
-                            navController = navController,
-                            viewModel2 = catalogueViewModel
-                        )
-                    }
-                    composable("giftList"){
-                        giftScreen(giftViewModel(),navController)
-                    }
-
-                    composable("wishingList"){
-                        ListaDeseosScreen(navController, scrollState, ListaDeseadosViewModel, ListaCarritoViewModel)
-                    }
-
-                    composable("shoppingCart"){
-                        listaCarritoScreen(navController, scrollState, ListaCarritoViewModel)
-                    }
-                    composable("tramitarPedido"){
-                        ProcessOrder(navController, scrollState)
+                    composable(NavRoutes.HOME.route) {
+                        HomeCatalogueScreen(navController = navController, scrollState = scrollState)
                     }
                 }
             }

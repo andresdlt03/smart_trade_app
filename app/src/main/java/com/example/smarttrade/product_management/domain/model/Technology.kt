@@ -4,6 +4,7 @@ class Technology(
     name: String,
     description: String,
     dataSheet: String,
+    price: Double,
     photo: ByteArray,
     val consume: String,
     val model: String,
@@ -11,6 +12,7 @@ class Technology(
     name,
     description,
     dataSheet,
+    price,
     photo,
     "technology"
 ) {

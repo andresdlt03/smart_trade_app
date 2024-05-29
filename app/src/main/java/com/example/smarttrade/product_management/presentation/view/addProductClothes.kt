@@ -32,7 +32,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.smarttrade.R
-import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
 import com.example.smarttrade.components.OutlinedText
 import com.example.smarttrade.gift.presentation.topBarAdd
 import com.example.smarttrade.product_management.presentation.view.components.PublishProductButton
@@ -42,7 +41,6 @@ import com.example.smarttrade.product_management.presentation.viewmodel.AddProdu
 fun addProductClothesScreen(viewModel: AddProductClothesViewModel = hiltViewModel(),
                             navHostController: NavHostController,
                             scrollState: ScrollState,
-                            vm: catalogueViewModel
 ) {
 
     Column(
@@ -52,12 +50,12 @@ fun addProductClothesScreen(viewModel: AddProductClothesViewModel = hiltViewMode
             .padding(32.dp),
         verticalArrangement = Arrangement.Top,
     ) {
-        addProductClothes(viewModel, navHostController, vm)
+        addProductClothes(viewModel, navHostController)
     }
 }
 
 @Composable
-fun addProductClothes(viewModel: AddProductClothesViewModel, navHostController: NavHostController, vm: catalogueViewModel){
+fun addProductClothes(viewModel: AddProductClothesViewModel, navHostController: NavHostController){
 
     val productState = viewModel.state.collectAsState()
     val clothesState = viewModel.localState.collectAsState()

@@ -4,12 +4,14 @@ class Food(
     name: String,
     description: String,
     dataSheet: String,
+    price: Double,
     photo: ByteArray,
     val calories: String,
 ): Product(
     name,
     description,
     dataSheet,
+    price,
     photo,
     "food"
 ) {

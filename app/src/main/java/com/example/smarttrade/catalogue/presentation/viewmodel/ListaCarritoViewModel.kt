@@ -1,4 +1,4 @@
-package com.example.smarttrade.catalogue.viewmodel
+package com.example.smarttrade.catalogue.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.smarttrade.catalogue.data.remote.http.lists.CarritoListRequest
 import com.example.smarttrade.catalogue.data.remote.http.lists.GuardarTardeListRequest
-import com.example.smarttrade.catalogue.data.remote.http.lists.WishListRequest
 import com.example.smarttrade.catalogue.domain.repository.CatalogueRepository
 import com.example.smarttrade.network.Exception.NetworkException
 import com.example.smarttrade.singleton.UserLogged

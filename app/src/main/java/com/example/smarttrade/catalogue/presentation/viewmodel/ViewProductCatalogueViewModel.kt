@@ -1,4 +1,4 @@
-package com.example.smarttrade.catalogue.viewmodel
+package com.example.smarttrade.catalogue.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

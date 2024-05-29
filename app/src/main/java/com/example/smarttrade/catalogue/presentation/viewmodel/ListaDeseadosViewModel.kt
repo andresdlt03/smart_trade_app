@@ -1,4 +1,4 @@
-package com.example.smarttrade.catalogue.viewmodel
+package com.example.smarttrade.catalogue.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
