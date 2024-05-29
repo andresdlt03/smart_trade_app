@@ -12,7 +12,7 @@ interface CatalogueRepository {
 
     suspend fun getProductAvailabilities(productName:String): Response<String>
 
-    suspend fun getProductsSeller(EmailSeller: String): Response<String>
+    suspend fun getProductsSeller(emailSeller: String): Response<String>
 
     suspend fun verifyProduct(productId: String): Response<String>
 
