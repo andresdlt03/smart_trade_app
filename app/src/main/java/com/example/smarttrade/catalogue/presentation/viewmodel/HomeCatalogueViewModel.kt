@@ -31,6 +31,10 @@ open class HomeCatalogueViewModel @Inject constructor(
         _state.value = _state.value.copy(search = search)
     }
 
+    fun clearSearch() {
+        _state.value = _state.value.copy(search = "")
+    }
+
     fun refreshUnverifiedProducts(){
         viewModelScope.launch {
             try {

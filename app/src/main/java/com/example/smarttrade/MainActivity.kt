@@ -3,7 +3,6 @@ package com.example.smarttrade
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.foundation.rememberScrollState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,15 +11,11 @@ import com.example.smarttrade.auth.presentation.view.ClientRegisterScreen
 import com.example.smarttrade.auth.presentation.view.LoginScreen
 import com.example.smarttrade.auth.presentation.view.SellerRegisterScreen
 import com.example.smarttrade.catalogue.presentation.view.HomeCatalogueScreen
-import com.example.smarttrade.catalogue.presentation.viewmodel.ListaCarritoViewModel
-import com.example.smarttrade.catalogue.presentation.viewmodel.ListaDeseadosViewModel
 import com.example.smarttrade.ui.theme.SmartTradeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val ListaDeseadosViewModel: ListaDeseadosViewModel by viewModels()
-    private val ListaCarritoViewModel: ListaCarritoViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
