@@ -4,6 +4,7 @@ import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
@@ -90,9 +91,11 @@ fun HomeCatalogueScreen(
 fun ProductsList(
     productWrappers: List<ProductWrapper>,
     searchFilter: String,
-    // more filters
 ) {
-    Column {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
         productWrappers
             .filter { it.product.name.contains(searchFilter, ignoreCase = true) }
             .forEach { productWrapper ->
