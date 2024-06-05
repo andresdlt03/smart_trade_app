@@ -14,7 +14,6 @@ import javax.inject.Inject
 class CatalogueRepositoryImpl @Inject constructor(
     private val catalogueApi: CatalogueApi,
     private val gson: Gson
-
 ): CatalogueRepository {
 
     override suspend fun getVerifiedProducts(): List<ProductWrapper>? {
@@ -53,12 +52,18 @@ class CatalogueRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getProductsSeller(EmailSeller: String): Response<String> {
+    override suspend fun getProductsSeller(email: String): List<ProductWrapper>? {
         try {
-            return catalogueApi.getProductsSeller(EmailSeller)
+            val call = catalogueApi.getProductsSeller(email)
+            if(call.isSuccessful) {
+                val responseBody = call.body()
+                val productJsonWrappers = parseProductJsonWrappers(responseBody.toString())
+                return convertToProductWrappers(productJsonWrappers)
+            }
         } catch (e: Exception) {
             throw NetworkException(e.message.toString())
         }
+        return null;
     }
 
     override suspend fun verifyProduct(productId: String): Response<String> {

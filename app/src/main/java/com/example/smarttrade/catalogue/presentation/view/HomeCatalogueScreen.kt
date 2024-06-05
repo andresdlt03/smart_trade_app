@@ -4,7 +4,6 @@ import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
@@ -13,7 +12,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -99,7 +97,6 @@ fun ProductsList(
             .filter { it.product.name.contains(searchFilter, ignoreCase = true) }
             .forEach { productWrapper ->
                 ProductItem(
-                    image = productWrapper.product.photo,
                     name = productWrapper.product.name,
                     price = productWrapper.product.price.toString(),
                     description = productWrapper.product.description
@@ -108,19 +105,3 @@ fun ProductsList(
     }
 }
 
-@Composable
-fun ProductItem(
-    image: ByteArray?,
-    name: String,
-    price: String,
-    description: String
-) {
-    Row {
-        // Image(painter = , contentDescription = )
-        Column {
-            Text(text = name)
-            Text(text = price)
-            Text(text = description)
-        }
-    }
-}
