@@ -16,6 +16,20 @@ class CatalogueRepositoryImpl @Inject constructor(
     private val gson: Gson
 ): CatalogueRepository {
 
+    override suspend fun getProductById(productId: String): ProductWrapper? {
+        try {
+            val call = catalogueApi.getProductById(productId)
+            if(call.isSuccessful) {
+                val responseBody = call.body()
+                val productJsonWrapper = parseProductJsonWrapper(responseBody.toString())
+                return convertToProductWrapper(productJsonWrapper)
+            }
+        } catch (e: Exception) {
+            throw NetworkException(e.message.toString())
+        }
+        return null;
+    }
+
     override suspend fun getVerifiedProducts(): List<ProductWrapper>? {
         try {
             val call = catalogueApi.getVerifiedProducts()

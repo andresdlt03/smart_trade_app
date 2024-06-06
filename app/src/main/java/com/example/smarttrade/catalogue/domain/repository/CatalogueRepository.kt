@@ -7,6 +7,8 @@ import com.example.smarttrade.catalogue.data.repository.ProductWrapper
 import retrofit2.Response;
 
 interface CatalogueRepository {
+
+    suspend fun getProductById(productId: String): ProductWrapper?
     suspend fun getVerifiedProducts(): List<ProductWrapper>?
 
     suspend fun getUnverifiedProducts(): List<ProductWrapper>?

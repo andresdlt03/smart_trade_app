@@ -16,6 +16,17 @@ data class ProductWrapper(
     val category: String
 )
 
+fun parseProductJsonWrapper(json: String): ProductJsonWrapper {
+    val gson = Gson()
+    return gson.fromJson(json, ProductJsonWrapper::class.java)
+}
+
+fun convertToProductWrapper(wrapper: ProductJsonWrapper): ProductWrapper {
+    val productFactory = ProductFactory()
+    val product = productFactory.createProductFromDTO(wrapper.product, wrapper.category)
+    return ProductWrapper(product, wrapper.category)
+}
+
 fun parseProductJsonWrappers(json: String): List<ProductJsonWrapper> {
     val gson = Gson()
     val listType = object : TypeToken<List<ProductJsonWrapper>>() {}.type

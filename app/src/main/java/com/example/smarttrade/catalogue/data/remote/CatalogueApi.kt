@@ -10,6 +10,11 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface CatalogueApi {
+
+    @Headers("content-type: application/json")
+    @GET("products/{productId}")
+    suspend fun getProductById(@Path("productId") productId: String): Response<String>
+
     @Headers("content-type: application/json")
     @GET("products/verified")
     suspend fun getVerifiedProducts(): Response<String>
