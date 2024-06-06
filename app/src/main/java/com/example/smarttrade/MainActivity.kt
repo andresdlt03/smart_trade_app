@@ -11,6 +11,11 @@ import com.example.smarttrade.auth.presentation.view.ClientRegisterScreen
 import com.example.smarttrade.auth.presentation.view.LoginScreen
 import com.example.smarttrade.auth.presentation.view.SellerRegisterScreen
 import com.example.smarttrade.catalogue.presentation.view.HomeCatalogueScreen
+import com.example.smarttrade.product_management.presentation.view.ProductManagementScreen
+import com.example.smarttrade.product_management.presentation.view.addProductBooksScreen
+import com.example.smarttrade.product_management.presentation.view.addProductClothesScreen
+import com.example.smarttrade.product_management.presentation.view.addProductFoodScreen
+import com.example.smarttrade.product_management.presentation.view.addProductTechnologyScreen
 import com.example.smarttrade.ui.theme.SmartTradeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,7 +52,39 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     composable(NavRoutes.HOME.route) {
-                        HomeCatalogueScreen(navController = navController, scrollState = scrollState)
+                        HomeCatalogueScreen(
+                            navController = navController,
+                            scrollState = scrollState
+                        )
+                    }
+                    composable(NavRoutes.ADD_PRODUCT.route) {
+                        ProductManagementScreen(
+                            navController = navController
+                        )
+                    }
+                    composable(NavRoutes.ADD_TECHNOLOGY.route) {
+                        addProductTechnologyScreen(
+                            navHostController = navController,
+                            scrollState = scrollState
+                        )
+                    }
+                    composable(NavRoutes.ADD_BOOKS.route) {
+                        addProductBooksScreen(
+                            navHostController = navController,
+                            scrollState = scrollState
+                        )
+                    }
+                    composable(NavRoutes.ADD_FOOD.route) {
+                        addProductFoodScreen(
+                            navHostController = navController,
+                            scrollState = scrollState
+                        )
+                    }
+                    composable(NavRoutes.ADD_CLOTHES.route) {
+                        addProductClothesScreen(
+                            navHostController = navController,
+                            scrollState = scrollState
+                        )
                     }
                 }
             }

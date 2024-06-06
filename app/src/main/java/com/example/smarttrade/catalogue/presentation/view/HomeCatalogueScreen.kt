@@ -3,8 +3,9 @@ package com.example.smarttrade.catalogue.presentation.view
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
@@ -55,6 +56,7 @@ fun HomeCatalogueScreen(
                     .padding(padding)
                     .padding(horizontal = 16.dp)
                     .padding(top = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 SearchBar(
                     query = state.search,
@@ -75,13 +77,12 @@ fun HomeCatalogueScreen(
                             Modifier.clickable { viewModel.clearSearch() }
                         )
                     }
-                ) {
-                    state.products?.let {
-                        ProductsList(
-                            productWrappers = it,
-                            searchFilter = state.search,
-                        )
-                    }
+                ) {}
+                state.products?.let {
+                    ProductsList(
+                        productWrappers = it,
+                        searchFilter = state.search,
+                    )
                 }
             }
     }
@@ -94,7 +95,7 @@ fun ProductsList(
 ) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
     ) {
         productWrappers
             .filter { it.product.name.contains(searchFilter, ignoreCase = true) }
