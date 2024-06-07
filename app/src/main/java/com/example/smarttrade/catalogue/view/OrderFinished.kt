@@ -53,7 +53,6 @@ fun OrderFinishedScreen(navHostController: NavHostController) {
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Llamada a la lista horizontal
             val items = listOf(
                 ItemData(painterResource(R.drawable.mobile_image), "1"),
                 ItemData(painterResource(R.drawable.book_image), "2"),

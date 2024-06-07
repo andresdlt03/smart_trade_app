@@ -1,0 +1,101 @@
+package com.example.smarttrade.catalogue.view
+
+import android.annotation.SuppressLint
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.example.smarttrade.singleton.UserLogged
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Composable
+fun OrderHistoryScreen(
+    navHostController: NavHostController
+) {
+    Scaffold(
+        Modifier
+            .background(
+                color = Color.White
+            ), containerColor = Color.White,
+
+        bottomBar = {
+            when (UserLogged.userType) {
+                "seller" -> sellerBottomBar(navHostController)
+                "client" -> clientBottomBar(navHostController)
+                "admin" -> adminBottomBar(navHostController)
+                else -> throw IllegalArgumentException("Tipo de usuario desconocido")
+            }
+
+        }
+    ){
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = { /* VOLVER */} ) {
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Volver")
+                }
+
+                Text(
+                    "Historial de pedidos",
+                    fontSize = 24.sp,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+            }
+        }
+    }
+}
+
+
+@Composable
+fun ViewItems(
+    items: List<@Composable () -> Unit>,
+    secondTitle: String,
+    orderNumber: String,
+    orderDate: String,
+    totalAmount: String,
+    paymentMethod: String,
+
+    ){
+    Column() {
+        Text(secondTitle, fontSize = 20.sp, modifier = Modifier.padding(bottom = 8.dp))
+
+        Row(modifier = Modifier.horizontalScroll(rememberScrollState())) {
+            items.forEach { item ->
+                item()
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text("Número de pedido: $orderNumber", fontSize = 16.sp)
+        Text("Fecha: $orderDate", fontSize = 16.sp)
+        Text("Total: $totalAmount", fontSize = 16.sp)
+        Text("Forma de pago: $paymentMethod", fontSize = 16.sp)
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = { /* Acción del botón */ },
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            Text("Visualizar pedido")
+        }
+    }
+}
