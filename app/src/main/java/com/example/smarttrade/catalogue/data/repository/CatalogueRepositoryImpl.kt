@@ -80,9 +80,9 @@ class CatalogueRepositoryImpl @Inject constructor(
         return null;
     }
 
-    override suspend fun verifyProduct(productId: String): Response<String> {
+    override suspend fun verifyProduct(productId: String, verify: Boolean): Response<String> {
         try {
-            return catalogueApi.verifyProduct(productId)
+            return catalogueApi.verifyProduct(productId, verify)
         } catch (e: Exception) {
             throw NetworkException(e.message.toString())
         }

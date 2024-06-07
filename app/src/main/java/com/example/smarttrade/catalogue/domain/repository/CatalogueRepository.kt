@@ -17,7 +17,7 @@ interface CatalogueRepository {
 
     suspend fun getProductsSeller(emailSeller: String): List<ProductWrapper>?
 
-    suspend fun verifyProduct(productId: String): Response<String>
+    suspend fun verifyProduct(productId: String, verify: Boolean): Response<String>
 
     suspend fun getList(listType: String): Response<String>
 

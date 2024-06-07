@@ -11,6 +11,7 @@ import com.example.smarttrade.auth.presentation.view.ClientRegisterScreen
 import com.example.smarttrade.auth.presentation.view.LoginScreen
 import com.example.smarttrade.auth.presentation.view.SellerRegisterScreen
 import com.example.smarttrade.catalogue.presentation.view.HomeCatalogueScreen
+import com.example.smarttrade.lists.view.CartScreen
 import com.example.smarttrade.product_management.presentation.view.ProductManagementScreen
 import com.example.smarttrade.product_management.presentation.view.addProductBooksScreen
 import com.example.smarttrade.product_management.presentation.view.addProductClothesScreen
@@ -84,6 +85,11 @@ class MainActivity : ComponentActivity() {
                         addProductClothesScreen(
                             navHostController = navController,
                             scrollState = scrollState
+                        )
+                    }
+                    composable(NavRoutes.SHOPPING_CART.route) {
+                        CartScreen(
+                            navController = navController
                         )
                     }
                 }

@@ -93,7 +93,10 @@ fun HomeCatalogueScreen(
 
     state.selectedProduct?.let {
         AlertDialog(onDismissRequest = { /*TODO*/ }) {
-            ProductDetailsScreen(navController = navController, scrollState = scrollState, product = it)
+            ProductDetailsScreen(
+                navController = navController,
+                product = it
+            )
         }
     }
 }

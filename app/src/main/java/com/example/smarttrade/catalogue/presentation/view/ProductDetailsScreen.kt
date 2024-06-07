@@ -1,14 +1,13 @@
 package com.example.smarttrade.catalogue.presentation.view
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -32,6 +31,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,9 +48,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.smarttrade.NavRoutes
 import com.example.smarttrade.R
 import com.example.smarttrade.catalogue.data.repository.ProductWrapper
 import com.example.smarttrade.catalogue.presentation.viewmodel.ProductDetailsViewModel
+import com.example.smarttrade.singleton.UserLogged
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,9 +60,15 @@ import com.example.smarttrade.catalogue.presentation.viewmodel.ProductDetailsVie
 fun ProductDetailsScreen(
     viewModel: ProductDetailsViewModel = hiltViewModel(),
     navController: NavHostController,
-    scrollState: ScrollState,
     product: ProductWrapper
 ) {
+
+    val state = viewModel.state.collectAsState().value
+
+    LaunchedEffect(Unit) {
+        viewModel.initializeAvailabilities(product.product.name)
+    }
+
     Scaffold (
         topBar = { TopAppBar(
             title = { Text(
@@ -71,7 +80,7 @@ fun ProductDetailsScreen(
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = "Back",
                     modifier = Modifier.clickable {
-                        navController.popBackStack()
+                        navController.navigate(NavRoutes.HOME.route)
                     }
                 )
             }
@@ -84,14 +93,15 @@ fun ProductDetailsScreen(
         Column(
             modifier = Modifier
                 .padding(32.dp)
-                .padding(top = 48.dp),
+                .padding(top = 48.dp)
+                .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
             Image(
                 painterResource(id = R.drawable.logo),
                 modifier = Modifier
-                    .size(200.dp),
+                    .size(120.dp),
                 contentDescription = "Logo",
             )
 
@@ -99,102 +109,132 @@ fun ProductDetailsScreen(
                 modifier = Modifier
                     .padding(top = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 Text(
                     text = product.product.name,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 32.sp
+                    fontSize = 24.sp
                 )
                 Text(
                     text = product.product.price.toString() + " €",
-                    fontSize = 24.sp
+                    fontSize = 18.sp
                 )
                 Text(
                     text = product.product.description,
-                    fontSize = 24.sp
+                    fontSize = 16.sp
                 )
             }
 
-            Column(
-                modifier = Modifier
-                    .padding(top = 24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(28.dp)
-            ){
-                Row (
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(32.dp)
-                ){
-                    Column {
-                        Text(
-                            text = "Stock: ",
-                            fontSize = 22.sp
+            // Change the controls depending on the user type
+            UserLogged.userType?.let {
+                if (it == "client") {
+                    Column(
+                        modifier = Modifier
+                            .padding(top = 24.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(28.dp)
+                    ){
+
+                        PriceSellerDropdown(
+                            otherPriceSellers = state.availabilitiesString,
+                            viewModel
                         )
-                        OutlinedTextField(
-                            modifier = Modifier
-                                .width(60.dp)
-                                .height(60.dp),
-                            textStyle = TextStyle(fontSize = 18.sp),
-                            value = "0",
-                            keyboardOptions = KeyboardOptions.Default.copy(
-                                keyboardType = KeyboardType.Number
-                            ),
-                            onValueChange = {
-                                viewModel.updateStockSelected(it.toInt())
-                            },
-                        )
-                    }
-                    Button(
-                        onClick = {
-                            // TODO: Implementar lógica para agregar a la lista de deseos
+
+                        Row (
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(32.dp)
+                        ){
+                            Column {
+                                Text(
+                                    text = "Cantidad: ",
+                                    fontSize = 12.sp
+                                )
+                                OutlinedTextField(
+                                    modifier = Modifier
+                                        .width(60.dp)
+                                        .height(60.dp),
+                                    textStyle = TextStyle(fontSize = 18.sp),
+                                    value = state.stockSelected,
+                                    keyboardOptions = KeyboardOptions.Default.copy(
+                                        keyboardType = KeyboardType.Number
+                                    ),
+                                    onValueChange = {
+                                        viewModel.updateStockSelected(it)
+                                    },
+                                )
+                            }
+                            Button(
+                                onClick = {
+                                    // TODO: Implementar lógica para agregar a la lista de deseos
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.FavoriteBorder,
+                                    contentDescription = "Favorito",
+                                )
+                            }
                         }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.FavoriteBorder,
-                            contentDescription = "Favorito",
-                        )
+                        Button(
+                            onClick = {
+                                viewModel.addProductToCart(
+                                    product.product.name,
+                                    state.priceSelected,
+                                    state.stockSelected.toInt()
+                                )
+                            }
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = "Carrito")
+                                Text(
+                                    text = "Agregar al carrito",
+                                    fontSize = 20.sp
+                                )
+                            }
+                        }
                     }
-                }
-                Button(
-                    onClick = {
-                        // TODO: Implementar lógica para agregar al carrito
-                    }
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                } else if (it == "seller") {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .padding(top = 24.dp),
                     ) {
-                        Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = "Carrito")
-                        Text(
-                            text = "Agregar al carrito",
-                            fontSize = 24.sp
-                        )
+                        Button(
+                            onClick = {
+                                viewModel.deleteProductAvailability(product.product.name)
+                                navController.navigate(NavRoutes.HOME.route)
+                                },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.Red
+                            )
+                        ) {
+                            Text(
+                                text = "Borrar producto",
+                                fontSize = 20.sp
+                            )
+                        }
                     }
                 }
             }
+
         }
     }
 }
-
 @Composable
 fun PriceSellerDropdown(
-    initialPrice: String,
-    initialSeller: String,
     otherPriceSellers: List<String>,
-    menuBackgroundColor: Color = Color.Gray // Puedes cambiar el color según tu preferencia
+    viewModel: ProductDetailsViewModel
 ) {
-    var selectedPriceSeller by remember { mutableStateOf("$initialPrice - $initialSeller") }
+    var selectedPriceSeller by remember { mutableStateOf(otherPriceSellers.firstOrNull() ?: "") }
     var expanded by remember { mutableStateOf(false) }
-
-    val allPriceSellers = mutableListOf("$initialPrice - $initialSeller").apply {
-        addAll(otherPriceSellers)
-    }
 
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
+            .width(250.dp)
+            .padding(8.dp),
         contentAlignment = Alignment.TopCenter
     ) {
         Column(
@@ -202,31 +242,32 @@ fun PriceSellerDropdown(
         ) {
             Button(
                 onClick = { expanded = true },
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.White),
                 shape = RoundedCornerShape(4.dp),
                 modifier = Modifier
                     .width(200.dp)
-                    .height(50.dp)
+                    .height(80.dp)
+                    .border(1.dp, Color.Black, shape = RoundedCornerShape(4.dp))
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(text = selectedPriceSeller, color = Color.White)
-                    Icon(imageVector = Icons.Default.ArrowDropDown, contentDescription = "Dropdown Icon", tint = Color.White)
+                    Text(text = selectedPriceSeller, color = Color.Black)
+                    Icon(imageVector = Icons.Default.ArrowDropDown, contentDescription = "Dropdown Icon", tint = Color.Black)
                 }
             }
             DropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
-                modifier = Modifier
-                    .background(menuBackgroundColor)
+                modifier = Modifier.background(Color.White).border(1.dp, Color.Black, RoundedCornerShape(4.dp))
             ) {
-                allPriceSellers.forEach { priceSeller ->
+                otherPriceSellers.forEach { priceSeller ->
                     DropdownMenuItem(
                         onClick = {
                             selectedPriceSeller = priceSeller
+                            viewModel.updatePriceSelected(priceSeller.split(" - ")[1].split(" €")[0].toDouble())
                             expanded = false
                         },
                         text = { Text(text = priceSeller) }

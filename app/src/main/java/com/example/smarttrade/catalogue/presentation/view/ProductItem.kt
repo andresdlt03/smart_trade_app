@@ -48,12 +48,12 @@ fun ProductItem(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Image(
-                painterResource(id = R.drawable.logo),
+                painterResource(id = R.drawable.default_product),
                 contentDescription = "logo",
                 contentScale = ContentScale.Fit,
                 modifier = Modifier.size(72.dp),
             )
-            Column() {
+            Column {
                 Text(
                     text = product.product.name,
                     fontSize = 18.sp,
@@ -61,7 +61,7 @@ fun ProductItem(
                     fontWeight = FontWeight.Bold,
                 )
                 Text(
-                    text = product.product.price.toString(),
+                    text = product.product.price.toString() + " €",
                     color = Color.Black,
                     fontWeight = FontWeight.Bold,
                 )

@@ -112,7 +112,7 @@ fun clientBottomBar(navController: NavHostController) {
                 Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
             }
 
-            IconButton(onClick = { /*navController.navigate("shoppingCart")*/ }) {
+            IconButton(onClick = { navController.navigate(NavRoutes.SHOPPING_CART.route) }) {
                 Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = "Carrito")
             }
 

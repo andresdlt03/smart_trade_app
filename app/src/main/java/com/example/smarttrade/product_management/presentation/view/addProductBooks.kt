@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import com.example.smarttrade.NavRoutes
 import com.example.smarttrade.R
 import com.example.smarttrade.components.OutlinedText
 import com.example.smarttrade.product_management.presentation.view.components.PublishProductButton
@@ -166,7 +167,7 @@ fun addProductBooks(viewModel: AddProductBookViewModel, navHostController: NavHo
             onDismissRequest = { /*TODO*/ },
             confirmButton = {
                 Button(onClick = {
-                    navHostController.navigate("catalogue")
+                    navHostController.navigate(NavRoutes.HOME.route)
                 }) {
                     Text(text = "Aceptar")
                 }

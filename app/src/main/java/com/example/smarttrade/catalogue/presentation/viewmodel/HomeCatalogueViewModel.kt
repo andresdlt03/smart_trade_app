@@ -64,7 +64,7 @@ open class HomeCatalogueViewModel @Inject constructor(
     fun verifyProduct(productName: String) {
         viewModelScope.launch {
             try {
-                catalogueRepository.verifyProduct(productName)
+                catalogueRepository.verifyProduct(productName, true)
                 refreshProducts()
             } catch(e: NetworkException) {
                 println(e.message)
