@@ -13,6 +13,7 @@ import com.example.smarttrade.auth.presentation.view.SellerRegisterScreen
 import com.example.smarttrade.catalogue.presentation.view.HomeCatalogueScreen
 import com.example.smarttrade.gift.presentation.giftScreen
 import com.example.smarttrade.lists.view.CartScreen
+import com.example.smarttrade.orders.OrdersHistoryScreen
 import com.example.smarttrade.payment.view.ProcessOrder
 import com.example.smarttrade.product_management.presentation.view.ProductManagementScreen
 import com.example.smarttrade.product_management.presentation.view.addProductBooksScreen
@@ -106,6 +107,11 @@ class MainActivity : ComponentActivity() {
                         ProcessOrder(
                             navController = navController,
                             scrollState = scrollState
+                        )
+                    }
+                    composable(NavRoutes.ORDERS_HISTORY.route) {
+                        OrdersHistoryScreen(
+                            navHostController = navController
                         )
                     }
                     composable(NavRoutes.FINISH_ORDER.route){

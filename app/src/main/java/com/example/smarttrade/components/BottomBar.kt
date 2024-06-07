@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -120,8 +119,8 @@ fun clientBottomBar(navController: NavHostController) {
                 Icon(imageVector = Icons.Default.Favorite, contentDescription = "Lista de deseos")
             }
 
-            IconButton(onClick = { /*navController.navigate("gift_list") */}) {
-                Icon(imageVector = Icons.Default.Star, contentDescription = "Listas de regalos")
+            IconButton(onClick = { navController.navigate(NavRoutes.ORDERS_HISTORY.route) }) {
+                Icon(imageVector = Icons.Default.List, contentDescription = "Listas de regalos")
             }
             IconButton(onClick = {
                 navController.navigate(NavRoutes.INITIAL_SCREEN.route)

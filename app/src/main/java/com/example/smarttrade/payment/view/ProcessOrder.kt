@@ -39,7 +39,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.smarttrade.NavRoutes
 import com.example.smarttrade.lists.CartState
+import com.example.smarttrade.orders.Order
+import com.example.smarttrade.orders.OrdersState
 import com.example.smarttrade.singleton.UserLogged
+import java.time.LocalDate
+import kotlin.random.Random
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -48,8 +52,6 @@ fun ProcessOrder(
     navController : NavHostController,
     scrollState: ScrollState
 ) {
-
-
     var deliveryAddress by remember { mutableStateOf(UserLogged.dir) }
     var isEditingAddress by remember { mutableStateOf(false) }
     var paymentMethod by remember { mutableStateOf("Tarjeta de crédito") }
@@ -73,10 +75,10 @@ fun ProcessOrder(
             BottomAppBar {}
         }
     ) {
-        padding ->
         Column(
             modifier = Modifier
                 .verticalScroll(scrollState)
+                .padding(horizontal = 16.dp, vertical = 60.dp)
         ) {
 
             Text(text = "Dirección de entrega", fontSize = 18.sp, modifier = Modifier.padding(bottom = 8.dp))
@@ -131,7 +133,18 @@ fun ProcessOrder(
             }
 
             Button(
-                    onClick = {/*IR A PEDIDO RECIBIDO*/},
+                    onClick = {
+                        OrdersState.orders.add(
+                            Order(
+                                CartState.getCart().map { it.productName }.toMutableList(),
+                                Random.nextInt(100000, 1000000).toString(),
+                                LocalDate.now().toString(),
+                                CartState.getCartTotal(),
+                                paymentMethod
+                            )
+                        )
+                        CartState.clearCart()
+                    },
                     modifier = Modifier
                         .padding(top = 24.dp)
                         .align(Alignment.End)
