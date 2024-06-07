@@ -17,4 +17,5 @@ enum class NavRoutes(val route: String) {
     CHECKOUT("payment"),
     FINISH_ORDER("finish_order"),
     ORDERS_HISTORY("orders_history"),
+    ORDER_DETAILS("order_details"),
 }

@@ -5,5 +5,6 @@ data class Order (
     val orderNumber: String = "",
     val orderDate: String = "",
     val totalAmount: Double = 0.0,
-    val paymentMethod: String = ""
+    val paymentMethod: String = "",
+    var status: String = "Realizado"
 )

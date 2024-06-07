@@ -136,7 +136,9 @@ fun ProcessOrder(
                     onClick = {
                         OrdersState.orders.add(
                             Order(
-                                CartState.getCart().map { it.productName }.toMutableList(),
+                                CartState.getCart().map {
+                                    "${it.quantity} x ${it.productName}"
+                                }.toMutableList(),
                                 Random.nextInt(100000, 1000000).toString(),
                                 LocalDate.now().toString(),
                                 CartState.getCartTotal(),
