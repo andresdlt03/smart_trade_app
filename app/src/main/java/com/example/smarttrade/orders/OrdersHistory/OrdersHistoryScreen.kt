@@ -114,9 +114,9 @@ fun ViewItems(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Column {
-                Text("Número de pedido: $orderNumber", fontSize = 16.sp)
+                Text("Número de pedido: #$orderNumber", fontSize = 16.sp)
                 Text("Fecha: $orderDate", fontSize = 16.sp)
-                Text("Total: $totalAmount", fontSize = 16.sp)
+                Text("Total: $totalAmount €", fontSize = 16.sp)
                 Text("Forma de pago: $paymentMethod", fontSize = 16.sp)
             }
 
