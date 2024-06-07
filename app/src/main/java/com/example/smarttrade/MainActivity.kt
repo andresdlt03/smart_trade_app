@@ -13,6 +13,10 @@ import com.example.smarttrade.auth.presentation.view.SellerRegisterScreen
 import com.example.smarttrade.catalogue.presentation.view.HomeCatalogueScreen
 import com.example.smarttrade.lists.view.CartScreen
 import com.example.smarttrade.product_management.presentation.view.ProductManagementScreen
+import com.example.smarttrade.catalogue.view.OrderFinishedScreen
+import com.example.smarttrade.catalogue.view.ProcessOrder
+import com.example.smarttrade.gift.presentation.giftScreen
+import com.example.smarttrade.gift.presentation.giftViewModel
 import com.example.smarttrade.product_management.presentation.view.addProductBooksScreen
 import com.example.smarttrade.product_management.presentation.view.addProductClothesScreen
 import com.example.smarttrade.product_management.presentation.view.addProductFoodScreen
@@ -91,6 +95,15 @@ class MainActivity : ComponentActivity() {
                         CartScreen(
                             navController = navController
                         )
+                    }
+                    composable(NavRoutes.GIFT_LIST.route){
+                        giftScreen(giftViewModel(),navController)
+                    }
+                    composable(NavRoutes.PAYMENT.route){
+                        ProcessOrder(navController, scrollState)
+                    }
+                    composable(NavRoutes.FINISH_ORDER.route){
+                        OrderFinishedScreen(navController)
                     }
                 }
             }
