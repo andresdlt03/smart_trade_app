@@ -15,6 +15,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -55,6 +56,8 @@ fun ProcessOrder(
     var deliveryAddress by remember { mutableStateOf(UserLogged.dir) }
     var isEditingAddress by remember { mutableStateOf(false) }
     var paymentMethod by remember { mutableStateOf("Tarjeta de crédito") }
+
+    var orderDone by remember { mutableStateOf(false) }
 
     Scaffold (
         topBar = {
@@ -146,6 +149,7 @@ fun ProcessOrder(
                             )
                         )
                         CartState.clearCart()
+                        orderDone = true
                     },
                     modifier = Modifier
                         .padding(top = 24.dp)
@@ -155,5 +159,21 @@ fun ProcessOrder(
                     Text(text = "Pagar", color = Color.White)
                 }
         }
+    }
+
+    if (orderDone) {
+        AlertDialog(
+            onDismissRequest = { /*TODO*/ },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        navController.navigate(NavRoutes.HOME.route)
+                        orderDone = false
+                    }
+                )
+                { Text(text = "Seguir comprando") }
+                            },
+            text = { Text(text = "Pedido realizado con éxito") }
+        )
     }
 }

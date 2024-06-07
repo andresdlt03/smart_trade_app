@@ -55,6 +55,10 @@ import com.example.smarttrade.NavRoutes
 import com.example.smarttrade.R
 import com.example.smarttrade.catalogue.data.repository.ProductWrapper
 import com.example.smarttrade.catalogue.presentation.viewmodel.ProductDetailsViewModel
+import com.example.smarttrade.product_management.domain.model.Book
+import com.example.smarttrade.product_management.domain.model.Clothes
+import com.example.smarttrade.product_management.domain.model.Food
+import com.example.smarttrade.product_management.domain.model.Technology
 import com.example.smarttrade.singleton.UserLogged
 
 
@@ -124,6 +128,7 @@ fun ProductDetailsScreen(
                     text = product.product.description,
                     fontSize = 16.sp
                 )
+                SpecificFields(productWrapper = product)
             }
 
             // Change the controls depending on the user type
@@ -319,4 +324,43 @@ fun PriceSellerDropdown(
             }
         }
     }
+}
+
+@Composable
+fun SpecificFields(productWrapper: ProductWrapper){
+    when(productWrapper.product.category.lowercase()){
+        "technology" -> {
+            val product = productWrapper.product as Technology
+            Text(
+                text = "Modelo: ${product.model}",
+                fontSize = 16.sp
+            )
+            Text(
+                text = "Consumo: ${product.consume}",
+                fontSize = 16.sp
+            )
+        }
+        "clothes" -> {
+            val product = productWrapper.product as Clothes
+            Text(
+                text = "Talla: ${product.size}",
+                fontSize = 16.sp
+            )
+        }
+        "books" -> {
+            val product = productWrapper.product as Book
+            Text(
+                text = "ISBN: ${product.ISBN}",
+                fontSize = 16.sp
+            )
+        }
+        "food" -> {
+            val product = productWrapper.product as Food
+            Text(
+                text = "Calorías: ${product.calories}",
+                fontSize = 16.sp
+            )
+        }
+    }
+
 }
