@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.smarttrade.NavRoutes
 import com.example.smarttrade.auth.presentation.viewmodel.SellerRegisterViewModel
 import com.example.smarttrade.components.OutlinedText
 
@@ -95,7 +96,7 @@ fun SellerRegisterForm(viewModel: SellerRegisterViewModel = hiltViewModel(),
                 onDismissRequest = { /*TODO*/ },
                 confirmButton = {
                     Button(onClick = {
-                        navController.navigate("login")
+                        navController.navigate(NavRoutes.LOGIN.route)
                     }) {
                         Text(text = "Iniciar sesión")
                     }

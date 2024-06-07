@@ -32,4 +32,11 @@ object UserLogged {
         set(value) {
             _fullName.value = value
         }
+
+    fun logOut() {
+        _userType.value = ""
+        _email.value = ""
+        _dir.value = ""
+        _fullName.value = ""
+    }
 }

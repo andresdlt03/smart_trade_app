@@ -73,6 +73,7 @@ class AddProductFoodViewModel @Inject constructor(
             super.state.value.name,
             super.state.value.description,
             super.state.value.dataSheet,
+            super.state.value.price.toDouble(),
             processPhoto(),
             localState.value.calories
         )

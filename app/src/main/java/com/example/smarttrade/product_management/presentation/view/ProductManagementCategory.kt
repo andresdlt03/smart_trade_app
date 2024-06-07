@@ -35,12 +35,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.smarttrade.NavRoutes
 import com.example.smarttrade.product_management.presentation.viewmodel.Category
 import com.example.smarttrade.product_management.presentation.viewmodel.ProductManagementViewModel
 
 
 @Composable
-fun productManagementScreen(viewModel: ProductManagementViewModel = hiltViewModel(), navController: NavHostController) {
+fun ProductManagementScreen(viewModel: ProductManagementViewModel = hiltViewModel(), navController: NavHostController) {
 
     Column (
         modifier = Modifier
@@ -48,12 +49,12 @@ fun productManagementScreen(viewModel: ProductManagementViewModel = hiltViewMode
             .padding(32.dp),
         verticalArrangement = Arrangement.Top,
     ){
-        productManagement(viewModel, navController)
+        ProductManagement(viewModel, navController)
     }
 }
 
 @Composable
-fun productManagement(viewModel: ProductManagementViewModel = hiltViewModel(),
+fun ProductManagement(viewModel: ProductManagementViewModel = hiltViewModel(),
                       navController: NavHostController){
 
     val category :String by viewModel.category.observeAsState(initial = "")
@@ -88,7 +89,7 @@ fun topBarManage(navController: NavHostController){
         verticalAlignment = Alignment.CenterVertically
     ){
         FloatingActionButton(
-            onClick = {navController.navigate("catalogue") },
+            onClick = {navController.navigate(NavRoutes.HOME.route) },
         ) {
             Icon(Icons.Filled.ArrowBack, "Back button")
         }

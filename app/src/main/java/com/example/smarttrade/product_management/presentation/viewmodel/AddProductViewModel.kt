@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
+import com.example.smarttrade.NavRoutes
 import com.example.smarttrade.product_management.presentation.utils.convertImageToBytes
 import com.example.smarttrade.product_management.presentation.viewmodel.state.ProductState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -48,7 +49,7 @@ open class AddProductViewModel @Inject constructor(
     }
 
     fun goBackToCategories(navController: NavHostController){
-        navController.navigate("product_management")
+        navController.navigate(NavRoutes.ADD_PRODUCT.route)
     }
 
     fun setErrors(

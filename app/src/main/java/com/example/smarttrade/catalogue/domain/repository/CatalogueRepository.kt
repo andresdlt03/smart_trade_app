@@ -3,18 +3,21 @@ package com.example.smarttrade.catalogue.domain.repository;
 import com.example.smarttrade.catalogue.data.remote.http.lists.CarritoListRequest
 import com.example.smarttrade.catalogue.data.remote.http.lists.GuardarTardeListRequest
 import com.example.smarttrade.catalogue.data.remote.http.lists.WishListRequest
+import com.example.smarttrade.catalogue.data.repository.ProductWrapper
 import retrofit2.Response;
 
 interface CatalogueRepository {
-    suspend fun getVerifiedProducts(): Response<String>
 
-    suspend fun getUnverifiedProducts(): Response<String>
+    suspend fun getProductById(productId: String): ProductWrapper?
+    suspend fun getVerifiedProducts(): List<ProductWrapper>?
+
+    suspend fun getUnverifiedProducts(): List<ProductWrapper>?
 
     suspend fun getProductAvailabilities(productName:String): Response<String>
 
-    suspend fun getProductsSeller(emailSeller: String): Response<String>
+    suspend fun getProductsSeller(emailSeller: String): List<ProductWrapper>?
 
-    suspend fun verifyProduct(productId: String): Response<String>
+    suspend fun verifyProduct(productId: String, verify: Boolean): Response<String>
 
     suspend fun getList(listType: String): Response<String>
 

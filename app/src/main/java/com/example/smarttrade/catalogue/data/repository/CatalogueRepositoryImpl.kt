@@ -12,46 +12,77 @@ import javax.inject.Inject
 
 
 class CatalogueRepositoryImpl @Inject constructor(
-    private val CatalogueApi: CatalogueApi,
+    private val catalogueApi: CatalogueApi,
     private val gson: Gson
-
 ): CatalogueRepository {
 
-    override suspend fun getVerifiedProducts(): Response<String> {
+    override suspend fun getProductById(productId: String): ProductWrapper? {
         try {
-            return CatalogueApi.getVerifiedProducts()
+            val call = catalogueApi.getProductById(productId)
+            if(call.isSuccessful) {
+                val responseBody = call.body()
+                val productJsonWrapper = parseProductJsonWrapper(responseBody.toString())
+                return convertToProductWrapper(productJsonWrapper)
+            }
         } catch (e: Exception) {
             throw NetworkException(e.message.toString())
         }
+        return null;
     }
 
-    override suspend fun getUnverifiedProducts(): Response<String> {
+    override suspend fun getVerifiedProducts(): List<ProductWrapper>? {
         try {
-            return CatalogueApi.getUnverifiedProducts()
+            val call = catalogueApi.getVerifiedProducts()
+            if(call.isSuccessful) {
+                val responseBody = call.body()
+                val productJsonWrappers = parseProductJsonWrappers(responseBody.toString())
+                return convertToProductWrappers(productJsonWrappers)
+            }
         } catch (e: Exception) {
             throw NetworkException(e.message.toString())
         }
+        return null;
+    }
+
+    override suspend fun getUnverifiedProducts(): List<ProductWrapper>? {
+        try {
+            val call = catalogueApi.getUnverifiedProducts()
+            if(call.isSuccessful) {
+                val responseBody = call.body()
+                val productJsonWrappers = parseProductJsonWrappers(responseBody.toString())
+                return convertToProductWrappers(productJsonWrappers)
+            }
+        } catch (e: Exception) {
+            throw NetworkException(e.message.toString())
+        }
+        return null;
     }
 
     override suspend fun getProductAvailabilities(productName:String): Response<String> {
         try {
-            return CatalogueApi.getProductAvailabilities(productName)
+            return catalogueApi.getProductAvailabilities(productName)
         } catch (e: Exception) {
             throw NetworkException(e.message.toString())
         }
     }
 
-    override suspend fun getProductsSeller(EmailSeller: String): Response<String> {
+    override suspend fun getProductsSeller(email: String): List<ProductWrapper>? {
         try {
-            return CatalogueApi.getProductsSeller(EmailSeller)
+            val call = catalogueApi.getProductsSeller(email)
+            if(call.isSuccessful) {
+                val responseBody = call.body()
+                val productJsonWrappers = parseProductJsonWrappers(responseBody.toString())
+                return convertToProductWrappers(productJsonWrappers)
+            }
         } catch (e: Exception) {
             throw NetworkException(e.message.toString())
         }
+        return null;
     }
 
-    override suspend fun verifyProduct(productId: String): Response<String> {
+    override suspend fun verifyProduct(productId: String, verify: Boolean): Response<String> {
         try {
-            return CatalogueApi.verifyProduct(productId)
+            return catalogueApi.verifyProduct(productId, verify)
         } catch (e: Exception) {
             throw NetworkException(e.message.toString())
         }
@@ -59,7 +90,7 @@ class CatalogueRepositoryImpl @Inject constructor(
 
     override suspend fun getList(listType: String): Response<String> {
         try {
-            return CatalogueApi.getList(listType)
+            return catalogueApi.getList(listType)
         } catch (e: Exception) {
             throw NetworkException(e.message.toString())
         }
@@ -68,7 +99,7 @@ class CatalogueRepositoryImpl @Inject constructor(
     override suspend fun deleteFromWishList(deleteWishList: WishListRequest, clientId: String): Response<String> {
         try {
             val json = gson.toJson(deleteWishList)
-            return CatalogueApi.deleteFromWishList(json,clientId)
+            return catalogueApi.deleteFromWishList(json,clientId)
         } catch (e: Exception) {
             throw NetworkException(e.message.toString())
         }
@@ -77,7 +108,7 @@ class CatalogueRepositoryImpl @Inject constructor(
     override suspend fun deleteFromCarritoList(deleteCarritoList: CarritoListRequest, clientId: String): Response<String> {
         try {
             val json = gson.toJson(deleteCarritoList)
-            return CatalogueApi.deleteFromCarritoList(json,clientId)
+            return catalogueApi.deleteFromCarritoList(json,clientId)
         } catch (e: Exception) {
             throw NetworkException(e.message.toString())
         }
@@ -86,7 +117,7 @@ class CatalogueRepositoryImpl @Inject constructor(
     override suspend fun deleteFromGuardarTardeList(deleteGuardarTardeList: GuardarTardeListRequest, clientId: String): Response<String> {
         try {
             val json = gson.toJson(deleteGuardarTardeList)
-            return CatalogueApi.deleteFromGuardarTardeList(json,clientId)
+            return catalogueApi.deleteFromGuardarTardeList(json,clientId)
         } catch (e: Exception) {
             throw NetworkException(e.message.toString())
         }
@@ -95,7 +126,7 @@ class CatalogueRepositoryImpl @Inject constructor(
     override suspend fun addToWishList(addWishList: WishListRequest, clientId: String): Response<String> {
         try {
             val json = gson.toJson(addWishList)
-            return CatalogueApi.addToWishList(json,clientId)
+            return catalogueApi.addToWishList(json,clientId)
         } catch (e: Exception) {
             throw NetworkException(e.message.toString())
         }
@@ -104,7 +135,7 @@ class CatalogueRepositoryImpl @Inject constructor(
     override suspend fun addToCarritoList(addCarritoList: CarritoListRequest, clientId: String): Response<String> {
         try {
             val json = gson.toJson(addCarritoList)
-            return CatalogueApi.addToCarritoList(json,clientId)
+            return catalogueApi.addToCarritoList(json,clientId)
         } catch (e: Exception) {
             throw NetworkException(e.message.toString())
         }
@@ -113,7 +144,7 @@ class CatalogueRepositoryImpl @Inject constructor(
     override suspend fun addToGuardarTardeList(addGuardarTardeList: GuardarTardeListRequest, clientId: String): Response<String> {
         try {
             val json = gson.toJson(addGuardarTardeList)
-            return CatalogueApi.addToGuardarTardeList(json,clientId)
+            return catalogueApi.addToGuardarTardeList(json,clientId)
         } catch (e: Exception) {
             throw NetworkException(e.message.toString())
         }

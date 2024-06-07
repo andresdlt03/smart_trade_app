@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
+import com.example.smarttrade.NavRoutes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -48,10 +49,10 @@ class ProductManagementViewModel @Inject constructor() : ViewModel(){
 
     fun changeAddScreen(navControler: NavHostController, name: String){
         when(name){
-            "Tecnología" -> navControler.navigate("add1")
-            "Libros" ->     navControler.navigate("add2")
-            "Comida" ->     navControler.navigate("add3")
-            "Ropa"->        navControler.navigate("add4")
+            "Tecnología" -> navControler.navigate(NavRoutes.ADD_TECHNOLOGY.route)
+            "Libros" ->     navControler.navigate(NavRoutes.ADD_BOOKS.route)
+            "Comida" ->     navControler.navigate(NavRoutes.ADD_FOOD.route)
+            "Ropa"->        navControler.navigate(NavRoutes.ADD_CLOTHES.route)
         }
 
     }

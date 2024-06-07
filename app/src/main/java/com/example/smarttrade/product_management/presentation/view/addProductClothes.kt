@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,8 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import com.example.smarttrade.NavRoutes
 import com.example.smarttrade.R
-import com.example.smarttrade.catalogue.viewmodel.catalogueViewModel
 import com.example.smarttrade.components.OutlinedText
 import com.example.smarttrade.gift.presentation.topBarAdd
 import com.example.smarttrade.product_management.presentation.view.components.PublishProductButton
@@ -42,7 +44,6 @@ import com.example.smarttrade.product_management.presentation.viewmodel.AddProdu
 fun addProductClothesScreen(viewModel: AddProductClothesViewModel = hiltViewModel(),
                             navHostController: NavHostController,
                             scrollState: ScrollState,
-                            vm: catalogueViewModel
 ) {
 
     Column(
@@ -52,12 +53,12 @@ fun addProductClothesScreen(viewModel: AddProductClothesViewModel = hiltViewMode
             .padding(32.dp),
         verticalArrangement = Arrangement.Top,
     ) {
-        addProductClothes(viewModel, navHostController, vm)
+        addProductClothes(viewModel, navHostController)
     }
 }
 
 @Composable
-fun addProductClothes(viewModel: AddProductClothesViewModel, navHostController: NavHostController, vm: catalogueViewModel){
+fun addProductClothes(viewModel: AddProductClothesViewModel, navHostController: NavHostController){
 
     val productState = viewModel.state.collectAsState()
     val clothesState = viewModel.localState.collectAsState()
@@ -160,6 +161,36 @@ fun addProductClothes(viewModel: AddProductClothesViewModel, navHostController: 
 
     Spacer(modifier = Modifier.height(8.dp))
     PublishProductButton(viewModel, navHostController)
+
+    // DIALOGS
+
+    if(productState.value.uploadSuccess){
+        AlertDialog(
+            onDismissRequest = { /*TODO*/ },
+            confirmButton = {
+                Button(onClick = {
+                    navHostController.navigate(NavRoutes.HOME.route)
+                }) {
+                    Text(text = "Aceptar")
+                }
+            },
+            text = { Text(text = "Producto subido con éxito") }
+        )
+    }
+
+    if(productState.value.uploadError != null) {
+        AlertDialog(
+            onDismissRequest = { /*TODO*/ },
+            confirmButton = {
+                Button(onClick = {
+                    navHostController.navigate("catalogue")
+                }) {
+                    Text(text = "Aceptar")
+                }
+            },
+            text = { Text(text = productState.value.uploadError!!) }
+        )
+    }
 }
 
 
