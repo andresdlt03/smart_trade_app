@@ -32,12 +32,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 
 
 @Composable
-fun giftScreen(viewModel: giftViewModel ,
-               navController: NavHostController
+fun giftScreen(
+    viewModel: giftViewModel = hiltViewModel(),
+    navController: NavHostController
 ) {
 
     Column(

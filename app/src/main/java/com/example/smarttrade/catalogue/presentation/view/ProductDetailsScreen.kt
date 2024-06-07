@@ -3,7 +3,6 @@ package com.example.smarttrade.catalogue.presentation.view
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,14 +17,18 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -63,6 +66,7 @@ fun ProductDetailsScreen(
     product: ProductWrapper
 ) {
 
+    var addedToCartDialog by remember { mutableStateOf(false) }
     val state = viewModel.state.collectAsState().value
 
     LaunchedEffect(Unit) {
@@ -76,13 +80,9 @@ fun ProductDetailsScreen(
                 text = "Detalles del producto"
             ) },
             navigationIcon = {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Back",
-                    modifier = Modifier.clickable {
-                        navController.navigate(NavRoutes.HOME.route)
-                    }
-                )
+                IconButton(onClick = { navController.navigate(NavRoutes.HOME.route) }) {
+                    Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                }
             }
         ) },
         modifier = Modifier
@@ -177,11 +177,13 @@ fun ProductDetailsScreen(
                         }
                         Button(
                             onClick = {
+
                                 viewModel.addProductToCart(
                                     product.product.name,
                                     state.priceSelected,
                                     state.stockSelected.toInt()
                                 )
+                                addedToCartDialog = true
                             }
                         ) {
                             Row(
@@ -222,6 +224,45 @@ fun ProductDetailsScreen(
 
         }
     }
+
+    // Added to Cart Dialog
+    if (addedToCartDialog) {
+        AlertDialog(
+            onDismissRequest = { /*TODO*/ },
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Check,
+                    contentDescription = "Check"
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        addedToCartDialog = false
+                        navController.navigate(NavRoutes.HOME.route)
+                    }
+                ) {
+                    Text(text = "Seguir comprando")
+                }
+            },
+            dismissButton = {
+                OutlinedButton(
+                    onClick = {
+                        addedToCartDialog = false
+                        navController.navigate(NavRoutes.SHOPPING_CART.route)
+                    }
+                ) {
+                    Text(text = "Ir al carrito")
+                }
+            },
+            text = {
+                Text(
+                    text = "Producto añadido al carrito",
+                    fontSize = 20.sp
+                )
+            },
+        )
+    }
 }
 @Composable
 fun PriceSellerDropdown(
@@ -261,7 +302,9 @@ fun PriceSellerDropdown(
             DropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
-                modifier = Modifier.background(Color.White).border(1.dp, Color.Black, RoundedCornerShape(4.dp))
+                modifier = Modifier
+                    .background(Color.White)
+                    .border(1.dp, Color.Black, RoundedCornerShape(4.dp))
             ) {
                 otherPriceSellers.forEach { priceSeller ->
                     DropdownMenuItem(

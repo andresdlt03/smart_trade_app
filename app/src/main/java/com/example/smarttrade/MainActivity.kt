@@ -11,12 +11,10 @@ import com.example.smarttrade.auth.presentation.view.ClientRegisterScreen
 import com.example.smarttrade.auth.presentation.view.LoginScreen
 import com.example.smarttrade.auth.presentation.view.SellerRegisterScreen
 import com.example.smarttrade.catalogue.presentation.view.HomeCatalogueScreen
-import com.example.smarttrade.lists.view.CartScreen
-import com.example.smarttrade.product_management.presentation.view.ProductManagementScreen
-import com.example.smarttrade.catalogue.view.OrderFinishedScreen
-import com.example.smarttrade.catalogue.view.ProcessOrder
 import com.example.smarttrade.gift.presentation.giftScreen
-import com.example.smarttrade.gift.presentation.giftViewModel
+import com.example.smarttrade.lists.view.CartScreen
+import com.example.smarttrade.payment.view.ProcessOrder
+import com.example.smarttrade.product_management.presentation.view.ProductManagementScreen
 import com.example.smarttrade.product_management.presentation.view.addProductBooksScreen
 import com.example.smarttrade.product_management.presentation.view.addProductClothesScreen
 import com.example.smarttrade.product_management.presentation.view.addProductFoodScreen
@@ -35,7 +33,10 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val scrollState = rememberScrollState()
 
-                NavHost(navController = navController, startDestination = "initial_screen") {
+                NavHost(
+                    navController = navController,
+                    startDestination = NavRoutes.INITIAL_SCREEN.route
+                ) {
                     composable(NavRoutes.INITIAL_SCREEN.route) {
                         InitialScreen(
                             navController = navController
@@ -97,13 +98,18 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     composable(NavRoutes.GIFT_LIST.route){
-                        giftScreen(giftViewModel(),navController)
+                        giftScreen(
+                            navController = navController
+                        )
                     }
-                    composable(NavRoutes.PAYMENT.route){
-                        ProcessOrder(navController, scrollState)
+                    composable(NavRoutes.CHECKOUT.route){
+                        ProcessOrder(
+                            navController = navController,
+                            scrollState = scrollState
+                        )
                     }
                     composable(NavRoutes.FINISH_ORDER.route){
-                        OrderFinishedScreen(navController)
+                    //    OrderFinishedScreen(navController)
                     }
                 }
             }

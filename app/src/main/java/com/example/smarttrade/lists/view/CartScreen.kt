@@ -84,6 +84,17 @@ fun CartScreen(
 
                 )
             }
+
+            Button(
+                modifier = Modifier
+                    .align(Alignment.End),
+                enabled = state.getCartSize() > 0,
+                onClick = {
+                    navController.navigate(NavRoutes.CHECKOUT.route)
+                }
+            ) {
+                Text(text = "Tramitar pedido")
+            }
         }
     }
 }
@@ -137,10 +148,6 @@ fun CartElement(
                 tint = Color.Red,
                 contentDescription = "Remove"
             )
-        }
-
-        Button(onClick = { /*TODO*/ }) {
-            Text(text = "Tramitar pedido")
         }
     }
 }
