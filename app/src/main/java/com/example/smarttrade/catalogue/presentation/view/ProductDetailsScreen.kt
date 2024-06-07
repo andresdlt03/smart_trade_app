@@ -27,9 +27,9 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -48,9 +48,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.smarttrade.R
+import com.example.smarttrade.catalogue.data.repository.ProductWrapper
 import com.example.smarttrade.catalogue.presentation.viewmodel.ProductDetailsViewModel
-import com.example.smarttrade.components.BottomBar
-import com.example.smarttrade.product_management.domain.model.Product
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,11 +58,14 @@ fun ProductDetailsScreen(
     viewModel: ProductDetailsViewModel = hiltViewModel(),
     navController: NavHostController,
     scrollState: ScrollState,
-    product: Product
+    product: ProductWrapper
 ) {
     Scaffold (
         topBar = { TopAppBar(
-            title = { Text(text = "Detalles del producto") },
+            title = { Text(
+                fontSize = 20.sp,
+                text = "Detalles del producto"
+            ) },
             navigationIcon = {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
@@ -77,15 +79,12 @@ fun ProductDetailsScreen(
         modifier = Modifier
             .background(color = Color.White),
         containerColor = Color.White,
-        bottomBar =  {
-            BottomBar(navController = navController)
-        }
     ) {
         padding ->
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(32.dp),
+                .padding(32.dp)
+                .padding(top = 48.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
@@ -103,16 +102,16 @@ fun ProductDetailsScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(
-                    text = product.name,
+                    text = product.product.name,
                     fontWeight = FontWeight.Bold,
                     fontSize = 32.sp
                 )
                 Text(
-                    text = product.price.toString() + " €",
+                    text = product.product.price.toString() + " €",
                     fontSize = 24.sp
                 )
                 Text(
-                    text = product.description,
+                    text = product.product.description,
                     fontSize = 24.sp
                 )
             }
@@ -132,7 +131,7 @@ fun ProductDetailsScreen(
                             text = "Stock: ",
                             fontSize = 22.sp
                         )
-                        TextField(
+                        OutlinedTextField(
                             modifier = Modifier
                                 .width(60.dp)
                                 .height(60.dp),

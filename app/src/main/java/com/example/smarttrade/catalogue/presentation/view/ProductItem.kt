@@ -20,26 +20,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.smarttrade.R
+import com.example.smarttrade.catalogue.data.repository.ProductWrapper
 import com.example.smarttrade.catalogue.presentation.viewmodel.HomeCatalogueViewModel
 import com.example.smarttrade.singleton.UserLogged
 
 @Composable
 fun ProductItem(
-    name: String,
-    price: String,
-    description: String
+    product: ProductWrapper,
+    viewModel: HomeCatalogueViewModel = hiltViewModel(),
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(8.dp)
+            .clickable {
+                viewModel.openProductDetails(product)
+            },
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ){
         Row(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -53,18 +55,18 @@ fun ProductItem(
             )
             Column() {
                 Text(
-                    text = name,
+                    text = product.product.name,
                     fontSize = 18.sp,
                     color = Color.Black,
                     fontWeight = FontWeight.Bold,
                 )
                 Text(
-                    text = price,
+                    text = product.product.price.toString(),
                     color = Color.Black,
                     fontWeight = FontWeight.Bold,
                 )
                 Text(
-                    text = description,
+                    text = product.product.description,
                     color = Color.Black,
                     maxLines = 2
                 )
@@ -72,7 +74,7 @@ fun ProductItem(
         }
 
         if(UserLogged.userType == "admin") {
-            VerifyButtons(name)
+            VerifyButtons(product.product.name)
         }
 
     }
@@ -100,14 +102,4 @@ fun VerifyButtons(
             contentDescription = "Clear",
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ProductItemPreview() {
-    ProductItem(
-        name = "Product Name",
-        price = "Price",
-        description = "Description"
-    )
 }

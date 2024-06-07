@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -80,16 +81,26 @@ fun HomeCatalogueScreen(
                 ) {}
                 state.products?.let {
                     ProductsList(
+                        viewModel = viewModel,
                         productWrappers = it,
                         searchFilter = state.search,
                     )
                 }
             }
     }
+
+    // Open selected product
+
+    state.selectedProduct?.let {
+        AlertDialog(onDismissRequest = { /*TODO*/ }) {
+            ProductDetailsScreen(navController = navController, scrollState = scrollState, product = it)
+        }
+    }
 }
 
 @Composable
 fun ProductsList(
+    viewModel: HomeCatalogueViewModel,
     productWrappers: List<ProductWrapper>,
     searchFilter: String,
 ) {
@@ -101,9 +112,8 @@ fun ProductsList(
             .filter { it.product.name.contains(searchFilter, ignoreCase = true) }
             .forEach { productWrapper ->
                 ProductItem(
-                    name = productWrapper.product.name,
-                    price = productWrapper.product.price.toString(),
-                    description = productWrapper.product.description
+                    product = productWrapper,
+                    viewModel = viewModel
                 )
             }
     }

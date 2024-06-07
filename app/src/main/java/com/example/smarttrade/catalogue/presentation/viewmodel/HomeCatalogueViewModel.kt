@@ -55,6 +55,10 @@ open class HomeCatalogueViewModel @Inject constructor(
         }
     }
 
+    fun openProductDetails(product: ProductWrapper) {
+        _state.value = _state.value.copy(selectedProduct = product)
+    }
+
     // Admin functions
 
     fun verifyProduct(productName: String) {
