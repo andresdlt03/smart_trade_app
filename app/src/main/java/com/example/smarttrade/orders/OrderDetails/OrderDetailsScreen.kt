@@ -2,6 +2,8 @@ package com.example.smarttrade.orders.OrderDetails
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,13 +28,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.smarttrade.NavRoutes
 import com.example.smarttrade.orders.Order
 import com.example.smarttrade.orders.OrdersState
+import com.example.smarttrade.ratings.RatingScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -76,6 +81,7 @@ fun OrderDetailsScreen(
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ViewItem(
     items: MutableList<String>,
@@ -87,7 +93,8 @@ fun ViewItem(
     navHostController: NavHostController
 ){
 
-    var cancelatedOrder by remember { mutableStateOf(false) }
+    var canceledOrder by remember { mutableStateOf(false) }
+    var ratingProduct by remember { mutableStateOf(false) }
 
     Column {
         Row {
@@ -111,7 +118,23 @@ fun ViewItem(
         Spacer(modifier = Modifier.height(16.dp))
 
         items.forEach { item ->
-            Text(item, fontSize = 16.sp)
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Text(item, fontSize = 16.sp)
+                Text(
+                    text = "Dejar una reseña",
+                    modifier = Modifier
+                        .clickable {
+                            ratingProduct = true
+                        },
+                    color = Color.Blue,
+                    fontWeight = FontWeight.Bold,
+                    style = TextStyle(
+                        textDecoration = TextDecoration.Underline
+                    )
+                )
+            }
         }
 
         if(status == "Realizado"){
@@ -126,7 +149,7 @@ fun ViewItem(
                               }
                               it
                           }
-                    cancelatedOrder = true
+                    canceledOrder = true
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 colors = ButtonDefaults.buttonColors(
@@ -139,16 +162,16 @@ fun ViewItem(
         }
     }
 
-    if(cancelatedOrder){
+    if(canceledOrder){
         AlertDialog(
             onDismissRequest = {
-                cancelatedOrder = false
+                canceledOrder = false
                 navHostController.navigate(NavRoutes.ORDERS_HISTORY.route)
             },
             confirmButton = {
                 Button(
                     onClick = {
-                        cancelatedOrder = false
+                        canceledOrder = false
                         navHostController.navigate(NavRoutes.ORDERS_HISTORY.route)
                     }
                 ) {
@@ -160,5 +183,11 @@ fun ViewItem(
             }
 
         )
+    }
+
+    if(ratingProduct) {
+        AlertDialog(onDismissRequest = { /*TODO*/ }) {
+            RatingScreen(navHostController = navHostController)
+        }
     }
 }

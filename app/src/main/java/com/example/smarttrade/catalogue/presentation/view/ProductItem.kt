@@ -14,6 +14,10 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,6 +37,24 @@ fun ProductItem(
     product: ProductWrapper,
     viewModel: HomeCatalogueViewModel = hiltViewModel(),
 ) {
+
+    var image by remember { mutableStateOf(R.drawable.default_product) }
+
+    when(product.category.lowercase()){
+        "technology" -> {
+            image = R.drawable.mobile_image
+        }
+        "clothes" -> {
+            image = R.drawable.camiseta
+        }
+        "book" -> {
+            image = R.drawable.book_image
+        }
+        "food" -> {
+            image = R.drawable.default_product
+        }
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -48,7 +70,7 @@ fun ProductItem(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Image(
-                painterResource(id = R.drawable.default_product),
+                painterResource(id = image),
                 contentDescription = "logo",
                 contentScale = ContentScale.Fit,
                 modifier = Modifier.size(72.dp),

@@ -20,6 +20,7 @@ import com.example.smarttrade.product_management.presentation.view.addProductBoo
 import com.example.smarttrade.product_management.presentation.view.addProductClothesScreen
 import com.example.smarttrade.product_management.presentation.view.addProductFoodScreen
 import com.example.smarttrade.product_management.presentation.view.addProductTechnologyScreen
+import com.example.smarttrade.ratings.SeeRatingScreen
 import com.example.smarttrade.ui.theme.SmartTradeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -116,6 +117,11 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(NavRoutes.FINISH_ORDER.route){
                     //    OrderFinishedScreen(navController)
+                    }
+                    composable(NavRoutes.RATINGS.route){
+                        SeeRatingScreen(
+                            navController = navController
+                        )
                     }
                 }
             }

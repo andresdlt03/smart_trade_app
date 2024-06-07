@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -70,8 +71,24 @@ fun ProductDetailsScreen(
     product: ProductWrapper
 ) {
 
+    var image by remember { mutableStateOf(R.drawable.default_product) }
     var addedToCartDialog by remember { mutableStateOf(false) }
     val state = viewModel.state.collectAsState().value
+
+    when(product.category.lowercase()){
+        "technology" -> {
+            image = R.drawable.mobile_image
+        }
+        "clothes" -> {
+            image = R.drawable.camiseta
+        }
+        "book" -> {
+            image = R.drawable.book_image
+        }
+        "food" -> {
+            image = R.drawable.default_product
+        }
+    }
 
     LaunchedEffect(Unit) {
         viewModel.initializeAvailabilities(product.product.name)
@@ -103,11 +120,23 @@ fun ProductDetailsScreen(
         ) {
 
             Image(
-                painterResource(id = R.drawable.logo),
+                painterResource(id = image),
                 modifier = Modifier
                     .size(120.dp),
                 contentDescription = "Logo",
             )
+
+            OutlinedButton(onClick = {
+                navController.navigate(NavRoutes.RATINGS.route)
+            }) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Icon(imageVector = Icons.Default.Star, contentDescription = "Valoraciones")
+                    Text(text = "Ver valoraciones")
+                }
+            }
 
             Column(
                 modifier = Modifier
